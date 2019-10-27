@@ -1,52 +1,24 @@
+import engine.GameEngineGraphical;
 import model.Point;
 import model.World;
+import view.PacmanController;
+import view.PacmanPainter;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        World w = new World();
-        printPos(w);
+        World game = new World();
 
-        Scanner in = new Scanner(System.in);
-        String line = "";
+        PacmanPainter painter = new PacmanPainter(game);
+        PacmanController controller = new PacmanController();
 
-        while ((line = in.nextLine()) != null) {
-            line = line.toUpperCase();
-            switch (line) {
-                case "W": {
-                    Point old = w.getHeroPos();
-                    Point n = new Point(old.getX(), old.getY() - 1);
-                    w.moveHeroTo(n);
-                    break;
-                }
-                case "A": {
-                    Point old = w.getHeroPos();
-                    Point n = new Point(old.getX() - 1, old.getY());
-                    w.moveHeroTo(n);
-                    break;
-                }
-                case "S": {
-                    Point old = w.getHeroPos();
-                    Point n = new Point(old.getX(), old.getY() + 1);
-                    w.moveHeroTo(n);
-                    break;
-                }
-                case "D": {
-                    Point old = w.getHeroPos();
-                    Point n = new Point(old.getX() + 1, old.getY());
-                    w.moveHeroTo(n);
-                    break;
-                }
-            }
-            printPos(w);
+        // classe qui lance le moteur de jeu generique
+        GameEngineGraphical engine = new GameEngineGraphical(game, painter, controller);
+        try {
+            engine.run();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-    }
-
-    private static void printPos(World w) {
-        Point p = w.getHeroPos();
-
-        System.out.println("Pacman(" + p.getX() + "; " + p.getY() + ")");
-        System.out.print("input (W, A, S, D): ");
     }
 }
