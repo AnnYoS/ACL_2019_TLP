@@ -8,6 +8,8 @@ import engine.Game;
 import engine.GamePainter;
 import model.Point;
 import model.World;
+import model.cell.Cell;
+import model.cell.Wall;
 
 /**
  * @author Horatiu Cirstea, Vincent Thomas
@@ -44,11 +46,22 @@ public class PacmanPainter implements GamePainter {
 	@Override
 	public void draw(BufferedImage im) {
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
+
+		Cell[][] mapCells = game.getMapCells();
+		for(int i=0; i<mapCells.length;i++){
+			for(int j=0; j<mapCells[0].length;j++){
+				if(mapCells[i][j].getClass().equals(Wall.class)){
+					crayon.setColor(Color.gray);
+					crayon.fillRect(i * BLOCK_SIZE, j * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+				}
+			}
+		}
+
 		crayon.setColor(Color.blue);
-
 		Point heroPos = game.getHeroPos();
-
 		crayon.fillOval(heroPos.getX() * BLOCK_SIZE,heroPos.getY() * BLOCK_SIZE,BLOCK_SIZE,BLOCK_SIZE);
+
+
 	}
 
 	@Override

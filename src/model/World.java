@@ -2,6 +2,7 @@ package model;
 
 import engine.Cmd;
 import engine.Game;
+import model.cell.Cell;
 import model.person.Hero;
 
 public class World implements Game {
@@ -32,6 +33,8 @@ public class World implements Game {
     public Point getHeroPos() {
         return hero.getPos();
     }
+
+    public Cell[][] getMapCells(){return map.getCells();}
 
     @Override
     public void evolve(Cmd userCmd) {
