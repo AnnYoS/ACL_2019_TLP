@@ -9,7 +9,9 @@ public class World implements Game {
     private Hero hero;
 
     public World() {
-        map = new Map();
+        //map = new Map();
+        StaticMapFactory staticMapFactory = new StaticMapFactory();
+        map = staticMapFactory.loadMap();
         hero = new Hero(new Point(0, 0));
     }
 
