@@ -38,6 +38,13 @@ public class World implements Game {
         return res;
     }
 
+    private void moveMonsters(){
+        for (Monster m: monsterList) {
+            Point p = m.getMove(map);
+            m.setPos(p);
+        }
+    }
+
     public Point getHeroPos() {
         return hero.getPos();
     }
@@ -55,22 +62,26 @@ public class World implements Game {
                 Point old = getHeroPos();
                 Point n = new Point(old.getX(), old.getY() - 1);
                 moveHeroTo(n);
+                moveMonsters();
                 break;
             }
             case DOWN: {
                 Point old = getHeroPos();
                 Point n = new Point(old.getX(), old.getY() + 1);
                 moveHeroTo(n);
+                moveMonsters();
                 break;
             }case LEFT: {
                 Point old = getHeroPos();
                 Point n = new Point(old.getX() - 1, old.getY());
                 moveHeroTo(n);
+                moveMonsters();
                 break;
             }case RIGHT: {
                 Point old = getHeroPos();
                 Point n = new Point(old.getX() + 1, old.getY());
                 moveHeroTo(n);
+                moveMonsters();
                 break;
             }
             case IDLE:
