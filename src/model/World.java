@@ -4,16 +4,24 @@ import engine.Cmd;
 import engine.Game;
 import model.cell.Cell;
 import model.person.Hero;
+import model.person.Monster;
+import model.person.strategy.RandomStrategy;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class World implements Game {
     private Map map;
     private Hero hero;
+    private List<Monster> monsterList;
 
     public World() {
         //map = new Map();
         StaticMapFactory staticMapFactory = new StaticMapFactory();
         map = staticMapFactory.loadMap();
         hero = new Hero(new Point(0, 0));
+        monsterList = new ArrayList<>();
+        monsterList.add(new Monster(new Point(0, 19), new RandomStrategy()));
     }
 
     public boolean moveHeroTo(Point p) {
@@ -32,6 +40,10 @@ public class World implements Game {
 
     public Point getHeroPos() {
         return hero.getPos();
+    }
+
+    public List<Monster> getMonsterList() {
+        return monsterList;
     }
 
     public Cell[][] getMapCells(){return map.getCells();}

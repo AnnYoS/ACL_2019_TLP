@@ -10,6 +10,7 @@ import model.Point;
 import model.World;
 import model.cell.Cell;
 import model.cell.Wall;
+import model.person.Monster;
 
 /**
  * @author Horatiu Cirstea, Vincent Thomas
@@ -60,6 +61,11 @@ public class PacmanPainter implements GamePainter {
 		crayon.setColor(Color.blue);
 		Point heroPos = game.getHeroPos();
 		crayon.fillOval(heroPos.getX() * BLOCK_SIZE,heroPos.getY() * BLOCK_SIZE,BLOCK_SIZE,BLOCK_SIZE);
+
+		crayon.setColor(Color.red);
+		for (Monster m: game.getMonsterList()){
+			crayon.fillOval(m.getPos().getX() * BLOCK_SIZE, m.getPos().getY() * BLOCK_SIZE, BLOCK_SIZE,BLOCK_SIZE);
+		}
 
 
 	}

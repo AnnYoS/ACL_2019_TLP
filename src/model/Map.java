@@ -15,7 +15,7 @@ public class Map {
 
     public boolean isWalkable(Point p) {
         boolean res;
-        if(p.getX()>=0 && p.getY()>=0) {
+        if(p.getX()>=0 && p.getY()>=0 && p.getX()< cells.length && p.getY() < cells[1].length) {
             res = cells[p.getX()][p.getY()].isWalkable();
         }else{
             res = false;

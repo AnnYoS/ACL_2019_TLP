@@ -1,5 +1,6 @@
 package model.person;
 
+import model.Map;
 import model.Point;
 import model.person.strategy.MonsterStrategy;
 
@@ -23,5 +24,9 @@ public class Monster implements Person {
     public MonsterStrategy getMoveStrategy() {
         return moveStrategy;
     }
-    
+
+    public Point getMove(Map map){
+        return moveStrategy.move(this.pos, map);
+    }
+
 }
