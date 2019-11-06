@@ -5,7 +5,7 @@ import engine.Game;
 import model.cell.Cell;
 import model.person.Hero;
 import model.person.Monster;
-import model.person.strategy.RandomStrategy;
+import model.person.strategy.FollowStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class World implements Game {
         map = staticMapFactory.loadMap();
         hero = new Hero(new Point(1, 1));
         monsterList = new ArrayList<>();
-        monsterList.add(new Monster(new Point(4, 11), new RandomStrategy()));
+        monsterList.add(new Monster(new Point(4, 11), new FollowStrategy()));
     }
 
     public boolean moveHeroTo(Point p) {
