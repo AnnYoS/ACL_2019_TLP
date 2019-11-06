@@ -19,9 +19,9 @@ public class World implements Game {
         //map = new Map();
         StaticMapFactory staticMapFactory = new StaticMapFactory();
         map = staticMapFactory.loadMap();
-        hero = new Hero(new Point(0, 0));
+        hero = new Hero(new Point(1, 1));
         monsterList = new ArrayList<>();
-        monsterList.add(new Monster(new Point(0, 19), new RandomStrategy()));
+        monsterList.add(new Monster(new Point(4, 11), new RandomStrategy()));
     }
 
     public boolean moveHeroTo(Point p) {
@@ -38,9 +38,9 @@ public class World implements Game {
         return res;
     }
 
-    private void moveMonsters(){
+    private void moveMonsters() {
         for (Monster m: monsterList) {
-            Point p = m.getMove(map);
+            Point p = m.getMove(map, hero.getPos());
             m.setPos(p);
         }
     }

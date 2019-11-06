@@ -25,8 +25,8 @@ public class Monster implements Person {
         return moveStrategy;
     }
 
-    public Point getMove(Map map){
-        return moveStrategy.move(this.pos, map);
+    public Point getMove(Map map, Point heroPos){
+        return moveStrategy.move(this.pos, map, heroPos);
     }
 
 }

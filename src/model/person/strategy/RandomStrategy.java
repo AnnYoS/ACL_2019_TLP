@@ -8,8 +8,8 @@ import java.util.Random;
 public class RandomStrategy implements MonsterStrategy {
     private Random rand = new Random();
     @Override
-    public Point move(Point pos, Map map) {
-        Point pos2 = null;
+    public Point move(Point pos, Map map, Point heroPos) {
+        Point newPos = null;
         boolean exit = false;
         int x;
         int y;
@@ -32,13 +32,12 @@ public class RandomStrategy implements MonsterStrategy {
                     break;
             }
             if(x != pos.getX() || y != pos.getY()) {
-                Point newPos = new Point(x, y);
+                newPos = new Point(x, y);
                 if (map.isWalkable(newPos)) {
-                    pos2 = newPos;
                     exit = true;
                 }
             }
         }
-        return pos2;
+        return newPos;
     }
 }
