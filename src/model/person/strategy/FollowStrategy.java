@@ -22,6 +22,7 @@ public class FollowStrategy implements MonsterStrategy {
         int y;
         double newDistance = 0.0;
         double oldDistance = Math.sqrt((heroPos.getX()-pos.getX())*(heroPos.getX()-pos.getX())+(heroPos.getY()-pos.getY())*(heroPos.getY()-pos.getY()));
+        int count = 0;
         while(!exit) {
             x = pos.getX();
             y = pos.getY();
@@ -44,12 +45,13 @@ public class FollowStrategy implements MonsterStrategy {
                     newDistance = Math.sqrt((heroPos.getX()-x)*(heroPos.getX()-x)+(heroPos.getY()-pos.getY())*(heroPos.getY()-pos.getY()));
                     break;
             }
-            if (newDistance <= oldDistance || x == heroPos.getX() && y == heroPos.getY()) {
+            if (count>=10 || newDistance <= oldDistance || x == heroPos.getX() && y == heroPos.getY()) {
                 newPos = new Point(x, y);
                 if (map.isWalkable(newPos)) {
                     exit = true;
                 }
             }
+            count++;
         }
         return newPos;
     }
