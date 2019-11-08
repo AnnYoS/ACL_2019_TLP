@@ -19,10 +19,10 @@ public class World implements Game {
         //map = new Map();
         StaticMapFactory staticMapFactory = new StaticMapFactory();
         map = staticMapFactory.loadMap();
-        hero = new Hero(new Point(0, 0), 1);
+        hero = new Hero(new Point(1, 1), 1);
         monsterList = new ArrayList<>();
-        monsterList.add(new Monster(new Point(4, 11), new FollowStrategy()));
-        monsterList.add(new Monster(new Point(0, 19), new RandomStrategy(), 1));
+        monsterList.add(new Monster(new Point(4, 11), new FollowStrategy(), 1));
+       // monsterList.add(new Monster(new Point(0, 19), new RandomStrategy(), 1));
     }
 
     public boolean moveHeroTo(Point p) {
@@ -71,7 +71,7 @@ public class World implements Game {
                 Point old = getHeroPos();
                 Point n = new Point(old.getX(), old.getY() - 1);
                 moveHeroTo(n);
-                //moveMonsters();
+                moveMonsters();
                 monsterAttack();
                 break;
             }
@@ -79,21 +79,21 @@ public class World implements Game {
                 Point old = getHeroPos();
                 Point n = new Point(old.getX(), old.getY() + 1);
                 moveHeroTo(n);
-                //moveMonsters();
+                moveMonsters();
                 monsterAttack();
                 break;
             }case LEFT: {
                 Point old = getHeroPos();
                 Point n = new Point(old.getX() - 1, old.getY());
                 moveHeroTo(n);
-                //moveMonsters();
+                moveMonsters();
                 monsterAttack();
                 break;
             }case RIGHT: {
                 Point old = getHeroPos();
                 Point n = new Point(old.getX() + 1, old.getY());
                 moveHeroTo(n);
-                //moveMonsters();
+                moveMonsters();
                 monsterAttack();
                 break;
             }
