@@ -13,7 +13,7 @@ public class Hero implements Person {
 
     @Override
     public void attack(Person p) {
-        //le hero n'attaque pas pour le moment
+        p.looseLP(1);
     }
 
     @Override
