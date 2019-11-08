@@ -19,9 +19,9 @@ public class World implements Game {
         //map = new Map();
         StaticMapFactory staticMapFactory = new StaticMapFactory();
         map = staticMapFactory.loadMap();
-        hero = new Hero(new Point(1, 1), 1);
+        hero = new Hero(new Point(1, 1), 50);
         monsterList = new ArrayList<>();
-        monsterList.add(new Monster(new Point(4, 11), new FollowStrategy(), 1));
+        monsterList.add(new Monster(new Point(4, 11), new FollowStrategy(), 10));
        // monsterList.add(new Monster(new Point(0, 19), new RandomStrategy(), 1));
     }
 
@@ -47,9 +47,15 @@ public class World implements Game {
     }
 
     private void monsterAttack(){
-        for (Monster m: monsterList){
-            if (m.getPos().getX() == getHeroPos().getX() && m.getPos().getY() == getHeroPos().getY()){
+        for (int i = monsterList.size() - 1; i >= 0; i--) {
+            Monster m = monsterList.get(i);
+            if (m.getPos().equals(hero.getPos())){
                 m.attack(hero);
+                hero.attack(m);
+
+                if(m.getLifepoints() <= 0) {
+                    monsterList.remove(i);
+                }
             }
         }
     }

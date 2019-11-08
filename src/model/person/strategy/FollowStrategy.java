@@ -10,6 +10,12 @@ public class FollowStrategy implements MonsterStrategy {
 
     @Override
     public Point move(Point pos, Map map, Point heroPos) {
+        /*
+        faire un tableau : [1, 2, 3, 4]
+        shuffle le tableau
+        prendre dans l'ordre les pos comme la suite de l'algo
+        si aucun n'améliore prendre le premier possible
+         */
         Point newPos = null;
         boolean exit = false;
         int x;
