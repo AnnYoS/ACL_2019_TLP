@@ -15,7 +15,7 @@ public class World implements Game {
     private Hero hero;
     private List<Monster> monsterList;
 
-    public World() {
+    /*public World() {
         //map = new Map();
         StaticMapFactory staticMapFactory = new StaticMapFactory();
         map = staticMapFactory.loadMap();
@@ -23,6 +23,26 @@ public class World implements Game {
         monsterList = new ArrayList<>();
         monsterList.add(new Monster(new Point(4, 10), new FollowStrategy(), 1));
         monsterList.add(new Monster(new Point(14, 14), new RandomStrategy(), 1));
+    }*/
+
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
+    public Hero getHero() {
+        return hero;
+    }
+
+    public void setHero(Hero hero) {
+        this.hero = hero;
+    }
+
+    public void setMonsterList(List<Monster> monsterList) {
+        this.monsterList = monsterList;
     }
 
     public boolean moveHeroTo(Point p) {
