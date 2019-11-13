@@ -45,10 +45,10 @@ public class PacmanController implements GameController {
 		char c = Character.toLowerCase(e.getKeyChar());
 
 		switch (c) {
-			case 'w':
+			case 'z':
 				this.commandeEnCours = Cmd.UP;
 				break;
-			case 'a':
+			case 'q':
 				this.commandeEnCours = Cmd.LEFT;
 				break;
 			case 's':

@@ -15,14 +15,24 @@ public class World implements Game {
     private Hero hero;
     private List<Monster> monsterList;
 
-    public World() {
-        //map = new Map();
-        StaticMapFactory staticMapFactory = new StaticMapFactory();
-        map = staticMapFactory.loadMap();
-        hero = new Hero(new Point(1, 1), 2);
-        monsterList = new ArrayList<>();
-        monsterList.add(new Monster(new Point(4, 10), new FollowStrategy(), 1));
-        monsterList.add(new Monster(new Point(14, 14), new RandomStrategy(), 1));
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
+    public Hero getHero() {
+        return hero;
+    }
+
+    public void setHero(Hero hero) {
+        this.hero = hero;
+    }
+
+    public void setMonsterList(List<Monster> monsterList) {
+        this.monsterList = monsterList;
     }
 
     public boolean moveHeroTo(Point p) {
@@ -77,34 +87,28 @@ public class World implements Game {
                 Point old = getHeroPos();
                 Point n = new Point(old.getX(), old.getY() - 1);
                 moveHeroTo(n);
-                moveMonsters();
-                monsterAttack();
                 break;
             }
             case DOWN: {
                 Point old = getHeroPos();
                 Point n = new Point(old.getX(), old.getY() + 1);
                 moveHeroTo(n);
-                moveMonsters();
-                monsterAttack();
                 break;
             }case LEFT: {
                 Point old = getHeroPos();
                 Point n = new Point(old.getX() - 1, old.getY());
                 moveHeroTo(n);
-                moveMonsters();
-                monsterAttack();
                 break;
             }case RIGHT: {
                 Point old = getHeroPos();
                 Point n = new Point(old.getX() + 1, old.getY());
                 moveHeroTo(n);
-                moveMonsters();
-                monsterAttack();
                 break;
             }
             case IDLE:
         }
+        moveMonsters();
+        monsterAttack();
     }
 
     @Override
