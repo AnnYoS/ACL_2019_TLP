@@ -3,7 +3,7 @@ package model.person.strategy;
 import model.Map;
 import model.Point;
 
-import java.util.Random;
+import java.util.*;
 
 public class FollowStrategy implements MonsterStrategy {
     private Random rand = new Random();
@@ -16,43 +16,50 @@ public class FollowStrategy implements MonsterStrategy {
         prendre dans l'ordre les pos comme la suite de l'algo
         si aucun n'améliore prendre le premier possible
          */
-        Point newPos = null;
-        boolean exit = false;
         int x;
         int y;
         double newDistance = 0.0;
-        double oldDistance = Math.sqrt((heroPos.getX()-pos.getX())*(heroPos.getX()-pos.getX())+(heroPos.getY()-pos.getY())*(heroPos.getY()-pos.getY()));
-        int count = 0;
-        while(!exit) {
+
+        List<Integer> directions = new ArrayList<>();
+        directions.add(1);
+        directions.add(2);
+        directions.add(3);
+        directions.add(4);
+
+        java.util.Map<Double, Point> distanceMap= new TreeMap<>();
+
+        Collections.shuffle(directions);
+
+        for (Integer i: directions) {
             x = pos.getX();
             y = pos.getY();
-            int dep = 1+rand.nextInt(4);
-            switch (dep) {
+            switch (i) {
                 case 1: // En haut
                     y = y - 1;
-                    newDistance = Math.sqrt((heroPos.getX()-pos.getX())*(heroPos.getX()-pos.getX())+(heroPos.getY()-y)*(heroPos.getY()-y));
+                    newDistance = Math.sqrt((heroPos.getX()-x)*(heroPos.getX()-x)+(heroPos.getY()-y)*(heroPos.getY()-y));
                     break;
                 case 2: // A droite
                     x = x + 1;
-                    newDistance = Math.sqrt((heroPos.getX()-x)*(heroPos.getX()-x)+(heroPos.getY()-pos.getY())*(heroPos.getY()-pos.getY()));
+                    newDistance = Math.sqrt((heroPos.getX()-x)*(heroPos.getX()-x)+(heroPos.getY()-y)*(heroPos.getY()-y));
                     break;
                 case 3: // En bas
                     y = y + 1;
-                    newDistance = Math.sqrt((heroPos.getX()-pos.getX())*(heroPos.getX()-pos.getX())+(heroPos.getY()-y)*(heroPos.getY()-y));
+                    newDistance = Math.sqrt((heroPos.getX()-x)*(heroPos.getX()-x)+(heroPos.getY()-y)*(heroPos.getY()-y));
                     break;
                 case 4: // A gauche
                     x = x - 1;
-                    newDistance = Math.sqrt((heroPos.getX()-x)*(heroPos.getX()-x)+(heroPos.getY()-pos.getY())*(heroPos.getY()-pos.getY()));
+                    newDistance = Math.sqrt((heroPos.getX()-x)*(heroPos.getX()-x)+(heroPos.getY()-y)*(heroPos.getY()-y));
                     break;
             }
-            if (count>=10 || newDistance <= oldDistance || x == heroPos.getX() && y == heroPos.getY()) {
-                newPos = new Point(x, y);
-                if (map.isWalkable(newPos)) {
-                    exit = true;
-                }
+            Point newPos = new Point(x, y);
+            if (map.isWalkable(newPos)) {
+                distanceMap.put(newDistance,newPos);
             }
-            count++;
         }
-        return newPos;
+
+        //System.out.println("Distance choisit : "+distanceMap.keySet().iterator().next());
+
+        return distanceMap.get(distanceMap.keySet().iterator().next());
+
     }
 }
