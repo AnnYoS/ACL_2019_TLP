@@ -5,7 +5,11 @@ import model.Vector;
 import model.person.strategy.MonsterStrategy;
 
 public class Monster implements Person {
+
+    public static float SPEED = 0.005f;
+
     private Vector pos;
+    private Vector speed;
     private int lifepoints;
     private MonsterStrategy moveStrategy;
 
@@ -13,6 +17,7 @@ public class Monster implements Person {
         this.pos = pos;
         this.moveStrategy = moveStrategy;
         this.lifepoints = lp;
+        speed = new Vector(0, 0);
     }
 
     @Override
@@ -37,8 +42,13 @@ public class Monster implements Person {
         return moveStrategy;
     }
 
-    public Vector getMove(Map map, Vector heroPos){
-        return moveStrategy.move(this.pos, map, heroPos);
+    public void calcSpeed(Map map, Vector heroPos) {
+        Vector tmp =  moveStrategy.move(this.pos, map, heroPos);
+        speed = tmp;
+    }
+
+    public void evolve(long dt) {
+        pos.add(speed, dt);
     }
 
     public int getLifepoints() { return lifepoints; }

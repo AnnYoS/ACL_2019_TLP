@@ -47,10 +47,15 @@ public class World implements Game {
         return res;
     }
 
-    private void moveMonsters() {
+    private void calcMonsterSpeeds() {
         for (Monster m: monsterList) {
-            Vector p = m.getMove(map, hero.getPos());
-            m.setPos(p);
+            m.calcSpeed(map, hero.getPos());
+        }
+    }
+
+    private void moveMonsters(long dt) {
+        for(Monster m : monsterList) {
+            m.evolve(dt);
         }
     }
 
@@ -79,8 +84,14 @@ public class World implements Game {
     public Cell[][] getMapCells(){return map.getCells();}
 
     @Override
-    public void evolve(Cmd userCmd) {
-        switch (userCmd) {
+    public void evolve(long dt) {
+        moveMonsters(dt);
+        monsterAttack();
+    }
+
+    @Override
+    public void events(Cmd c) {
+        switch (c) {
             case UP: {
                 Vector old = getHeroPos();
                 Vector n = new Vector(old.getX(), old.getY() - 1);
@@ -105,8 +116,7 @@ public class World implements Game {
             }
             case IDLE:
         }
-        moveMonsters();
-        monsterAttack();
+        calcMonsterSpeeds();
     }
 
     @Override

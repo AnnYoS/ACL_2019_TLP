@@ -56,12 +56,19 @@ public class GameEngineGraphical {
 		// creation de l'interface graphique
 		this.gui = new GraphicalInterface(this.gamePainter,this.gameController);
 
+		long time = System.currentTimeMillis();
+
 		// boucle de game
 		while (!this.game.isFinished()) {
 			// demande controle utilisateur
 			Cmd c = this.gameController.getCommand();
 			// fait evoluer le game
-			this.game.evolve(c);
+			this.game.events(c);
+
+			long dt = System.currentTimeMillis() - time;
+			time = System.currentTimeMillis();
+
+			this.game.evolve(dt);
 			// affiche le game
 			this.gui.paint();
 			// met en attente

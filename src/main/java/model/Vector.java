@@ -19,6 +19,41 @@ public class Vector {
         return y;
     }
 
+    public Vector clone() {
+        return new Vector(x, y);
+    }
+
+    public void add(Vector v) {
+        x += v.x;
+        y += v.y;
+    }
+
+    public void add(Vector v, float c) {
+        x += v.x * c;
+        y += v.y * c;
+    }
+
+    public void sub(Vector v) {
+        x -= v.x;
+        y -= v.y;
+    }
+
+    public void mult(float c) {
+        x *= c;
+        y *= c;
+    }
+
+    public float length() {
+        return (float) Math.sqrt(x * x + y * y);
+    }
+
+    public float distance(Vector v) {
+        Vector tmp = v.clone();
+
+        tmp.sub(this);
+        return tmp.length();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

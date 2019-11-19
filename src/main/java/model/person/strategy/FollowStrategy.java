@@ -2,6 +2,7 @@ package model.person.strategy;
 
 import model.Map;
 import model.Vector;
+import model.person.Monster;
 
 import java.util.*;
 
@@ -19,6 +20,7 @@ public class FollowStrategy implements MonsterStrategy {
         float x;
         float y;
         double newDistance = 0.0;
+        Vector newSpeed = new Vector(0, 0);
 
         List<Integer> directions = new ArrayList<>();
         directions.add(1);
@@ -37,23 +39,27 @@ public class FollowStrategy implements MonsterStrategy {
                 case 1: // En haut
                     y = y - 1;
                     newDistance = Math.sqrt((heroPos.getX()-x)*(heroPos.getX()-x)+(heroPos.getY()-y)*(heroPos.getY()-y));
+                    newSpeed = new Vector(0f, -Monster.SPEED);
                     break;
                 case 2: // A droite
                     x = x + 1;
                     newDistance = Math.sqrt((heroPos.getX()-x)*(heroPos.getX()-x)+(heroPos.getY()-y)*(heroPos.getY()-y));
+                    newSpeed = new Vector(Monster.SPEED, 0f);
                     break;
                 case 3: // En bas
                     y = y + 1;
                     newDistance = Math.sqrt((heroPos.getX()-x)*(heroPos.getX()-x)+(heroPos.getY()-y)*(heroPos.getY()-y));
+                    newSpeed = new Vector(0f, Monster.SPEED);
                     break;
                 case 4: // A gauche
                     x = x - 1;
                     newDistance = Math.sqrt((heroPos.getX()-x)*(heroPos.getX()-x)+(heroPos.getY()-y)*(heroPos.getY()-y));
+                    newSpeed = new Vector(-Monster.SPEED, 0f);
                     break;
             }
             Vector newPos = new Vector(x, y);
             if (map.isWalkable(newPos)) {
-                distanceMap.put(newDistance,newPos);
+                distanceMap.put(newDistance,newSpeed);
             }
         }
 

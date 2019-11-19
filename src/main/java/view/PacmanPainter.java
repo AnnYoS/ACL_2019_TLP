@@ -60,11 +60,11 @@ public class PacmanPainter implements GamePainter {
 
 		crayon.setColor(Color.blue);
 		Vector heroPos = game.getHeroPos();
-		crayon.fillOval((int)(heroPos.getX() * BLOCK_SIZE),(int)(heroPos.getY() * BLOCK_SIZE),BLOCK_SIZE,BLOCK_SIZE);
+		crayon.fillOval(((int)heroPos.getX() * BLOCK_SIZE),((int)heroPos.getY() * BLOCK_SIZE),BLOCK_SIZE,BLOCK_SIZE);
 
 		crayon.setColor(Color.red);
 		for (Monster m: game.getMonsterList()){
-			crayon.fillOval((int)(m.getPos().getX() * BLOCK_SIZE), (int)(m.getPos().getY() * BLOCK_SIZE), BLOCK_SIZE,BLOCK_SIZE);
+			crayon.fillOval(((int)m.getPos().getX() * BLOCK_SIZE), ((int)m.getPos().getY() * BLOCK_SIZE), BLOCK_SIZE,BLOCK_SIZE);
 		}
 
 
