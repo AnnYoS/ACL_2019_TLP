@@ -1,15 +1,15 @@
 package model.person;
 
 import model.Map;
-import model.Point;
+import model.Vector;
 import model.person.strategy.MonsterStrategy;
 
 public class Monster implements Person {
-    private Point pos;
+    private Vector pos;
     private int lifepoints;
     private MonsterStrategy moveStrategy;
 
-    public Monster(Point pos, MonsterStrategy moveStrategy, int lp) {
+    public Monster(Vector pos, MonsterStrategy moveStrategy, int lp) {
         this.pos = pos;
         this.moveStrategy = moveStrategy;
         this.lifepoints = lp;
@@ -25,11 +25,11 @@ public class Monster implements Person {
         lifepoints = lifepoints - lp;
     }
 
-    public Point getPos() {
+    public Vector getPos() {
         return pos;
     }
 
-    public void setPos(Point pos) {
+    public void setPos(Vector pos) {
         this.pos = pos;
     }
 
@@ -37,7 +37,7 @@ public class Monster implements Person {
         return moveStrategy;
     }
 
-    public Point getMove(Map map, Point heroPos){
+    public Vector getMove(Map map, Vector heroPos){
         return moveStrategy.move(this.pos, map, heroPos);
     }
 

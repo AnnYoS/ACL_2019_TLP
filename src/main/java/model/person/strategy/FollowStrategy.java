@@ -1,7 +1,7 @@
 package model.person.strategy;
 
 import model.Map;
-import model.Point;
+import model.Vector;
 
 import java.util.*;
 
@@ -9,15 +9,15 @@ public class FollowStrategy implements MonsterStrategy {
     private Random rand = new Random();
 
     @Override
-    public Point move(Point pos, Map map, Point heroPos) {
+    public Vector move(Vector pos, Map map, Vector heroPos) {
         /*
         faire un tableau : [1, 2, 3, 4]
         shuffle le tableau
         prendre dans l'ordre les pos comme la suite de l'algo
         si aucun n'améliore prendre le premier possible
          */
-        int x;
-        int y;
+        float x;
+        float y;
         double newDistance = 0.0;
 
         List<Integer> directions = new ArrayList<>();
@@ -26,7 +26,7 @@ public class FollowStrategy implements MonsterStrategy {
         directions.add(3);
         directions.add(4);
 
-        java.util.Map<Double, Point> distanceMap= new TreeMap<>();
+        java.util.Map<Double, Vector> distanceMap= new TreeMap<>();
 
         Collections.shuffle(directions);
 
@@ -51,7 +51,7 @@ public class FollowStrategy implements MonsterStrategy {
                     newDistance = Math.sqrt((heroPos.getX()-x)*(heroPos.getX()-x)+(heroPos.getY()-y)*(heroPos.getY()-y));
                     break;
             }
-            Point newPos = new Point(x, y);
+            Vector newPos = new Vector(x, y);
             if (map.isWalkable(newPos)) {
                 distanceMap.put(newDistance,newPos);
             }

@@ -5,9 +5,7 @@ import engine.Game;
 import model.cell.Cell;
 import model.person.Hero;
 import model.person.Monster;
-import model.person.strategy.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class World implements Game {
@@ -35,10 +33,10 @@ public class World implements Game {
         this.monsterList = monsterList;
     }
 
-    public boolean moveHeroTo(Point p) {
+    public boolean moveHeroTo(Vector p) {
         boolean res;
 
-        Point tmp = hero.getPos();
+        Vector tmp = hero.getPos();
 
         res = Math.abs(p.getX() - tmp.getX()) <= 1 && Math.abs(p.getY() - tmp.getY()) <= 1 && map.isWalkable(p);
 
@@ -51,7 +49,7 @@ public class World implements Game {
 
     private void moveMonsters() {
         for (Monster m: monsterList) {
-            Point p = m.getMove(map, hero.getPos());
+            Vector p = m.getMove(map, hero.getPos());
             m.setPos(p);
         }
     }
@@ -70,7 +68,7 @@ public class World implements Game {
         }
     }
 
-    public Point getHeroPos() {
+    public Vector getHeroPos() {
         return hero.getPos();
     }
 
@@ -84,24 +82,24 @@ public class World implements Game {
     public void evolve(Cmd userCmd) {
         switch (userCmd) {
             case UP: {
-                Point old = getHeroPos();
-                Point n = new Point(old.getX(), old.getY() - 1);
+                Vector old = getHeroPos();
+                Vector n = new Vector(old.getX(), old.getY() - 1);
                 moveHeroTo(n);
                 break;
             }
             case DOWN: {
-                Point old = getHeroPos();
-                Point n = new Point(old.getX(), old.getY() + 1);
+                Vector old = getHeroPos();
+                Vector n = new Vector(old.getX(), old.getY() + 1);
                 moveHeroTo(n);
                 break;
             }case LEFT: {
-                Point old = getHeroPos();
-                Point n = new Point(old.getX() - 1, old.getY());
+                Vector old = getHeroPos();
+                Vector n = new Vector(old.getX() - 1, old.getY());
                 moveHeroTo(n);
                 break;
             }case RIGHT: {
-                Point old = getHeroPos();
-                Point n = new Point(old.getX() + 1, old.getY());
+                Vector old = getHeroPos();
+                Vector n = new Vector(old.getX() + 1, old.getY());
                 moveHeroTo(n);
                 break;
             }

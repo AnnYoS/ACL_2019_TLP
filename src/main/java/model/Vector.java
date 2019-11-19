@@ -2,20 +2,20 @@ package model;
 
 import java.util.Objects;
 
-public class Point {
-    private int x;
-    private int y;
+public class Vector {
+    private float x;
+    private float y;
 
-    public Point(int x, int y) {
+    public Vector(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
@@ -23,9 +23,9 @@ public class Point {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Point point = (Point) o;
-        return x == point.x &&
-                y == point.y;
+        Vector vector = (Vector) o;
+        return x == vector.x &&
+                y == vector.y;
     }
 
     @Override

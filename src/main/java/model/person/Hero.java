@@ -1,12 +1,12 @@
 package model.person;
 
-import model.Point;
+import model.Vector;
 
 public class Hero implements Person {
-    private Point pos;
+    private Vector pos;
     private int lifepoints;
 
-    public Hero(Point pos, int lp) {
+    public Hero(Vector pos, int lp) {
         this.pos = pos;
         this.lifepoints = lp;
     }
@@ -21,11 +21,11 @@ public class Hero implements Person {
         lifepoints = lifepoints - lp;
     }
 
-    public Point getPos() {
+    public Vector getPos() {
         return pos;
     }
 
-    public void setPos(Point pos) {
+    public void setPos(Vector pos) {
         this.pos = pos;
     }
 

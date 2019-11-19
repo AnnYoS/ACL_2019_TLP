@@ -1,8 +1,8 @@
 package model.person.strategy;
 
 import model.Map;
-import model.Point;
+import model.Vector;
 
 public interface MonsterStrategy {
-    Point move(Point pos, Map map, Point heroPos);
+    Vector move(Vector pos, Map map, Vector heroPos);
 }

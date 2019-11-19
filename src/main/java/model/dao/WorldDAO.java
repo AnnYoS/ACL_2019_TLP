@@ -1,7 +1,7 @@
 package model.dao;
 
 
-import model.Point;
+import model.Vector;
 import model.World;
 import model.person.Hero;
 import model.person.Monster;
@@ -38,7 +38,7 @@ public class WorldDAO implements IWorldDAO{
             int x = Integer.valueOf(sp[0]);
             int y = Integer.valueOf(sp[1]);
             int lp = Integer.valueOf(sp[2]);
-            world.setHero(new Hero(new Point(x,y), lp));
+            world.setHero(new Hero(new Vector(x,y), lp));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -63,7 +63,7 @@ public class WorldDAO implements IWorldDAO{
                     }
                 }
                 int lp = Integer.valueOf(sp[3]);
-                monsters.add(new Monster(new Point(x,y),strat ,lp));
+                monsters.add(new Monster(new Vector(x,y),strat ,lp));
             }
         }catch (Exception e){
             e.printStackTrace();
