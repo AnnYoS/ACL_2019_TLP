@@ -1,6 +1,8 @@
 package model.cell;
 
+import sun.misc.CEFormatException;
+
 public interface ICellFactory {
-    public Cell load(char cell);
-    public void save(Cell cell);
+    Cell createWall();
+    Cell createGrass();
 }
