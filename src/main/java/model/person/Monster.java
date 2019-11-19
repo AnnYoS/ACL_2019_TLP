@@ -30,6 +30,16 @@ public class Monster implements Person {
         lifepoints = lifepoints - lp;
     }
 
+    @Override
+    public Vector getSpeed() {
+        return speed;
+    }
+
+    @Override
+    public void setSpeed(Vector v) {
+        speed = v;
+    }
+
     public Vector getPos() {
         return pos;
     }
@@ -45,10 +55,6 @@ public class Monster implements Person {
     public void calcSpeed(Map map, Vector heroPos) {
         Vector tmp =  moveStrategy.move(this.pos, map, heroPos);
         speed = tmp;
-    }
-
-    public void evolve(long dt) {
-        pos.add(speed, dt);
     }
 
     public int getLifepoints() { return lifepoints; }

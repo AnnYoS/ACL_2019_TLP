@@ -55,14 +55,14 @@ public class World implements Game {
 
     private void moveMonsters(long dt) {
         for(Monster m : monsterList) {
-            m.evolve(dt);
+            m.evolve(map, dt);
         }
     }
 
     private void monsterAttack(){
-        for (int i =0 ; i<monsterList.size();i++){
+        for (int i =0 ; i < monsterList.size();i++){
             Monster m = monsterList.get(i);
-            if (m.getPos().equals(getHeroPos())){
+            if (m.getPos().integetManhattanDistance(getHeroPos()) == 0){
                 m.attack(hero);
                 hero.attack(m);
                 if(m.getLifepoints()<=0){
@@ -86,6 +86,7 @@ public class World implements Game {
     @Override
     public void evolve(long dt) {
         moveMonsters(dt);
+        hero.evolve(map, dt);
         monsterAttack();
     }
 
@@ -93,28 +94,34 @@ public class World implements Game {
     public void events(Cmd c) {
         switch (c) {
             case UP: {
-                Vector old = getHeroPos();
+                /*Vector old = getHeroPos();
                 Vector n = new Vector(old.getX(), old.getY() - 1);
-                moveHeroTo(n);
+                moveHeroTo(n);*/
+                hero.setSpeed(new Vector(0, -Hero.SPEED));
                 break;
             }
             case DOWN: {
-                Vector old = getHeroPos();
+                /*Vector old = getHeroPos();
                 Vector n = new Vector(old.getX(), old.getY() + 1);
-                moveHeroTo(n);
+                moveHeroTo(n);*/
+                hero.setSpeed(new Vector(0, Hero.SPEED));
                 break;
             }case LEFT: {
-                Vector old = getHeroPos();
+                /*Vector old = getHeroPos();
                 Vector n = new Vector(old.getX() - 1, old.getY());
-                moveHeroTo(n);
+                moveHeroTo(n);*/
+                hero.setSpeed(new Vector(-Hero.SPEED, 0));
                 break;
             }case RIGHT: {
-                Vector old = getHeroPos();
+                /*Vector old = getHeroPos();
                 Vector n = new Vector(old.getX() + 1, old.getY());
-                moveHeroTo(n);
+                moveHeroTo(n);*/
+                hero.setSpeed(new Vector(Hero.SPEED, 0));
                 break;
             }
-            case IDLE:
+            case IDLE: {
+                hero.setSpeed(new Vector(0, 0));
+            }
         }
         calcMonsterSpeeds();
     }

@@ -54,6 +54,16 @@ public class Vector {
         return tmp.length();
     }
 
+    public int integetManhattanDistance(Vector v) {
+        int x1 = (int) v.getX();
+        int y1 = (int) v.getY();
+
+        int x2 = (int) getX();
+        int y2 = (int) getY();
+
+        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
