@@ -1,9 +1,14 @@
+import engine.GameController;
 import engine.GameEngineGraphical;
 import model.World;
 import model.dao.DAOFactory;
+import view.GameOverController;
+import view.GameOverPainter;
 import view.PacmanController;
 import view.PacmanPainter;
 
+import javax.imageio.ImageIO;
+import java.io.File;
 import java.io.IOException;
 
 public class Main {
