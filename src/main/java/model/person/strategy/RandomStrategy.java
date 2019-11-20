@@ -1,18 +1,20 @@
 package model.person.strategy;
 
 import model.Map;
-import model.Point;
+import model.Vector;
+import model.person.Monster;
 
 import java.util.Random;
 
 public class RandomStrategy implements MonsterStrategy {
     private Random rand = new Random();
     @Override
-    public Point move(Point pos, Map map) {
-        Point pos2 = null;
+    public Vector move(Vector pos, Map map, Vector heroPos) {
+        Vector newPos = null;
+        Vector newSpeed = null;
         boolean exit = false;
-        int x;
-        int y;
+        float x;
+        float y;
         while(!exit) {
             x = pos.getX();
             y = pos.getY();
@@ -20,25 +22,28 @@ public class RandomStrategy implements MonsterStrategy {
             switch (dep) {
                 case 1: // En haut
                     y = y-1;
+                    newSpeed = new Vector(0f, -Monster.SPEED);
                     break;
                 case 2: // A droite
                     x = x+1;
+                    newSpeed = new Vector(Monster.SPEED, 0f);
                     break;
                 case 3: // En bas
                     y = y+1;
+                    newSpeed = new Vector(0f, Monster.SPEED);
                     break;
                 case 4: // A gauche
                     x = x-1;
+                    newSpeed = new Vector(-Monster.SPEED, 0f);
                     break;
             }
             if(x != pos.getX() || y != pos.getY()) {
-                Point newPos = new Point(x, y);
+                newPos = new Vector(x, y);
                 if (map.isWalkable(newPos)) {
-                    pos2 = newPos;
                     exit = true;
                 }
             }
         }
-        return pos2;
+        return newSpeed;
     }
 }

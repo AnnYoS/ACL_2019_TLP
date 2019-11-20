@@ -24,6 +24,16 @@ public class StaticMapFactory extends MapFactory{
         cells[6][2]= new Wall();
         cells[8][8]= new Wall();
 
+        //ajout de murs pour les bords
+        for (int i = 0; i <20 ; i++) {
+            cells[i][0] = new Wall();
+            cells[i][19] = new Wall();
+            cells[0][i] = new Wall();
+            if(i != 10){
+                cells[19][i] = new Wall();
+            }
+        }
+
         m.setCells(cells);
         return m;
     }

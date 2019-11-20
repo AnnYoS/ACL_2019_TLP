@@ -13,10 +13,10 @@ public class Map {
         this.cells=cells;
     }
 
-    public boolean isWalkable(Point p) {
+    public boolean isWalkable(Vector p) {
         boolean res;
         if(p.getX()>=0 && p.getY()>=0 && p.getX()< cells.length && p.getY() < cells[1].length) {
-            res = cells[p.getX()][p.getY()].isWalkable();
+            res = cells[(int) p.getX()][(int) p.getY()].isWalkable();
         }else{
             res = false;
         }
