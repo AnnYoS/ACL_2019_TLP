@@ -91,7 +91,7 @@ public class WorldDAO implements IWorldDAO{
         for(int j = 0; j < cellArray.length; j++) {
             List<Cell> tmp = cells.get(j);
             for(int i = 0; i < tmp.size(); i++) {
-                cellArray[j][i] = tmp.get(i);
+                cellArray[i][j] = tmp.get(i);
             }
         }
 
