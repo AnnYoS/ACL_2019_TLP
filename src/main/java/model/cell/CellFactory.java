@@ -3,6 +3,7 @@ package model.cell;
 public class CellFactory implements ICellFactory {
     private static final Wall WALL = new Wall();
     private static final Grass GRASS = new Grass();
+    private static final Trap TRAP = new Trap();
 
     @Override
     public Cell createWall() {
@@ -12,5 +13,10 @@ public class CellFactory implements ICellFactory {
     @Override
     public Cell createGrass() {
         return GRASS;
+    }
+
+    @Override
+    public Cell createTrap() {
+        return TRAP;
     }
 }
