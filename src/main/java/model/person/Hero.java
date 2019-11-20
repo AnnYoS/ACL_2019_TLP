@@ -1,14 +1,23 @@
 package model.person;
 
-import model.Point;
+import model.Map;
+import model.Vector;
 
 public class Hero implements Person {
-    private Point pos;
+    public static final float SPEED = 0.01f;
+
+    private Vector pos;
+    private Vector speed;
     private int lifepoints;
 
-    public Hero(Point pos, int lp) {
+    public Hero(Vector pos, int lp) {
         this.pos = pos;
         this.lifepoints = lp;
+        speed = new Vector(0, 0);
+    }
+
+    public void setSpeed(Vector speed) {
+        this.speed = speed;
     }
 
     @Override
@@ -21,11 +30,16 @@ public class Hero implements Person {
         lifepoints = lifepoints - lp;
     }
 
-    public Point getPos() {
+    @Override
+    public Vector getSpeed() {
+        return speed;
+    }
+
+    public Vector getPos() {
         return pos;
     }
 
-    public void setPos(Point pos) {
+    public void setPos(Vector pos) {
         this.pos = pos;
     }
 

@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import engine.Game;
 import engine.GamePainter;
-import model.Point;
+import model.Vector;
 import model.World;
 import model.cell.Cell;
 import model.cell.Wall;
@@ -59,12 +59,12 @@ public class PacmanPainter implements GamePainter {
 		}
 
 		crayon.setColor(Color.blue);
-		Point heroPos = game.getHeroPos();
-		crayon.fillOval(heroPos.getX() * BLOCK_SIZE,heroPos.getY() * BLOCK_SIZE,BLOCK_SIZE,BLOCK_SIZE);
+		Vector heroPos = game.getHeroPos();
+		crayon.fillOval(((int)heroPos.getX() * BLOCK_SIZE),((int)heroPos.getY() * BLOCK_SIZE),BLOCK_SIZE,BLOCK_SIZE);
 
 		crayon.setColor(Color.red);
 		for (Monster m: game.getMonsterList()){
-			crayon.fillOval(m.getPos().getX() * BLOCK_SIZE, m.getPos().getY() * BLOCK_SIZE, BLOCK_SIZE,BLOCK_SIZE);
+			crayon.fillOval(((int)m.getPos().getX() * BLOCK_SIZE), ((int)m.getPos().getY() * BLOCK_SIZE), BLOCK_SIZE,BLOCK_SIZE);
 		}
 
 

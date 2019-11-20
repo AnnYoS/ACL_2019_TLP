@@ -1,17 +1,21 @@
 import engine.GameEngineGraphical;
-import model.Point;
 import model.World;
 import model.dao.DAOFactory;
 import view.PacmanController;
 import view.PacmanPainter;
 
-import java.util.Scanner;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
         //World game = new World();
 
-        World game = DAOFactory.getInstance().getWorldDAO().load(0);
+        World game = null;
+        try {
+            game = DAOFactory.getInstance().getWorldDAO().load("levels/lvl0.map");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         PacmanPainter painter = new PacmanPainter(game);
         PacmanController controller = new PacmanController();

@@ -5,9 +5,7 @@ import engine.Game;
 import model.cell.Cell;
 import model.person.Hero;
 import model.person.Monster;
-import model.person.strategy.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class World implements Game {
@@ -35,10 +33,10 @@ public class World implements Game {
         this.monsterList = monsterList;
     }
 
-    public boolean moveHeroTo(Point p) {
+    public boolean moveHeroTo(Vector p) {
         boolean res;
 
-        Point tmp = hero.getPos();
+        Vector tmp = hero.getPos();
 
         res = Math.abs(p.getX() - tmp.getX()) <= 1 && Math.abs(p.getY() - tmp.getY()) <= 1 && map.isWalkable(p);
 
@@ -49,17 +47,22 @@ public class World implements Game {
         return res;
     }
 
-    private void moveMonsters() {
+    private void calcMonsterSpeeds() {
         for (Monster m: monsterList) {
-            Point p = m.getMove(map, hero.getPos());
-            m.setPos(p);
+            m.calcSpeed(map, hero.getPos());
+        }
+    }
+
+    private void moveMonsters(long dt) {
+        for(Monster m : monsterList) {
+            m.evolve(map, dt);
         }
     }
 
     private void monsterAttack(){
-        for (int i =0 ; i<monsterList.size();i++){
+        for (int i =0 ; i < monsterList.size();i++){
             Monster m = monsterList.get(i);
-            if (m.getPos().equals(getHeroPos())){
+            if (m.getPos().integetManhattanDistance(getHeroPos()) == 0){
                 m.attack(hero);
                 hero.attack(m);
                 if(m.getLifepoints()<=0){
@@ -70,7 +73,7 @@ public class World implements Game {
         }
     }
 
-    public Point getHeroPos() {
+    public Vector getHeroPos() {
         return hero.getPos();
     }
 
@@ -81,34 +84,46 @@ public class World implements Game {
     public Cell[][] getMapCells(){return map.getCells();}
 
     @Override
-    public void evolve(Cmd userCmd) {
-        switch (userCmd) {
+    public void evolve(long dt) {
+        moveMonsters(dt);
+        hero.evolve(map, dt);
+        monsterAttack();
+    }
+
+    @Override
+    public void events(Cmd c) {
+        switch (c) {
             case UP: {
-                Point old = getHeroPos();
-                Point n = new Point(old.getX(), old.getY() - 1);
-                moveHeroTo(n);
+                /*Vector old = getHeroPos();
+                Vector n = new Vector(old.getX(), old.getY() - 1);
+                moveHeroTo(n);*/
+                hero.setSpeed(new Vector(0, -Hero.SPEED));
                 break;
             }
             case DOWN: {
-                Point old = getHeroPos();
-                Point n = new Point(old.getX(), old.getY() + 1);
-                moveHeroTo(n);
+                /*Vector old = getHeroPos();
+                Vector n = new Vector(old.getX(), old.getY() + 1);
+                moveHeroTo(n);*/
+                hero.setSpeed(new Vector(0, Hero.SPEED));
                 break;
             }case LEFT: {
-                Point old = getHeroPos();
-                Point n = new Point(old.getX() - 1, old.getY());
-                moveHeroTo(n);
+                /*Vector old = getHeroPos();
+                Vector n = new Vector(old.getX() - 1, old.getY());
+                moveHeroTo(n);*/
+                hero.setSpeed(new Vector(-Hero.SPEED, 0));
                 break;
             }case RIGHT: {
-                Point old = getHeroPos();
-                Point n = new Point(old.getX() + 1, old.getY());
-                moveHeroTo(n);
+                /*Vector old = getHeroPos();
+                Vector n = new Vector(old.getX() + 1, old.getY());
+                moveHeroTo(n);*/
+                hero.setSpeed(new Vector(Hero.SPEED, 0));
                 break;
             }
-            case IDLE:
+            case IDLE: {
+                hero.setSpeed(new Vector(0, 0));
+            }
         }
-        moveMonsters();
-        monsterAttack();
+        calcMonsterSpeeds();
     }
 
     @Override

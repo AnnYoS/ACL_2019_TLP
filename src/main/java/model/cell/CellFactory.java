@@ -1,22 +1,16 @@
 package model.cell;
 
 public class CellFactory implements ICellFactory {
-    public final char WALL = '#';
+    private static final Wall WALL = new Wall();
+    private static final Grass GRASS = new Grass();
 
     @Override
-    public Cell load(char cell) {
-        switch (cell) {
-            case WALL: {
-                return new Wall();
-            }
-            default: {
-                return new Grass();
-            }
-        }
+    public Cell createWall() {
+        return WALL;
     }
 
     @Override
-    public void save(Cell cell) {
-
+    public Cell createGrass() {
+        return GRASS;
     }
 }

@@ -9,16 +9,22 @@ package engine;
 public interface Game {
 
 	/**
-	 * methode qui contient l'evolution du jeu en fonction de la commande
+	 * modifie certaines propriétés physiques du jeu en fonction de l'entrée utilisateur
+	 * (modifie les vecteurs de vitesse)
 	 * 
-	 * @param userCmd
+	 * @param c
 	 *            commande utilisateur
 	 */
-	void evolve(Cmd userCmd);
+	void events(Cmd c);
+
+	/**
+	 * fait evoluer la physique du jeu
+	 * @param dt
+	 */
+	void evolve(long dt);
 
 	/**
 	 * @return true si et seulement si le jeu est fini
 	 */
 	boolean isFinished();
-
 }
