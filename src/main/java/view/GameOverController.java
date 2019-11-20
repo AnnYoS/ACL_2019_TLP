@@ -9,6 +9,10 @@ public class GameOverController implements GameController {
 
     private Cmd commandeEnCours;
 
+    public GameOverController() {
+        this.commandeEnCours = Cmd.IDLE;
+    }
+
     @Override
     public Cmd getCommand() {
         return this.commandeEnCours;

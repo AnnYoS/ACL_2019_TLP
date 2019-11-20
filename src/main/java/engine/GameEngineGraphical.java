@@ -84,12 +84,29 @@ public class GameEngineGraphical {
 		try {
 			GameOverController controller = new GameOverController();
 			GraphicalInterface gameOver = new GraphicalInterface(new GameOverPainter(ImageIO.read(new File("res/game_over.png"))), controller);
-			gameOver.paint();
+			this.gui.dispose();
+			boolean exit = false;
+			while (!exit) {
+				Cmd commande = controller.getCommand();
+				switch (commande) {
+					case YES: {
+						System.out.println("Retry");
+						break;
+					}
+					case NO: {
+						exit = true;
+						break;
+					}
+					default:{}
+				}
+				gameOver.paint();
+				Thread.sleep(100);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		//System.exit(0);
+		System.exit(0);
 	}
 
 }
