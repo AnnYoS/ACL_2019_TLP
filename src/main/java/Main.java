@@ -12,7 +12,7 @@ public class Main {
 
         World game = null;
         try {
-            game = DAOFactory.getInstance().getWorldDAO().load("levels/lvl0.map");
+            game = DAOFactory.getInstance().getWorldDAO().load("levels/lvl1.map");
         } catch (IOException e) {
             e.printStackTrace();
         }
