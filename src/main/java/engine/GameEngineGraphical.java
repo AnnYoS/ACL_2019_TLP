@@ -1,6 +1,13 @@
 package engine;
 
+import view.GameOverController;
+import view.GameOverPainter;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Horatiu Cirstea, Vincent Thomas
@@ -74,7 +81,15 @@ public class GameEngineGraphical {
 			// met en attente
 			Thread.sleep(100);
 		}
-		System.exit(0);
+		try {
+			GameOverController controller = new GameOverController();
+			GraphicalInterface gameOver = new GraphicalInterface(new GameOverPainter(ImageIO.read(new File("res/game_over.png"))), controller);
+			gameOver.paint();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		//System.exit(0);
 	}
 
 }
