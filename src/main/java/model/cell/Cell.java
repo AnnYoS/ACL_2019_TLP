@@ -8,4 +8,8 @@ public interface Cell extends Drawable {
     default void applyDamage(Person p) {
 
     }
+
+    default boolean isChest() {
+        return false;
+    }
 }

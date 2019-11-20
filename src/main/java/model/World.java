@@ -11,6 +11,7 @@ import java.util.List;
 public class World implements Game {
     private Map map;
     private Hero hero;
+    private boolean gameOver = false;
     private List<Monster> monsterList;
 
     public Map getMap() {
@@ -95,6 +96,13 @@ public class World implements Game {
         }
     }
 
+    private void checkIfWon() {
+        int x = (int) hero.getPos().getX();
+        int y = (int) hero.getPos().getY();
+
+        gameOver = map.getCell(x, y).isChest();
+    }
+
     public Vector getHeroPos() {
         return hero.getPos();
     }
@@ -110,6 +118,7 @@ public class World implements Game {
         monsterAttack();
         applyCellEffectOnPerson();
         removeDeadMonsters();
+        checkIfWon();
     }
 
     @Override
@@ -150,6 +159,6 @@ public class World implements Game {
 
     @Override
     public boolean isFinished() {
-        return hero.getLifepoints() <= 0;
+        return hero.getLifepoints() <= 0 || gameOver;
     }
 }

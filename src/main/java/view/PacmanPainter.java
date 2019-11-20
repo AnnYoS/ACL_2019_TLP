@@ -9,10 +9,7 @@ import engine.GamePainter;
 import model.Map;
 import model.Vector;
 import model.World;
-import model.cell.Cell;
-import model.cell.Grass;
-import model.cell.Trap;
-import model.cell.Wall;
+import model.cell.*;
 import model.person.Monster;
 
 /**
@@ -83,6 +80,13 @@ public class PacmanPainter implements GamePainter {
 		g.setColor(Color.CYAN);
 		g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 	}
+
+	public void drawCell(BufferedImage img, Chest c, int x, int y) {
+		Graphics g = img.getGraphics();
+		g.setColor(Color.YELLOW);
+		g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+	}
+
 
 	@Override
 	public int getWidth() {

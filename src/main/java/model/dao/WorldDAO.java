@@ -23,6 +23,7 @@ public class WorldDAO implements IWorldDAO{
     private static final char FOLLOW_STRAT = 'F';
     private static final char WALL = '#';
     private static final char TRAP = 'T';
+    private static final char CHEST = 'C';
     private static final char HERO = 'H';
     private static final char GRASS = ' ';
 
@@ -71,6 +72,10 @@ public class WorldDAO implements IWorldDAO{
                     }
                     case TRAP: {
                         cellLine.add(factory.createTrap());
+                        break;
+                    }
+                    case CHEST: {
+                        cellLine.add(factory.createChest());
                         break;
                     }
                     case GRASS : {
