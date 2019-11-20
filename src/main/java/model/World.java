@@ -11,6 +11,7 @@ import java.util.List;
 public class World implements Game {
     private Map map;
     private Hero hero;
+    private boolean gameOver = false;
     private List<Monster> monsterList;
 
     public Map getMap() {
@@ -59,18 +60,47 @@ public class World implements Game {
         }
     }
 
+    private void applyCellEffectOnPerson() {
+        Vector p = hero.getPos();
+
+        int x = (int) p.getX();
+        int y = (int) p.getY();
+
+        map.getCell(x, y).applyDamage(hero);
+
+        for(Monster m : monsterList) {
+            x = (int) m.getPos().getX();
+            y = (int) m.getPos().getY();
+
+            map.getCell(x, y).applyDamage(m);
+        }
+    }
+
+    private void removeDeadMonsters() {
+        for(int i = monsterList.size() - 1; i >= 0; i--) {
+            Monster m = monsterList.get(i);
+
+            if(m.getLifepoints() <= 0) {
+                monsterList.remove(i);
+            }
+        }
+    }
+
     private void monsterAttack(){
         for (int i =0 ; i < monsterList.size();i++){
             Monster m = monsterList.get(i);
             if (m.getPos().integetManhattanDistance(getHeroPos()) == 0){
                 m.attack(hero);
                 hero.attack(m);
-                if(m.getLifepoints()<=0){
-                    monsterList.remove(i);
-                    i--;
-                }
             }
         }
+    }
+
+    private void checkIfWon() {
+        int x = (int) hero.getPos().getX();
+        int y = (int) hero.getPos().getY();
+
+        gameOver = map.getCell(x, y).isChest();
     }
 
     public Vector getHeroPos() {
@@ -81,13 +111,14 @@ public class World implements Game {
         return monsterList;
     }
 
-    public Cell[][] getMapCells(){return map.getCells();}
-
     @Override
     public void evolve(long dt) {
         moveMonsters(dt);
         hero.evolve(map, dt);
         monsterAttack();
+        applyCellEffectOnPerson();
+        removeDeadMonsters();
+        checkIfWon();
     }
 
     @Override
@@ -128,6 +159,6 @@ public class World implements Game {
 
     @Override
     public boolean isFinished() {
-        return hero.getLifepoints() <= 0;
+        return hero.getLifepoints() <= 0 || gameOver;
     }
 }

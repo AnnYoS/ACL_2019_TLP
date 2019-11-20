@@ -1,13 +1,19 @@
 package model.cell;
 
+import model.person.Person;
 import view.PacmanPainter;
 
 import java.awt.image.BufferedImage;
 
-public class Grass implements Cell{
+public class Trap implements Cell {
     @Override
     public boolean isWalkable() {
         return true;
+    }
+
+    @Override
+    public void applyDamage(Person p) {
+        p.looseLP(1);
     }
 
     @Override
