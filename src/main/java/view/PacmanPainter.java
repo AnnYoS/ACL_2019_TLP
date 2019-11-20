@@ -24,10 +24,10 @@ public class PacmanPainter implements GamePainter {
 	 * la taille des cases
 	 */
 
-	private static final int BLOCK_SIZE = 20;
+	private static final int BLOCK_SIZE = 32;
 
-	protected static final int WIDTH = BLOCK_SIZE * 20;
-	protected static final int HEIGHT = BLOCK_SIZE * 20;
+	protected static final int WIDTH = BLOCK_SIZE * 32;
+	protected static final int HEIGHT = BLOCK_SIZE * 32;
 
 	private World game;
 
