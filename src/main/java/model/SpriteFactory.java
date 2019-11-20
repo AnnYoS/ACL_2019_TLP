@@ -1,17 +1,35 @@
 package model;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import model.dao.SpriteDAO;
 
 public class SpriteFactory implements ISpriteFactory{
 
-    private static Sprite grass;
-    private static Sprite wall;
+    private Sprite grass;
+    private Sprite wall;
+    private Sprite chest;
+    private Sprite trap;
 
-    public SpriteFactory(){
-        wall = new Sprite(new File("assets/wall32x32.png"));
-        grass = new Sprite(new File("assets/grass32x32.png"));
+    public SpriteFactory(SpriteDAO spriteDAO){
+        wall = new Sprite(spriteDAO.getWall());
+        grass = new Sprite(spriteDAO.getGrass());
+        chest = new Sprite(spriteDAO.getChest());
+        trap = new Sprite(spriteDAO.getTrap());
+    }
+
+    public Sprite getGrass() {
+        return grass;
+    }
+
+    public Sprite getWall() {
+        return wall;
+    }
+
+    public Sprite getChest() {
+        return chest;
+    }
+
+    public Sprite getTrap() {
+        return trap;
     }
 }
+

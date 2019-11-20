@@ -2,14 +2,12 @@ package view;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 
 import engine.Game;
 import engine.GamePainter;
-import model.Map;
-import model.Vector;
-import model.World;
+import model.*;
 import model.cell.*;
+import model.dao.SpriteDAO;
 import model.person.Monster;
 
 /**
@@ -31,6 +29,8 @@ public class PacmanPainter implements GamePainter {
 
 	private World game;
 
+	private SpriteFactory spriteFactory;
+
 	/**
 	 * appelle constructeur parent
 	 * 
@@ -39,6 +39,9 @@ public class PacmanPainter implements GamePainter {
 	 */
 	public PacmanPainter(Game game) {
 		this.game = (World) game;
+		SpriteDAO spriteDAO = new SpriteDAO();
+		spriteDAO.load();
+		this.spriteFactory = new SpriteFactory(spriteDAO);
 	}
 
 	/**
@@ -66,25 +69,32 @@ public class PacmanPainter implements GamePainter {
 		}
 	}
 
-	public void drawCell(BufferedImage img, Grass g, int x, int y) {
+	public void drawCell(BufferedImage img, Grass gr, int x, int y) {
+		Graphics g = img.getGraphics();
+		g.drawImage(spriteFactory.getGrass().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
 	}
 
 	public void drawCell(BufferedImage img, Wall w, int x, int y) {
 		Graphics g = img.getGraphics();
-		g.setColor(Color.GRAY);
-		g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+		g.drawImage(spriteFactory.getWall().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+		//g.setColor(Color.GRAY);
+		//g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 	}
 
 	public void drawCell(BufferedImage img, Trap t, int x, int y) {
 		Graphics g = img.getGraphics();
-		g.setColor(Color.CYAN);
-		g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+		g.drawImage(spriteFactory.getGrass().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+		g.drawImage(spriteFactory.getTrap().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+		//g.setColor(Color.CYAN);
+		//g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 	}
 
 	public void drawCell(BufferedImage img, Chest c, int x, int y) {
 		Graphics g = img.getGraphics();
-		g.setColor(Color.YELLOW);
-		g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+		g.drawImage(spriteFactory.getGrass().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+		g.drawImage(spriteFactory.getChest().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+		//g.setColor(Color.YELLOW);
+		//g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 	}
 
 
