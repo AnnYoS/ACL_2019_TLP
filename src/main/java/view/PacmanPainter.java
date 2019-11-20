@@ -1,14 +1,17 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 
 import engine.Game;
 import engine.GamePainter;
+import model.Map;
 import model.Vector;
 import model.World;
 import model.cell.Cell;
+import model.cell.Grass;
+import model.cell.Trap;
 import model.cell.Wall;
 import model.person.Monster;
 
@@ -48,13 +51,11 @@ public class PacmanPainter implements GamePainter {
 	public void draw(BufferedImage im) {
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
 
-		Cell[][] mapCells = game.getMapCells();
-		for(int i=0; i<mapCells.length;i++){
-			for(int j=0; j<mapCells[0].length;j++){
-				if(mapCells[i][j].getClass().equals(Wall.class)){
-					crayon.setColor(Color.gray);
-					crayon.fillRect(i * BLOCK_SIZE, j * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-				}
+		Map map = game.getMap();
+		for(int i=0; i < map.getW();i++){
+			for(int j=0; j < map.getH();j++){
+				Cell c = map.getCell(i, j);
+				c.draw(this, im, i, j);
 			}
 		}
 
@@ -66,8 +67,21 @@ public class PacmanPainter implements GamePainter {
 		for (Monster m: game.getMonsterList()){
 			crayon.fillOval(((int)m.getPos().getX() * BLOCK_SIZE), ((int)m.getPos().getY() * BLOCK_SIZE), BLOCK_SIZE,BLOCK_SIZE);
 		}
+	}
 
+	public void drawCell(BufferedImage img, Grass g, int x, int y) {
+	}
 
+	public void drawCell(BufferedImage img, Wall w, int x, int y) {
+		Graphics g = img.getGraphics();
+		g.setColor(Color.GRAY);
+		g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+	}
+
+	public void drawCell(BufferedImage img, Trap t, int x, int y) {
+		Graphics g = img.getGraphics();
+		g.setColor(Color.CYAN);
+		g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 	}
 
 	@Override
