@@ -2,6 +2,8 @@ package model;
 
 import model.dao.SpriteDAO;
 
+import java.awt.image.BufferedImage;
+
 public class SpriteFactory implements ISpriteFactory{
 
     private Sprite grass;
@@ -9,11 +11,11 @@ public class SpriteFactory implements ISpriteFactory{
     private Sprite chest;
     private Sprite trap;
 
-    public SpriteFactory(SpriteDAO spriteDAO){
-        wall = new Sprite(spriteDAO.getWall());
-        grass = new Sprite(spriteDAO.getGrass());
-        chest = new Sprite(spriteDAO.getChest());
-        trap = new Sprite(spriteDAO.getTrap());
+    public SpriteFactory(BufferedImage... sprites){
+        wall = new Sprite(sprites[1]);
+        grass = new Sprite(sprites[0]);
+        chest = new Sprite(sprites[2]);
+        trap = new Sprite(sprites[3]);
     }
 
     public Sprite getGrass() {

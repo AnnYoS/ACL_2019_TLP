@@ -37,11 +37,9 @@ public class PacmanPainter implements GamePainter {
 	 * @param game
 	 *            le jeutest a afficher
 	 */
-	public PacmanPainter(Game game) {
+	public PacmanPainter(Game game, SpriteFactory factory) {
 		this.game = (World) game;
-		SpriteDAO spriteDAO = new SpriteDAO();
-		spriteDAO.load();
-		this.spriteFactory = new SpriteFactory(spriteDAO);
+		spriteFactory = factory;
 	}
 
 	/**

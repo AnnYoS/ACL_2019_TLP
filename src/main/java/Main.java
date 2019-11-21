@@ -1,6 +1,8 @@
 import engine.GameEngineGraphical;
+import model.SpriteFactory;
 import model.World;
 import model.dao.DAOFactory;
+import model.dao.SpriteDAO;
 import view.PacmanController;
 import view.PacmanPainter;
 
@@ -17,7 +19,8 @@ public class Main {
             e.printStackTrace();
         }
 
-        PacmanPainter painter = new PacmanPainter(game);
+        SpriteFactory factory = SpriteDAO.getInstance().load();
+        PacmanPainter painter = new PacmanPainter(game, factory);
         PacmanController controller = new PacmanController();
 
         // classe qui lance le moteur de jeu generique

@@ -1,5 +1,8 @@
 package model.dao;
 
+import model.Sprite;
+import model.SpriteFactory;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -7,13 +10,21 @@ import java.io.IOException;
 
 public class SpriteDAO implements ISpriteDAO {
 
-    private BufferedImage grass;
-    private BufferedImage wall;
-    private BufferedImage chest;
-    private BufferedImage trap;
+    private static SpriteDAO instance = null;
+
+    public static SpriteDAO getInstance(){
+        if(instance == null){
+            instance = new SpriteDAO();
+        }
+        return instance;
+    }
 
     @Override
-    public void load() {
+    public SpriteFactory load() {
+        BufferedImage grass = null;
+        BufferedImage wall = null;
+        BufferedImage chest = null;
+        BufferedImage trap = null;
         try {
             grass = ImageIO.read(new File("assets/grass32x32.png"));
             wall = ImageIO.read(new File("assets/wall32x32.png"));
@@ -22,21 +33,7 @@ public class SpriteDAO implements ISpriteDAO {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
-    public BufferedImage getGrass() {
-        return grass;
-    }
-
-    public BufferedImage getWall() {
-        return wall;
-    }
-
-    public BufferedImage getChest() {
-        return chest;
-    }
-
-    public BufferedImage getTrap() {
-        return trap;
+        return new SpriteFactory(grass, wall, chest, trap);
     }
 }

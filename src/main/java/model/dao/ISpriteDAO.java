@@ -1,5 +1,7 @@
 package model.dao;
 
+import model.SpriteFactory;
+
 public interface ISpriteDAO {
-    public void load();
+    public SpriteFactory load();
 }
