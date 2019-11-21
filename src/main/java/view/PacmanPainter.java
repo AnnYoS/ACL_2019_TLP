@@ -2,14 +2,12 @@ package view;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 
 import engine.Game;
 import engine.GamePainter;
-import model.Map;
-import model.Vector;
-import model.World;
+import model.*;
 import model.cell.*;
+import model.dao.SpriteDAO;
 import model.person.Monster;
 
 /**
@@ -24,12 +22,14 @@ public class PacmanPainter implements GamePainter {
 	 * la taille des cases
 	 */
 
-	private static final int BLOCK_SIZE = 20;
+	private static final int BLOCK_SIZE = 32;
 
 	protected static final int WIDTH = BLOCK_SIZE * 20;
 	protected static final int HEIGHT = BLOCK_SIZE * 20;
 
 	private World game;
+
+	private SpriteFactory spriteFactory;
 
 	/**
 	 * appelle constructeur parent
@@ -37,8 +37,9 @@ public class PacmanPainter implements GamePainter {
 	 * @param game
 	 *            le jeutest a afficher
 	 */
-	public PacmanPainter(Game game) {
+	public PacmanPainter(Game game, SpriteFactory factory) {
 		this.game = (World) game;
+		spriteFactory = factory;
 	}
 
 	/**
@@ -56,35 +57,46 @@ public class PacmanPainter implements GamePainter {
 			}
 		}
 
-		crayon.setColor(Color.blue);
 		Vector heroPos = game.getHeroPos();
-		crayon.fillOval(((int)heroPos.getX() * BLOCK_SIZE),((int)heroPos.getY() * BLOCK_SIZE),BLOCK_SIZE,BLOCK_SIZE);
+		Vector heroSpeed = game.getHero().getSpeed();
+        Graphics g = im.getGraphics();
+        g.drawImage(spriteFactory.getHero().getAnimation(heroSpeed), (int) heroPos.getX() * BLOCK_SIZE, (int) heroPos.getY() * BLOCK_SIZE, null);
+
 
 		crayon.setColor(Color.red);
 		for (Monster m: game.getMonsterList()){
-			crayon.fillOval(((int)m.getPos().getX() * BLOCK_SIZE), ((int)m.getPos().getY() * BLOCK_SIZE), BLOCK_SIZE,BLOCK_SIZE);
+            Vector monsterPos = m.getPos();
+            Vector monsterSpeed = m.getSpeed();
+            g.drawImage(spriteFactory.getEnemy().getAnimation(monsterSpeed), (int) monsterPos.getX() * BLOCK_SIZE, (int) monsterPos.getY() * BLOCK_SIZE, null);
 		}
 	}
 
-	public void drawCell(BufferedImage img, Grass g, int x, int y) {
+	public void drawCell(BufferedImage img, Grass gr, int x, int y) {
+		Graphics g = img.getGraphics();
+		g.drawImage(spriteFactory.getGrass().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
 	}
 
 	public void drawCell(BufferedImage img, Wall w, int x, int y) {
 		Graphics g = img.getGraphics();
-		g.setColor(Color.GRAY);
-		g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+		g.drawImage(spriteFactory.getWall().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+		//g.setColor(Color.GRAY);
+		//g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 	}
 
 	public void drawCell(BufferedImage img, Trap t, int x, int y) {
 		Graphics g = img.getGraphics();
-		g.setColor(Color.CYAN);
-		g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+		g.drawImage(spriteFactory.getGrass().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+		g.drawImage(spriteFactory.getTrap().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+		//g.setColor(Color.CYAN);
+		//g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 	}
 
 	public void drawCell(BufferedImage img, Chest c, int x, int y) {
 		Graphics g = img.getGraphics();
-		g.setColor(Color.YELLOW);
-		g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+		g.drawImage(spriteFactory.getGrass().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+		g.drawImage(spriteFactory.getChest().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+		//g.setColor(Color.YELLOW);
+		//g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 	}
 
 
