@@ -1,11 +1,18 @@
+import engine.GameController;
 import engine.GameEngineGraphical;
 import model.SpriteFactory;
 import model.World;
 import model.dao.DAOFactory;
+
+import view.GameOverController;
+import view.GameOverPainter;
 import model.dao.SpriteDAO;
+
 import view.PacmanController;
 import view.PacmanPainter;
 
+import javax.imageio.ImageIO;
+import java.io.File;
 import java.io.IOException;
 
 public class Main {
