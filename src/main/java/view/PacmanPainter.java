@@ -57,13 +57,17 @@ public class PacmanPainter implements GamePainter {
 			}
 		}
 
-		crayon.setColor(Color.blue);
 		Vector heroPos = game.getHeroPos();
-		crayon.fillOval(((int)heroPos.getX() * BLOCK_SIZE),((int)heroPos.getY() * BLOCK_SIZE),BLOCK_SIZE,BLOCK_SIZE);
+		Vector heroSpeed = game.getHero().getSpeed();
+        Graphics g = im.getGraphics();
+        g.drawImage(spriteFactory.getHero().getAnimation(heroSpeed), (int) heroPos.getX() * BLOCK_SIZE, (int) heroPos.getY() * BLOCK_SIZE, null);
+
 
 		crayon.setColor(Color.red);
 		for (Monster m: game.getMonsterList()){
-			crayon.fillOval(((int)m.getPos().getX() * BLOCK_SIZE), ((int)m.getPos().getY() * BLOCK_SIZE), BLOCK_SIZE,BLOCK_SIZE);
+            Vector monsterPos = m.getPos();
+            Vector monsterSpeed = m.getSpeed();
+            g.drawImage(spriteFactory.getEnemy().getAnimation(monsterSpeed), (int) monsterPos.getX() * BLOCK_SIZE, (int) monsterPos.getY() * BLOCK_SIZE, null);
 		}
 	}
 
