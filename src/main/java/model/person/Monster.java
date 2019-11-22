@@ -40,7 +40,7 @@ public class Monster implements Person {
             //pos.setX((int)(pos.getX()));
             //pos.setY((int)(pos.getY()));
 
-            /*if(this.speed.getX() > 0) {
+            if(this.speed.getX() > 0) {
                 pos.setX((int)pos.getX());
             }
             else if(this.speed.getX() < 0) {
@@ -51,9 +51,9 @@ public class Monster implements Person {
             }
             else if(this.speed.getY() < 0) {
                 pos.setY((int)pos.getY() + 1);
-            }*/
-            pos.setX(pos.getXasInt());
-            pos.setY(pos.getYasInt());
+            }
+            /*pos.setX(pos.getXasInt());
+            pos.setY(pos.getYasInt());*/
 
             this.speed = speed;
         }
