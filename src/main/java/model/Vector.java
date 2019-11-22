@@ -19,6 +19,22 @@ public class Vector {
         return y;
     }
 
+    public int getXasInt() {
+        return Math.round(x);
+    }
+
+    public int getYasInt() {
+        return Math.round(y);
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
     public Vector clone() {
         return new Vector(x, y);
     }

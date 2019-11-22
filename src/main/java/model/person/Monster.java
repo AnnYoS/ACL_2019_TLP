@@ -6,7 +6,7 @@ import model.person.strategy.MonsterStrategy;
 
 public class Monster implements Person {
 
-    public static float SPEED = 0.005f;
+    public static float SPEED = 0.0025f;
 
     private Vector pos;
     private Vector speed;
@@ -35,10 +35,24 @@ public class Monster implements Person {
         return speed;
     }
 
+    public void setSpeed(Vector speed) {
+        if(! speed.equals(this.speed)) {
+            pos.setX(Math.round(pos.getX()));
+            pos.setY(Math.round(pos.getY()));
+        }
+
+        this.speed = speed;
+    }
+
     @Override
-    public void setSpeed(Vector v) {
+    public void forceSetSpeed(Vector v) {
+        if(! speed.equals(this.speed)) {
+            pos.setX((int) pos.getX());
+            pos.setY((int) pos.getY());
+        }
         speed = v;
     }
+
 
     public Vector getPos() {
         return pos;
@@ -48,13 +62,9 @@ public class Monster implements Person {
         this.pos = pos;
     }
 
-    public MonsterStrategy getMoveStrategy() {
-        return moveStrategy;
-    }
-
     public void calcSpeed(Map map, Vector heroPos) {
         Vector tmp =  moveStrategy.move(this.pos, map, heroPos);
-        speed = tmp;
+        setSpeed(tmp);
     }
 
     public int getLifepoints() { return lifepoints; }
