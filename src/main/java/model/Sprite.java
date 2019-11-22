@@ -1,5 +1,7 @@
 package model;
 
+import math.Vector;
+
 import java.awt.image.BufferedImage;
 
 public class Sprite {

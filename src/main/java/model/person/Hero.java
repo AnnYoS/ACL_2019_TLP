@@ -1,23 +1,36 @@
 package model.person;
 
-import model.Map;
-import model.Vector;
+import math.Point;
+import math.Vector;
 
 public class Hero implements Person {
-    public static final float SPEED = 0.01f;
+    public static final float SPEED = 0.005f;
 
-    private Vector pos;
+    private Point pos;
+    private Vector acc;
     private Vector speed;
     private int lifepoints;
 
-    public Hero(Vector pos, int lp) {
+    public Hero(Point pos, int lp) {
         this.pos = pos;
+        acc = new Vector(0, 0);
         this.lifepoints = lp;
         speed = new Vector(0, 0);
     }
 
     public void setSpeed(Vector speed) {
-        this.speed = speed;
+        if(Math.abs(acc.getX()) <= 0.5 && Math.abs(acc.getY()) <= 0.5) {
+            if (!this.speed.equals(speed)) {
+                this.speed = speed;
+                acc = new Vector(0, 0);
+            }
+        }
+    }
+
+    @Override
+    public void forceSetSpeed(Vector v) {
+        this.speed = v;
+        acc = new Vector(0, 0);
     }
 
     @Override
@@ -35,12 +48,29 @@ public class Hero implements Person {
         return speed;
     }
 
-    public Vector getPos() {
+    public Point getPos() {
         return pos;
     }
 
-    public void setPos(Vector pos) {
+    public void setPos(Point pos) {
         this.pos = pos;
+    }
+
+    @Override
+    public Vector getAcc() {
+        return acc;
+    }
+
+    @Override
+    public void setAcc(Vector v) {
+        acc = v;
+    }
+
+    @Override
+    public Vector getDrawPos() {
+        Vector tmp = acc.clone();
+        tmp.add(pos);
+        return tmp;
     }
 
     public int getLifepoints() { return lifepoints; }

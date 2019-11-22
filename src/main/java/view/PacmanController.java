@@ -41,20 +41,19 @@ public class PacmanController implements GameController {
 	 * met a jour les commandes en fonctions des touches appuyees
 	 */
 	public void keyPressed(KeyEvent e) {
+		//char c = Character.toLowerCase(e.getKeyChar());
 
-		char c = Character.toLowerCase(e.getKeyChar());
-
-		switch (c) {
-			case 'z':
+		switch (e.getKeyCode()) {
+			case KeyEvent.VK_UP:
 				this.commandeEnCours = Cmd.UP;
 				break;
-			case 'q':
+			case KeyEvent.VK_LEFT:
 				this.commandeEnCours = Cmd.LEFT;
 				break;
-			case 's':
+			case KeyEvent.VK_DOWN:
 				this.commandeEnCours = Cmd.DOWN;
 				break;
-			case 'd':
+			case KeyEvent.VK_RIGHT:
 				this.commandeEnCours = Cmd.RIGHT;
 				break;
 		}

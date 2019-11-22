@@ -1,7 +1,8 @@
 package model.person.strategy;
 
+import math.Point;
 import model.Map;
-import model.Vector;
+import math.Vector;
 import model.person.Monster;
 
 import java.util.*;
@@ -10,7 +11,8 @@ public class FollowStrategy implements MonsterStrategy {
     private Random rand = new Random();
 
     @Override
-    public Vector move(Vector pos, Map map, Vector heroPos) {
+    public Vector move(Monster m, Map map, Point heroPos) {
+        Point pos = m.getPos();
         /*
         faire un tableau : [1, 2, 3, 4]
         shuffle le tableau
@@ -57,7 +59,7 @@ public class FollowStrategy implements MonsterStrategy {
                     newSpeed = new Vector(-Monster.SPEED, 0f);
                     break;
             }
-            Vector newPos = new Vector(x, y);
+            Point newPos = new Point((int)x, (int)y);
             if (map.isWalkable(newPos)) {
                 distanceMap.put(newDistance,newSpeed);
             }
