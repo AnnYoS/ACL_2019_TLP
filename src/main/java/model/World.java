@@ -2,7 +2,8 @@ package model;
 
 import engine.Cmd;
 import engine.Game;
-import model.cell.Cell;
+import math.Point;
+import math.Vector;
 import model.person.Hero;
 import model.person.Monster;
 
@@ -34,20 +35,6 @@ public class World implements Game {
         this.monsterList = monsterList;
     }
 
-    public boolean moveHeroTo(Vector p) {
-        boolean res;
-
-        Vector tmp = hero.getPos();
-
-        res = Math.abs(p.getX() - tmp.getX()) <= 1 && Math.abs(p.getY() - tmp.getY()) <= 1 && map.isWalkable(p);
-
-        if(res) {
-            hero.setPos(p);
-        }
-
-        return res;
-    }
-
     private void calcMonsterSpeeds() {
         for (Monster m: monsterList) {
             m.calcSpeed(map, hero.getPos());
@@ -61,7 +48,7 @@ public class World implements Game {
     }
 
     private void applyCellEffectOnPerson() {
-        Vector p = hero.getPos();
+        Point p = hero.getPos();
 
         int x = (int) p.getX();
         int y = (int) p.getY();
@@ -89,7 +76,7 @@ public class World implements Game {
     private void monsterAttack(){
         for (int i =0 ; i < monsterList.size();i++){
             Monster m = monsterList.get(i);
-            if (m.getPos().integetManhattanDistance(getHeroPos()) == 0){
+            if (m.getPos().manhattanDistance(hero.getPos()) == 0){
                 m.attack(hero);
                 hero.attack(m);
             }
@@ -101,10 +88,6 @@ public class World implements Game {
         int y = (int) hero.getPos().getY();
 
         gameOver = map.getCell(x, y).isChest();
-    }
-
-    public Vector getHeroPos() {
-        return hero.getPos();
     }
 
     public List<Monster> getMonsterList() {

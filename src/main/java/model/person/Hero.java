@@ -1,46 +1,34 @@
 package model.person;
 
-import model.Map;
-import model.Vector;
+import math.Point;
+import math.Vector;
 
 public class Hero implements Person {
     public static final float SPEED = 0.005f;
 
-    private Vector pos;
+    private Point pos;
+    private Vector acc;
     private Vector speed;
     private int lifepoints;
 
-    public Hero(Vector pos, int lp) {
+    public Hero(Point pos, int lp) {
         this.pos = pos;
+        acc = new Vector(0, 0);
         this.lifepoints = lp;
         speed = new Vector(0, 0);
     }
 
     public void setSpeed(Vector speed) {
-        if(! speed.equals(this.speed)) {
-            if(this.speed.getX() > 0) {
-                pos.setX(pos.getXasInt());
-            }
-            else if(this.speed.getX() < 0) {
-                pos.setX((int)pos.getX());
-            }
-            else if(this.speed.getY() > 0) {
-                pos.setY((int)pos.getY());
-            }
-            else if(this.speed.getY() < 0) {
-                pos.setY((int)pos.getY());
-            }
-
+        if(!this.speed.equals(speed)) {
             this.speed = speed;
+            acc = new Vector(0, 0);
         }
     }
 
     @Override
     public void forceSetSpeed(Vector v) {
-        pos.setX(pos.getXasInt());
-        pos.setY(pos.getYasInt());
-
         this.speed = v;
+        acc = new Vector(0, 0);
     }
 
     @Override
@@ -58,12 +46,29 @@ public class Hero implements Person {
         return speed;
     }
 
-    public Vector getPos() {
+    public Point getPos() {
         return pos;
     }
 
-    public void setPos(Vector pos) {
+    public void setPos(Point pos) {
         this.pos = pos;
+    }
+
+    @Override
+    public Vector getAcc() {
+        return acc;
+    }
+
+    @Override
+    public void setAcc(Vector v) {
+        acc = v;
+    }
+
+    @Override
+    public Vector getDrawPos() {
+        Vector tmp = acc.clone();
+        tmp.add(pos);
+        return tmp;
     }
 
     public int getLifepoints() { return lifepoints; }

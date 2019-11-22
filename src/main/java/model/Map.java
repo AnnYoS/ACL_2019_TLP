@@ -1,5 +1,7 @@
 package model;
 
+import math.Point;
+import math.Vector;
 import model.cell.Cell;
 
 public class Map {
@@ -22,10 +24,11 @@ public class Map {
         }
     }
 
-    public boolean isWalkable(Vector p) {
+    public boolean isWalkable(Point p) {
         boolean res;
-        int x = (int) p.getX();
-        int y = (int) p.getY();
+        int x = p.getX();
+        int y = p.getY();
+
         if(x >= 0 && y >= 0 && x < w && y < h) {
             res = cells[x][y].isWalkable();
         }else{

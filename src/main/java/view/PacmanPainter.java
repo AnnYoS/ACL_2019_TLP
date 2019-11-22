@@ -5,9 +5,9 @@ import java.awt.image.BufferedImage;
 
 import engine.Game;
 import engine.GamePainter;
+import math.Vector;
 import model.*;
 import model.cell.*;
-import model.dao.SpriteDAO;
 import model.person.Monster;
 
 /**
@@ -57,7 +57,7 @@ public class PacmanPainter implements GamePainter {
 			}
 		}
 
-		Vector heroPos = game.getHeroPos();
+		Vector heroPos = game.getHero().getDrawPos();
 		Vector heroSpeed = game.getHero().getSpeed();
         Graphics g = im.getGraphics();
         g.drawImage(spriteFactory.getHero().getAnimation(heroSpeed), (int) (heroPos.getX() * BLOCK_SIZE), (int) (heroPos.getY() * BLOCK_SIZE), null);
@@ -65,7 +65,7 @@ public class PacmanPainter implements GamePainter {
 
 		crayon.setColor(Color.red);
 		for (Monster m: game.getMonsterList()){
-            Vector monsterPos = m.getPos();
+            Vector monsterPos = m.getDrawPos();
             Vector monsterSpeed = m.getSpeed();
             g.drawImage(spriteFactory.getEnemy().getAnimation(monsterSpeed), (int) (monsterPos.getX() * BLOCK_SIZE), (int) (monsterPos.getY() * BLOCK_SIZE), null);
 		}

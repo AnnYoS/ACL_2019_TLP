@@ -1,7 +1,8 @@
 package model.person.strategy;
 
+import math.Point;
 import model.Map;
-import model.Vector;
+import math.Vector;
 import model.person.Monster;
 
 import java.util.Random;
@@ -9,8 +10,10 @@ import java.util.Random;
 public class RandomStrategy implements MonsterStrategy {
     private Random rand = new Random();
     @Override
-    public Vector move(Vector pos, Map map, Vector heroPos) {
-        Vector newPos = null;
+    public Vector move(Monster m, Map map, Point heroPos) {
+        Point pos = m.getPos();
+
+        Point newPos = null;
         Vector newSpeed = null;
         boolean exit = false;
         float x;
@@ -38,7 +41,7 @@ public class RandomStrategy implements MonsterStrategy {
                     break;
             }
             if(x != pos.getX() || y != pos.getY()) {
-                newPos = new Vector(x, y);
+                newPos = new Point((int)x, (int)y);
                 if (map.isWalkable(newPos)) {
                     exit = true;
                 }

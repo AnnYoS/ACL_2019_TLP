@@ -1,4 +1,4 @@
-package model;
+package math;
 
 import java.util.Objects;
 
@@ -44,6 +44,11 @@ public class Vector {
         y += v.y;
     }
 
+    public void add(Point p) {
+        x += p.getX();
+        y += p.getY();
+    }
+
     public void add(Vector v, float c) {
         x += v.x * c;
         y += v.y * c;
@@ -68,16 +73,6 @@ public class Vector {
 
         tmp.sub(this);
         return tmp.length();
-    }
-
-    public int integetManhattanDistance(Vector v) {
-        int x1 = (int) v.getX();
-        int y1 = (int) v.getY();
-
-        int x2 = (int) getX();
-        int y2 = (int) getY();
-
-        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
     }
 
     @Override
