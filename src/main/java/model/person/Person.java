@@ -17,21 +17,22 @@ public interface Person {
 
     default void evolve(Map m, long dt) {
         Vector speed = getSpeed();
-        Vector old = getPos().clone();
+        Vector next = getPos().clone();
+
         if(speed.getX() > 0) {
-            old.setX((int)old.getX() + 1);
+            next.setX((int)next.getX() + 1);
         }
         else if(speed.getX() < 0) {
-            old.setX((int)old.getX() - 1);
+            next.setX((int)next.getX() - 1);
         }
         else if(speed.getY() > 0) {
-            old.setY((int)old.getY() + 1);
+            next.setY((int)next.getY() + 1);
         }
         else if(speed.getY() < 0) {
-            old.setY((int)old.getY() - 1);
+            next.setY((int)next.getY() - 1);
         }
 
-        if(m.isWalkable(old)) {
+        if(m.isWalkable(next)) {
             getPos().add(getSpeed(), dt);
         }
         else {
