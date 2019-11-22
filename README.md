@@ -7,3 +7,10 @@ The Legend of Pacman
 Resulting jar is located in target/
 
 (The jar is called tlp-[version].jar)
+
+To run the project:
+```java - jar tlp-[version].jar```
+
+(When running the jar file the folder assets
+has to be un your working directory for the images
+to load in the game.)

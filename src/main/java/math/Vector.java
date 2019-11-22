@@ -1,4 +1,4 @@
-package model;
+package math;
 
 import java.util.Objects;
 
@@ -19,6 +19,22 @@ public class Vector {
         return y;
     }
 
+    public int getXasInt() {
+        return Math.round(x);
+    }
+
+    public int getYasInt() {
+        return Math.round(y);
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
     public Vector clone() {
         return new Vector(x, y);
     }
@@ -26,6 +42,11 @@ public class Vector {
     public void add(Vector v) {
         x += v.x;
         y += v.y;
+    }
+
+    public void add(Point p) {
+        x += p.getX();
+        y += p.getY();
     }
 
     public void add(Vector v, float c) {
@@ -54,16 +75,6 @@ public class Vector {
         return tmp.length();
     }
 
-    public int integetManhattanDistance(Vector v) {
-        int x1 = (int) v.getX();
-        int y1 = (int) v.getY();
-
-        int x2 = (int) getX();
-        int y2 = (int) getY();
-
-        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,5 +87,13 @@ public class Vector {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return "Vector{" +
+                "x = " + x +
+                ", y = " + y +
+                '}';
     }
 }

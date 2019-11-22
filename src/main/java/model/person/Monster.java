@@ -1,20 +1,23 @@
 package model.person;
 
+import math.Point;
 import model.Map;
-import model.Vector;
+import math.Vector;
 import model.person.strategy.MonsterStrategy;
 
 public class Monster implements Person {
 
-    public static float SPEED = 0.005f;
+    public static float SPEED = 0.0025f;
 
-    private Vector pos;
+    private Point pos;
+    private Vector acc;
     private Vector speed;
     private int lifepoints;
     private MonsterStrategy moveStrategy;
 
-    public Monster(Vector pos, MonsterStrategy moveStrategy, int lp) {
+    public Monster(Point pos, MonsterStrategy moveStrategy, int lp) {
         this.pos = pos;
+        acc = new Vector(0, 0);
         this.moveStrategy = moveStrategy;
         this.lifepoints = lp;
         speed = new Vector(0, 0);
@@ -35,26 +38,47 @@ public class Monster implements Person {
         return speed;
     }
 
-    @Override
-    public void setSpeed(Vector v) {
-        speed = v;
+    public void setSpeed(Vector speed) {
+        if(!this.speed.equals(speed)) {
+            this.speed = speed;
+            acc = new Vector(0, 0);
+        }
     }
 
-    public Vector getPos() {
+    @Override
+    public void forceSetSpeed(Vector v) {
+        this.speed = v;
+        acc = new Vector(0, 0);
+    }
+
+    public Point getPos() {
         return pos;
     }
 
-    public void setPos(Vector pos) {
+    public void setPos(Point pos) {
         this.pos = pos;
     }
 
-    public MonsterStrategy getMoveStrategy() {
-        return moveStrategy;
+    public void calcSpeed(Map map, Point heroPos) {
+        Vector tmp =  moveStrategy.move(this, map, heroPos);
+        setSpeed(tmp);
     }
 
-    public void calcSpeed(Map map, Vector heroPos) {
-        Vector tmp =  moveStrategy.move(this.pos, map, heroPos);
-        speed = tmp;
+    @Override
+    public Vector getAcc() {
+        return acc;
+    }
+
+    @Override
+    public void setAcc(Vector v) {
+        acc = v;
+    }
+
+    @Override
+    public Vector getDrawPos() {
+        Vector tmp = acc.clone();
+        tmp.add(pos);
+        return tmp;
     }
 
     public int getLifepoints() { return lifepoints; }

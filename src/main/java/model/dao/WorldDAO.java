@@ -1,20 +1,19 @@
 package model.dao;
 
 
+import math.Point;
 import model.Map;
-import model.Vector;
+import math.Vector;
 import model.World;
 import model.cell.Cell;
 import model.cell.CellFactory;
 import model.person.Hero;
 import model.person.Monster;
 import model.person.strategy.FollowStrategy;
-import model.person.strategy.MonsterStrategy;
 import model.person.strategy.RandomStrategy;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -52,17 +51,17 @@ public class WorldDAO implements IWorldDAO{
 
                 switch (c) {
                     case RANDOM_STRAT: {
-                        monsters.add(new Monster(new Vector(i, y), new RandomStrategy(), 1));
+                        monsters.add(new Monster(new Point(i, y), new RandomStrategy(), 1));
                         cellLine.add(factory.createGrass());
                         break;
                     }
                     case FOLLOW_STRAT: {
-                        monsters.add(new Monster(new Vector(i, y), new FollowStrategy(), 1));
+                        monsters.add(new Monster(new Point(i, y), new FollowStrategy(), 1));
                         cellLine.add(factory.createGrass());
                         break;
                     }
                     case HERO : {
-                        hero = new Hero(new Vector(i, y), 50);
+                        hero = new Hero(new Point(i, y), 50);
                         cellLine.add(factory.createGrass());
                         break;
                     }
@@ -91,7 +90,7 @@ public class WorldDAO implements IWorldDAO{
         }
 
         if(hero == null) {
-            hero = new Hero(new Vector(0, 0), 50);
+            hero = new Hero(new Point(0, 0), 50);
         }
 
         Cell[][] cellArray = new Cell[cells.size()][width];

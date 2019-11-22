@@ -64,6 +64,7 @@ public class GameEngineGraphical {
 		this.gui = new GraphicalInterface(this.gamePainter,this.gameController);
 
 		long time = System.currentTimeMillis();
+		long max_time = 1000 / 10;
 
 		// boucle de game
 		while (!this.game.isFinished()) {
@@ -74,22 +75,40 @@ public class GameEngineGraphical {
 
 			long dt = System.currentTimeMillis() - time;
 			time = System.currentTimeMillis();
+			System.out.println(1000 / dt);
 
 			this.game.evolve(dt);
 			// affiche le game
 			this.gui.paint();
 			// met en attente
-			Thread.sleep(100);
+			Thread.sleep(Math.max(0, max_time - dt));
 		}
 		try {
 			GameOverController controller = new GameOverController();
-			GraphicalInterface gameOver = new GraphicalInterface(new GameOverPainter(ImageIO.read(new File("res/game_over.png"))), controller);
-			gameOver.paint();
+			GraphicalInterface gameOver = new GraphicalInterface(new GameOverPainter(ImageIO.read(new File("assets/game_over.png"))), controller);
+			this.gui.dispose();
+			boolean exit = false;
+			while (!exit) {
+				Cmd commande = controller.getCommand();
+				switch (commande) {
+					case YES: {
+						System.out.println("Retry");
+						break;
+					}
+					case NO: {
+						exit = true;
+						break;
+					}
+					default:{}
+				}
+				gameOver.paint();
+				Thread.sleep(100);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		//System.exit(0);
+		System.exit(0);
 	}
 
 }
