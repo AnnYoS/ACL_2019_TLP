@@ -81,5 +81,6 @@ public class Monster implements Person {
         return tmp;
     }
 
+     @Override
     public int getLifepoints() { return lifepoints; }
 }

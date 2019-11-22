@@ -7,6 +7,7 @@ import math.Vector;
 public interface Person {
     void attack (Person p);
     void looseLP (int lp);
+    int getLifepoints();
 
     Vector getSpeed();
     void setSpeed(Vector v);
