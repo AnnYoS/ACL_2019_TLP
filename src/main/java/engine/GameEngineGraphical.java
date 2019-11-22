@@ -83,7 +83,7 @@ public class GameEngineGraphical {
 		}
 		try {
 			GameOverController controller = new GameOverController();
-			GraphicalInterface gameOver = new GraphicalInterface(new GameOverPainter(ImageIO.read(new File("res/game_over.png"))), controller);
+			GraphicalInterface gameOver = new GraphicalInterface(new GameOverPainter(ImageIO.read(new File("assets/game_over.png"))), controller);
 			this.gui.dispose();
 			boolean exit = false;
 			while (!exit) {
