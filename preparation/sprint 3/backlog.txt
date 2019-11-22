@@ -1,0 +1,7 @@
+Ajout d'écrans
+Ajouter un HUD (affichage des points de vie)
+Améliorer la fiabilité de l'application (test)
+
+ajouter une touche pour attaquer
+améliorer les animations
+ajouter des niveaux
