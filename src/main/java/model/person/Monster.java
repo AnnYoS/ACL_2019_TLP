@@ -37,23 +37,18 @@ public class Monster implements Person {
 
     public void setSpeed(Vector speed) {
         if(! speed.equals(this.speed)) {
-            //pos.setX((int)(pos.getX()));
-            //pos.setY((int)(pos.getY()));
-
             if(this.speed.getX() > 0) {
-                pos.setX((int)pos.getX());
+                pos.setX(pos.getXasInt());
             }
             else if(this.speed.getX() < 0) {
-                pos.setX((int)pos.getX() + 1);
+                pos.setX((int)pos.getX());
             }
             else if(this.speed.getY() > 0) {
                 pos.setY((int)pos.getY());
             }
             else if(this.speed.getY() < 0) {
-                pos.setY((int)pos.getY() + 1);
+                pos.setY((int)pos.getY());
             }
-            /*pos.setX(pos.getXasInt());
-            pos.setY(pos.getYasInt());*/
 
             this.speed = speed;
         }
@@ -61,18 +56,8 @@ public class Monster implements Person {
 
     @Override
     public void forceSetSpeed(Vector v) {
-        if(this.speed.getX() > 0) {
-            pos.setX((int)pos.getX());
-        }
-        else if(this.speed.getX() < 0) {
-            pos.setX((int)pos.getX() + 1);
-        }
-        else if(this.speed.getY() > 0) {
-            pos.setY((int)pos.getY());
-        }
-        else if(this.speed.getY() < 0) {
-            pos.setY((int)pos.getY() + 1);
-        }
+        pos.setX(pos.getXasInt());
+        pos.setY(pos.getYasInt());
 
         this.speed = v;
     }

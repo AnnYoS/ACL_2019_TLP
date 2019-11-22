@@ -18,29 +18,30 @@ public interface Person {
     default void evolve(Map m, long dt) {
         Vector speed = getSpeed();
         Vector next = getPos().clone();
+        Vector old = next.clone();
 
         if(speed.getX() > 0) {
             next.setX((int)(next.getX() + 1));
         }
         else if(speed.getX() < 0) {
-            //pas utile:
-            if(next.getX() == 0) {
-                next.setX((int)(next.getX() - 1));
+            float dx = (int)next.getX() - next.getX();
+            if(dx < 0) {
+                next.setX((int)next.getX());
             }
             else {
-                next.setX((int) (next.getX()));
+                next.setX((int)(next.getX() - 1));
             }
         }
         else if(speed.getY() > 0) {
             next.setY((int)(next.getY() + 1));
         }
         else if(speed.getY() < 0) {
-            //pas utile:
-            if(next.getY() == 0) {
-                next.setY((int)(next.getY() - 1));
+            float dy = (int)next.getY() - next.getY();
+            if(dy < 0) {
+                next.setY((int)next.getY());
             }
             else {
-                next.setY((int) (next.getY()));
+                next.setY((int)(next.getY() - 1));
             }
         }
 
@@ -48,7 +49,6 @@ public interface Person {
             getPos().add(getSpeed(), dt);
         }
         else {
-            //setSpeed(new Vector(0, 0));
             forceSetSpeed(new Vector(0, 0));
         }
     }
