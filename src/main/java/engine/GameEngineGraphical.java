@@ -64,6 +64,7 @@ public class GameEngineGraphical {
 		this.gui = new GraphicalInterface(this.gamePainter,this.gameController);
 
 		long time = System.currentTimeMillis();
+		long max_time = 1000 / 10;
 
 		// boucle de game
 		while (!this.game.isFinished()) {
@@ -74,12 +75,13 @@ public class GameEngineGraphical {
 
 			long dt = System.currentTimeMillis() - time;
 			time = System.currentTimeMillis();
+			System.out.println(1000 / dt);
 
 			this.game.evolve(dt);
 			// affiche le game
 			this.gui.paint();
 			// met en attente
-			Thread.sleep(100);
+			Thread.sleep(Math.max(0, max_time - dt));
 		}
 		try {
 			GameOverController controller = new GameOverController();
