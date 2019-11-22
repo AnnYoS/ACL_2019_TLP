@@ -19,7 +19,7 @@ public class Hero implements Person {
     }
 
     public void setSpeed(Vector speed) {
-        if(Math.abs(acc.getX()) <= 0.3 && Math.abs(acc.getY()) <= 0.3) {
+        if(Math.abs(acc.getX()) <= 0.5 && Math.abs(acc.getY()) <= 0.5) {
             if (!this.speed.equals(speed)) {
                 this.speed = speed;
                 acc = new Vector(0, 0);
