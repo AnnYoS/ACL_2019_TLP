@@ -1,0 +1,153 @@
+@startuml
+
+package math {
+	class Vector
+	class Point
+}
+
+package person {
+	interface Person
+
+	class Hero
+	class Monster
+
+	Hero .up.|> Person
+	Monster .up.|> Person
+
+	Hero -- "2" Vector
+	Hero -- "1" Point
+	Monster --   "2" Vector
+	Monster --   "1" Point
+
+	Monster -- "1" MonsterStrategy
+
+	package strategy {
+		interface MonsterStrategy
+		class RandomStrategy
+		RandomStrategy .up.|> MonsterStrategy
+		SmartStrategy .up.|> MonsterStrategy
+		GhostStrategy .up.|> MonsterStrategy
+	}
+}
+
+class World
+
+World -- "1" Hero
+World -- "0..*" Monster
+World -- "1" Map
+
+package cell{
+	interface Cell
+
+	class Wall
+	class Trap
+	class Treasure
+	class Magic
+	class Passage
+	class Grass
+
+	Wall .down.|> Cell
+	Trap .down.|> Cell
+	Treasure .down.|> Cell
+	Magic .down.|> Cell
+	Passage .down.|> Cell
+	Grass .down.|> Cell
+
+	Passage -- "1" Vector
+
+
+	interface ICellFactory
+	class CellFactory
+
+	CellFactory .up.|> ICellFactory
+	CellFactory .down.> Passage
+	CellFactory .down.> Magic
+	CellFactory .down.> Grass
+	CellFactory .down.> Wall
+	CellFactory .down.> Trap
+	CellFactory .down.> Treasure
+}
+
+class Map
+Cell "1..*" -down- Map
+
+package DAO {
+	interface ISpriteDAO
+	class SpriteDAO
+
+	SpriteDAO .up.|> ISpriteDAO
+
+
+	interface IDAOFactory
+	class DAOFactory
+	DAOFactory .up.|> IDAOFactory
+	DAOFactory -- "1" WorldDAO
+	DAOFactory -- "1" MapDAO
+
+
+	interface IMapDAO
+	class MapDAO
+	MapDAO .up.|> IMapDAO
+	MapDAO ..> Map
+	MapDAO ..> ICellFactory
+
+
+	interface IWorldDAO
+	class WorldDAO
+	WorldDAO .up.|> IWorldDAO
+	WorldDAO -- "1" IMapDAO
+	WorldDAO ..> World
+}
+
+
+class Sprite
+interface ISpriteFactory
+class SpriteFactory
+SpriteFactory .up.|> ISpriteFactory
+SpriteFactory -- "1..*" Sprite
+SpriteFactory -- "1" ISpriteDAO
+
+
+package engine {
+	interface GamePainter
+
+	class GameEngineGraphical
+	GameEngineGraphical -- "1" GamePainter
+
+	class GraphicalInterface
+	class DrawingPanel
+
+	GameEngineGraphical -right- "1" GraphicalInterface
+	GraphicalInterface -- "1" DrawingPanel
+	DrawingPanel -- "1" GamePainter
+
+	interface GameController
+
+	GameEngineGraphical -- "2" GameController
+}
+
+package view {
+	class PacmanPainter
+	PacmanPainter -- "1" World
+	PacmanPainter .up.|> GamePainter
+	PacmanPainter -- "1" ISpriteFactory
+
+	class PacmanController
+	PacmanController .up.|> GameController
+
+	package gui {
+		interface Screen
+		class MainFrame
+
+		MainFrame -- "*" Screen
+		GameEngineGraphical .up.|> Screen
+		
+		class MainMenu
+		MainMenu .up.|> Screen
+
+		class GameOver
+		GameOver .up.|> Screen
+	}
+}
+
+@enduml
