@@ -75,7 +75,7 @@ public class GameEngineGraphical {
 
 			long dt = System.currentTimeMillis() - time;
 			time = System.currentTimeMillis();
-			System.out.println(1000 / dt);
+			//System.out.println(1000 / dt);
 
 			this.game.evolve(dt);
 			// affiche le game

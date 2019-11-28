@@ -83,6 +83,16 @@ public class World implements Game {
         }
     }
 
+    private void heroAttack(){
+        Point p = hero.getPos();
+        for (Monster m : monsterList){
+            Point pm = m.getPos();
+            if(Math.abs(pm.getX()-p.getX())<=1 && Math.abs(pm.getY()-p.getY())<=1){
+                hero.attack(m);
+            }
+        }
+    }
+
     private void checkIfWon() {
         int x = (int) hero.getPos().getX();
         int y = (int) hero.getPos().getY();
@@ -132,6 +142,8 @@ public class World implements Game {
                 moveHeroTo(n);*/
                 hero.setSpeed(new Vector(Hero.SPEED, 0));
                 break;
+            }case ATTACK: {
+                heroAttack();
             }
             case IDLE: {
                 hero.setSpeed(new Vector(0, 0));
