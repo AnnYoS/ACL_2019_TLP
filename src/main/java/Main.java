@@ -4,12 +4,8 @@ import model.SpriteFactory;
 import model.World;
 import model.dao.DAOFactory;
 
-import view.GameOverController;
-import view.GameOverPainter;
+import view.*;
 import model.dao.SpriteDAO;
-
-import view.PacmanController;
-import view.PacmanPainter;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -19,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         //World game = new World();
 
-        World game = null;
+        /*World game = null;
         try {
             game = DAOFactory.getInstance().getWorldDAO().load("levels/lvl1.map");
         } catch (IOException e) {
@@ -36,6 +32,7 @@ public class Main {
             engine.run();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
+        new MainFrame();
     }
 }

@@ -2,6 +2,7 @@ package engine;
 
 import view.GameOverController;
 import view.GameOverPainter;
+import view.Screen;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,7 +16,7 @@ import java.io.IOException;
  * moteur de game generique.
  * On lui passe un game et un afficheur et il permet d'executer un game.
  */
-public class GameEngineGraphical {
+public class GameEngineGraphical implements Screen {
 
 	/**
 	 * le game a executer
@@ -53,6 +54,7 @@ public class GameEngineGraphical {
 		this.game = game;
 		this.gamePainter = gamePainter;
 		this.gameController = gameController;
+		gui = new GraphicalInterface(this.gamePainter, this.gameController);
 	}
 
 	/**
@@ -113,4 +115,37 @@ public class GameEngineGraphical {
 		System.exit(0);
 	}
 
+	private long time;
+	private long dt;
+
+	@Override
+	public JPanel getContentPanel() {
+		return gui.getPanel();
+	}
+
+	@Override
+	public void start() {
+		time = System.currentTimeMillis();
+		dt = 0;
+	}
+
+	@Override
+	public void pause() {
+		start();
+	}
+
+	@Override
+	public void step() {
+		dt = System.currentTimeMillis() - time;
+		time = System.currentTimeMillis();
+
+		// demande controle utilisateur
+		Cmd c = this.gameController.getCommand();
+		// fait evoluer le game
+		this.game.events(c);
+
+		this.game.evolve(dt);
+		// affiche le game
+		this.gui.paint();
+	}
 }
