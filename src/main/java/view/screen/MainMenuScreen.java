@@ -56,8 +56,6 @@ public class MainMenuScreen implements Screen {
         select.addActionListener(event -> {
             String lvl = levelList.getSelectedValue();
 
-            System.out.println(lvl);
-
             if(lvl != null) {
                 String path = "levels/" + lvl + ".map";
 
