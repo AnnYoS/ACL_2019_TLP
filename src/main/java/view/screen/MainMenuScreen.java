@@ -4,7 +4,6 @@ import engine.GameEngineGraphical;
 import model.SpriteFactory;
 import model.World;
 import model.dao.DAOFactory;
-import model.dao.SpriteDAO;
 import view.PacmanController;
 import view.PacmanPainter;
 
@@ -67,7 +66,7 @@ public class MainMenuScreen implements Screen {
                     e.printStackTrace();
                 }
 
-                SpriteFactory factory = SpriteDAO.getInstance().load();
+                SpriteFactory factory = new SpriteFactory();
                 PacmanPainter painter = new PacmanPainter(game, factory);
                 PacmanController controller = new PacmanController();
 

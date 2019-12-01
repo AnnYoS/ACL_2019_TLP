@@ -1,11 +1,14 @@
 package model.cell;
 
+import math.Point;
+import math.Vector;
 import model.person.Person;
 import view.PacmanPainter;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Trap implements Cell {
+public class Warp implements Cell {
     @Override
     public boolean isWalkable() {
         return true;
@@ -13,7 +16,12 @@ public class Trap implements Cell {
 
     @Override
     public void applyEffect(Person p) {
-        p.looseLP(1);
+
+    }
+
+    @Override
+    public boolean isChest() {
+        return false;
     }
 
     @Override

@@ -5,6 +5,7 @@ public class CellFactory implements ICellFactory {
     private static final Grass GRASS = new Grass();
     private static final Trap TRAP = new Trap();
     private static final Chest CHEST = new Chest();
+    private static final Warp WARP = new Warp();
 
     @Override
     public Cell createWall() {
@@ -24,5 +25,10 @@ public class CellFactory implements ICellFactory {
     @Override
     public Cell createChest() {
         return CHEST;
+    }
+
+    @Override
+    public Cell createWarp() {
+        return WARP;
     }
 }

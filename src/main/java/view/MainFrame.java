@@ -1,15 +1,9 @@
 package view;
 
-import engine.GameEngineGraphical;
-import model.SpriteFactory;
-import model.World;
-import model.dao.DAOFactory;
-import model.dao.SpriteDAO;
 import view.screen.MainMenuScreen;
 import view.screen.Screen;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

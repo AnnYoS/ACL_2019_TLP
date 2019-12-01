@@ -34,7 +34,7 @@ public class SpriteFactory implements ISpriteFactory{
             bHero = ImageIO.read(new File("assets/hero32x32.png"));
             bMonster = ImageIO.read(new File("assets/enemy32x32.png"));
             bLife = ImageIO.read(new File("assets/life32x32.png"));
-            //bWarp = ImageIO.read(new File("assets/warp32x32.png"));
+            bWarp = ImageIO.read(new File("assets/warp32x32.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,7 +46,7 @@ public class SpriteFactory implements ISpriteFactory{
         hero = new Sprite(bHero);
         enemy = new Sprite(bMonster);
         life = new Sprite(bLife);
-        //warp = new Sprite(bWarp);
+        warp = new Sprite(bWarp);
     }
 
     public Sprite getGrass() {

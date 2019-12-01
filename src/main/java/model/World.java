@@ -14,6 +14,7 @@ public class World implements Game {
     private Hero hero;
     private boolean gameOver = false;
     private List<Monster> monsterList;
+    private List<Link> warpLinks;
 
     public Map getMap() {
         return map;
@@ -35,6 +36,14 @@ public class World implements Game {
         this.monsterList = monsterList;
     }
 
+    public void addWarpLinks(Link warpLink) {
+        this.warpLinks.add(warpLink);
+    }
+
+    public List<Link> getWarpLinks() {
+        return warpLinks;
+    }
+
     private void calcMonsterSpeeds() {
         for (Monster m: monsterList) {
             m.calcSpeed(map, hero.getPos());
@@ -53,13 +62,13 @@ public class World implements Game {
         int x = (int) p.getX();
         int y = (int) p.getY();
 
-        map.getCell(x, y).applyDamage(hero);
+        map.getCell(x, y).applyEffect(hero);
 
         for(Monster m : monsterList) {
             x = (int) m.getPos().getX();
             y = (int) m.getPos().getY();
 
-            map.getCell(x, y).applyDamage(m);
+            map.getCell(x, y).applyEffect(m);
         }
     }
 
