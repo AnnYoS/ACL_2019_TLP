@@ -1,8 +1,9 @@
 package model;
 
-import model.dao.SpriteDAO;
-
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class SpriteFactory implements ISpriteFactory{
 
@@ -13,15 +14,39 @@ public class SpriteFactory implements ISpriteFactory{
     private Sprite hero;
     private Sprite enemy;
     private Sprite life;
+    private Sprite warp;
 
-    public SpriteFactory(BufferedImage... sprites){
-        wall = new Sprite(sprites[1]);
-        grass = new Sprite(sprites[0]);
-        chest = new Sprite(sprites[2]);
-        trap = new Sprite(sprites[3]);
-        hero = new Sprite(sprites[4]);
-        enemy = new Sprite(sprites[5]);
-        life = new Sprite(sprites[6]);
+    public SpriteFactory(){
+
+        BufferedImage bGrass = null;
+        BufferedImage bWall = null;
+        BufferedImage bChest = null;
+        BufferedImage bTrap = null;
+        BufferedImage bHero = null;
+        BufferedImage bMonster = null;
+        BufferedImage bLife = null;
+        BufferedImage bWarp = null;
+        try {
+            bGrass = ImageIO.read(new File("assets/grass32x32.png"));
+            bWall = ImageIO.read(new File("assets/wall32x32.png"));
+            bChest = ImageIO.read(new File("assets/chest32x32.png"));
+            bTrap = ImageIO.read(new File("assets/trap32x32.png"));
+            bHero = ImageIO.read(new File("assets/hero32x32.png"));
+            bMonster = ImageIO.read(new File("assets/enemy32x32.png"));
+            bLife = ImageIO.read(new File("assets/life32x32.png"));
+            //bWarp = ImageIO.read(new File("assets/warp32x32.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        wall = new Sprite(bWall);
+        grass = new Sprite(bGrass);
+        chest = new Sprite(bChest);
+        trap = new Sprite(bTrap);
+        hero = new Sprite(bHero);
+        enemy = new Sprite(bMonster);
+        life = new Sprite(bLife);
+        //warp = new Sprite(bWarp);
     }
 
     public Sprite getGrass() {
@@ -49,5 +74,7 @@ public class SpriteFactory implements ISpriteFactory{
     }
 
     public Sprite getLife() { return life; }
+
+    public Sprite getWarp() { return warp; }
 }
 
