@@ -14,7 +14,6 @@ public class World implements Game {
     private Hero hero;
     private boolean gameOver = false;
     private List<Monster> monsterList;
-    private List<Link> warpLinks;
 
     public Map getMap() {
         return map;
@@ -36,13 +35,7 @@ public class World implements Game {
         this.monsterList = monsterList;
     }
 
-    public void addWarpLinks(Link warpLink) {
-        this.warpLinks.add(warpLink);
-    }
 
-    public List<Link> getWarpLinks() {
-        return warpLinks;
-    }
 
     private void calcMonsterSpeeds() {
         for (Monster m: monsterList) {
