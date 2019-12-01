@@ -1,12 +1,10 @@
 package engine;
 
-import view.GameOverController;
-import view.GameOverPainter;
+import view.gameOver.GameOverScreen;
 import view.Screen;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -87,31 +85,6 @@ public class GameEngineGraphical implements Screen {
 			time = System.currentTimeMillis();
 			System.out.println((1000f / dt));
 		}
-		try {
-			GameOverController controller = new GameOverController();
-			GraphicalInterface gameOver = new GraphicalInterface(new GameOverPainter(ImageIO.read(new File("assets/game_over.png"))), controller);
-			this.gui.dispose();
-			boolean exit = false;
-			while (!exit) {
-				Cmd commande = controller.getCommand();
-				switch (commande) {
-					case YES: {
-						System.out.println("Retry");
-						break;
-					}
-					case NO: {
-						exit = true;
-						break;
-					}
-					default:{}
-				}
-				gameOver.paint();
-				Thread.sleep(100);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 		System.exit(0);
 	}
 
@@ -149,5 +122,18 @@ public class GameEngineGraphical implements Screen {
 		this.game.evolve(dt);
 		// affiche le game
 		this.gui.paint();
+	}
+
+	@Override
+	public boolean keepScreen() {
+		return ! game.isFinished();
+	}
+
+	@Override
+	public Screen getNextScreen() {
+		if(game.isFinished()) {
+			return new GameOverScreen();
+		}
+		return this;
 	}
 }

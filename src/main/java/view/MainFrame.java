@@ -5,6 +5,8 @@ import model.SpriteFactory;
 import model.World;
 import model.dao.DAOFactory;
 import model.dao.SpriteDAO;
+import sun.security.util.PendingException;
+import view.gameOver.GameOverScreen;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -36,6 +38,8 @@ public class MainFrame {
         // classe qui lance le moteur de jeu generique
         GameEngineGraphical engine = new GameEngineGraphical(game, painter, controller);
         screenStack.add(engine);
+        //Screen engine = new GameOverScreen();
+        //screenStack.add(engine);
 
         // attacher le panel contenant l'afficheur du game
         /*this.panel=new DrawingPanel(gamePainter);
@@ -63,8 +67,30 @@ public class MainFrame {
         return screenStack.get(screenStack.size() - 1);
     }
 
+    private void popScreen() {
+        screenStack.remove(screenStack.size() - 1);
+    }
+
     private void timerStep() {
         Screen sc = getCurrentScreen();
         sc.step();
+
+        if (sc.getNextScreen() != sc) {
+            Screen next = sc.getNextScreen();
+            sc.pause();
+
+            if(! sc.keepScreen()) {
+                popScreen();
+            }
+
+            screenStack.add(next);
+            frame.setContentPane(next.getContentPanel());
+            next.start();
+            //frame.repaint();
+
+            //frame.getContentPane().requestFocus();
+            //frame.getContentPane().setFocusable(true);
+            frame.pack();
+        }
     }
 }

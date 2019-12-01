@@ -7,4 +7,7 @@ public interface Screen {
     void start();
     void pause();
     void step();
+
+    boolean keepScreen();
+    Screen getNextScreen();
 }
