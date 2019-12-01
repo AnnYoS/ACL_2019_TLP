@@ -83,7 +83,7 @@ public class GameEngineGraphical {
 
 			dt = System.currentTimeMillis() - time;
 			time = System.currentTimeMillis();
-			System.out.print((1000f / dt));
+			System.out.println((1000f / dt));
 		}
 		try {
 			GameOverController controller = new GameOverController();
