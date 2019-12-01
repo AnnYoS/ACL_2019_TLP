@@ -5,8 +5,8 @@ import model.SpriteFactory;
 import model.World;
 import model.dao.DAOFactory;
 import model.dao.SpriteDAO;
-import sun.security.util.PendingException;
-import view.gameOver.GameOverScreen;
+import view.screen.MainMenuScreen;
+import view.screen.Screen;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -24,29 +24,8 @@ public class MainFrame {
 
         screenStack = new ArrayList<>(5);
 
-        World game = null;
-        try {
-            game = DAOFactory.getInstance().getWorldDAO().load("levels/lvl1.map");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        SpriteFactory factory = SpriteDAO.getInstance().load();
-        PacmanPainter painter = new PacmanPainter(game, factory);
-        PacmanController controller = new PacmanController();
-
-        // classe qui lance le moteur de jeu generique
-        GameEngineGraphical engine = new GameEngineGraphical(game, painter, controller);
+        Screen engine = new MainMenuScreen();
         screenStack.add(engine);
-        //Screen engine = new GameOverScreen();
-        //screenStack.add(engine);
-
-        // attacher le panel contenant l'afficheur du game
-        /*this.panel=new DrawingPanel(gamePainter);
-        f.setContentPane(this.panel);
-
-        // attacher controller au panel du game
-        this.panel.addKeyListener(gameController);*/
 
         frame.setContentPane(engine.getContentPanel());
         frame.getContentPane().requestFocus();
@@ -83,13 +62,21 @@ public class MainFrame {
                 popScreen();
             }
 
-            screenStack.add(next);
-            frame.setContentPane(next.getContentPanel());
-            next.start();
-            //frame.repaint();
+            if(screenStack.size() == 0) {
+                System.exit(0);
+            }
 
-            //frame.getContentPane().requestFocus();
-            //frame.getContentPane().setFocusable(true);
+            if(next == null) {
+                next = getCurrentScreen();
+            }
+            else {
+                screenStack.add(next);
+            }
+
+            frame.setContentPane(next.getContentPanel());
+            frame.getContentPane().setFocusable(true);
+            frame.getContentPane().requestFocus();
+            next.start();
             frame.pack();
         }
     }

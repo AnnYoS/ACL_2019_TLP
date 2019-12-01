@@ -1,12 +1,9 @@
 package engine;
 
-import view.gameOver.GameOverScreen;
-import view.Screen;
+import view.screen.GameOverScreen;
+import view.screen.Screen;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * @author Horatiu Cirstea, Vincent Thomas

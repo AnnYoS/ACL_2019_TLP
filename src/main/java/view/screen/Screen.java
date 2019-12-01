@@ -1,4 +1,4 @@
-package view;
+package view.screen;
 
 import javax.swing.*;
 

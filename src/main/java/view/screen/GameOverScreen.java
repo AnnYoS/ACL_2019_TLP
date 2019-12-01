@@ -1,6 +1,4 @@
-package view.gameOver;
-
-import view.Screen;
+package view.screen;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,10 +9,21 @@ import java.io.IOException;
 public class GameOverScreen implements Screen {
     private JPanel panel;
 
+    private boolean keepScreen = true;
+    private Screen nextScreen = this;
+
     public GameOverScreen() {
         panel = new JPanel();
 
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+
+        JButton back = new JButton("Back to Main Menu");
+        back.addActionListener(e -> {
+            nextScreen = null;
+            keepScreen = false;
+        });
+
+        panel.add(back);
 
         try {
             BufferedImage img = ImageIO.read(new File("assets/game_over.png"));
@@ -42,17 +51,15 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void step() {
-        //System.out.println("step");
-        //panel.repaint();
     }
 
     @Override
     public boolean keepScreen() {
-        return true;
+        return keepScreen;
     }
 
     @Override
     public Screen getNextScreen() {
-        return this;
+        return nextScreen;
     }
 }
