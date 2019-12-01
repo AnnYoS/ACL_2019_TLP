@@ -18,7 +18,7 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 public class MainMenuScreen implements Screen {
-    private JPanel panel;
+    private JPanel contentPanel;
 
     private JList<String> levelList;
 
@@ -26,24 +26,45 @@ public class MainMenuScreen implements Screen {
     private boolean keepScreen = true;
 
     public MainMenuScreen() {
-        panel = new JPanel();
-        panel.setPreferredSize(new Dimension(600, 600));
-
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-
-        JButton select = new JButton("Select");
-        JButton exit = new JButton("Exit");
-
-        panel.add(select);
-        panel.add(exit);
-
+        //Liste des niveaux
         levelList = new JList<String>();
 
         levelList.setListData(getLevelList());
 
-        panel.add(levelList);
+        JScrollPane listScroller = new JScrollPane(levelList);
+        listScroller.setPreferredSize(new Dimension(250, 80));
 
-        panel.setVisible(true);
+        //Panneau de la liste des niveaux
+        JPanel listPanel = new JPanel();
+        listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.PAGE_AXIS));
+        JLabel listLabel = new JLabel("Levels :");
+
+        listPanel.add(listLabel);
+        listPanel.add(Box.createRigidArea(new Dimension(0,5)));
+        listPanel.add(listScroller);
+        listPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+        //JPanel pour les boutons
+        JPanel buttonPane = new JPanel();
+        buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
+        buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+        buttonPane.add(Box.createHorizontalGlue());
+        JButton select = new JButton("Select");
+        buttonPane.add(select);
+        buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
+        JButton exit = new JButton("Exit");
+        buttonPane.add(exit);
+
+        //Container
+
+        contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.PAGE_AXIS));
+        contentPanel.setPreferredSize(new Dimension(400, 400));
+        contentPanel.add(listPanel, BorderLayout.CENTER);
+        contentPanel.add(buttonPane, BorderLayout.PAGE_END);
+
+
+        contentPanel.setVisible(true);
 
         exit.addActionListener(event -> {
             synchronized (this) {
@@ -108,7 +129,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public JPanel getContentPanel() {
-        return panel;
+        return contentPanel;
     }
 
     @Override
