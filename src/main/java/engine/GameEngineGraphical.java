@@ -139,6 +139,8 @@ public class GameEngineGraphical implements Screen {
 		dt = System.currentTimeMillis() - time;
 		time = System.currentTimeMillis();
 
+		//System.out.println(1000.0 / dt);
+
 		// demande controle utilisateur
 		Cmd c = this.gameController.getCommand();
 		// fait evoluer le game
