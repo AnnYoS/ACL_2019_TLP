@@ -12,6 +12,7 @@ public class SpriteFactory implements ISpriteFactory{
     private Sprite trap;
     private Sprite hero;
     private Sprite enemy;
+    private Sprite life;
 
     public SpriteFactory(BufferedImage... sprites){
         wall = new Sprite(sprites[1]);
@@ -20,6 +21,7 @@ public class SpriteFactory implements ISpriteFactory{
         trap = new Sprite(sprites[3]);
         hero = new Sprite(sprites[4]);
         enemy = new Sprite(sprites[5]);
+        life = new Sprite(sprites[6]);
     }
 
     public Sprite getGrass() {
@@ -45,5 +47,7 @@ public class SpriteFactory implements ISpriteFactory{
     public Sprite getEnemy() {
         return enemy;
     }
+
+    public Sprite getLife() { return life; }
 }
 

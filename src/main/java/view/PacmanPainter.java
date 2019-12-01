@@ -69,6 +69,8 @@ public class PacmanPainter implements GamePainter {
             Vector monsterSpeed = m.getSpeed();
             g.drawImage(spriteFactory.getEnemy().getAnimation(monsterSpeed), (int) (monsterPos.getX() * BLOCK_SIZE), (int) (monsterPos.getY() * BLOCK_SIZE), null);
 		}
+
+		drawLifePoint(im);
 	}
 
 	public void drawCell(BufferedImage img, Grass gr, int x, int y) {
@@ -97,6 +99,12 @@ public class PacmanPainter implements GamePainter {
 		g.drawImage(spriteFactory.getChest().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
 		//g.setColor(Color.YELLOW);
 		//g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+	}
+
+	public void drawLifePoint(BufferedImage img){
+		Graphics g = img.getGraphics();
+		g.drawImage(spriteFactory.getLife().getSprite(), 0, 0, null);
+		g.drawString(game.getHero().getLifepoints()+"", BLOCK_SIZE, BLOCK_SIZE);
 	}
 
 
