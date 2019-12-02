@@ -5,4 +5,5 @@ public interface ICellFactory {
     Cell createGrass();
     Cell createTrap();
     Cell createChest();
+    Cell createWarp();
 }

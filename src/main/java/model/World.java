@@ -35,6 +35,8 @@ public class World implements Game {
         this.monsterList = monsterList;
     }
 
+
+
     private void calcMonsterSpeeds() {
         for (Monster m: monsterList) {
             m.calcSpeed(map, hero.getPos());
@@ -53,13 +55,13 @@ public class World implements Game {
         int x = (int) p.getX();
         int y = (int) p.getY();
 
-        map.getCell(x, y).applyDamage(hero);
+        map.getCell(x, y).applyEffect(hero);
 
         for(Monster m : monsterList) {
             x = (int) m.getPos().getX();
             y = (int) m.getPos().getY();
 
-            map.getCell(x, y).applyDamage(m);
+            map.getCell(x, y).applyEffect(m);
         }
     }
 
@@ -78,6 +80,16 @@ public class World implements Game {
             Monster m = monsterList.get(i);
             if (m.getPos().manhattanDistance(hero.getPos()) == 0){
                 m.attack(hero);
+                hero.attack(m);
+            }
+        }
+    }
+
+    private void heroAttack(){
+        Point p = hero.getPos();
+        for (Monster m : monsterList){
+            Point pm = m.getPos();
+            if(Math.abs(pm.getX()-p.getX())<=1 && Math.abs(pm.getY()-p.getY())<=1){
                 hero.attack(m);
             }
         }
@@ -132,6 +144,8 @@ public class World implements Game {
                 moveHeroTo(n);*/
                 hero.setSpeed(new Vector(Hero.SPEED, 0));
                 break;
+            }case ATTACK: {
+                heroAttack();
             }
             case IDLE: {
                 hero.setSpeed(new Vector(0, 0));

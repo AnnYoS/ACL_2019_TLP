@@ -3,7 +3,6 @@ package model.dao;
 
 import math.Point;
 import model.Map;
-import math.Vector;
 import model.World;
 import model.cell.Cell;
 import model.cell.CellFactory;
@@ -26,6 +25,7 @@ public class WorldDAO implements IWorldDAO{
     private static final char HERO = 'H';
     private static final char GRASS = ' ';
 
+
     @Override
     public World load(String path) throws IOException {
         World res = new World();
@@ -34,6 +34,8 @@ public class WorldDAO implements IWorldDAO{
 
         List<List<Cell>> cells = new ArrayList<>();
         List<Monster> monsters = new ArrayList<>();
+        List<List<Point>> warpLinks = new ArrayList<>();
+
         Hero hero = null;
 
         BufferedReader in = new BufferedReader(new FileReader(path));
@@ -77,6 +79,15 @@ public class WorldDAO implements IWorldDAO{
                         cellLine.add(factory.createChest());
                         break;
                     }
+                    //Les Warps
+                    case '0':
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                    case '5':
+                        cellLine.add(factory.createWarp());
+                        break;
                     case GRASS : {
                     }
                     default: {

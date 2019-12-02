@@ -1,6 +1,6 @@
 package engine;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 
 /**
@@ -15,7 +15,7 @@ public class GraphicalInterface  {
 	 * le Panel pour l'afficheur
 	 */
 	private DrawingPanel panel;
-	private JFrame f;
+	//private JFrame f;
 	
 	/**
 	 * la construction de l'interface graphique: JFrame avec panel pour le game
@@ -25,7 +25,7 @@ public class GraphicalInterface  {
 	 * 
 	 */
 	public GraphicalInterface(GamePainter gamePainter, GameController gameController){
-		this.f=new JFrame();
+		/*this.f=new JFrame();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// attacher le panel contenant l'afficheur du game
@@ -38,7 +38,10 @@ public class GraphicalInterface  {
 		f.pack();
 		f.setVisible(true);
 		f.getContentPane().setFocusable(true);
-		f.getContentPane().requestFocus();
+		f.getContentPane().requestFocus();*/
+		panel = new DrawingPanel(gamePainter);
+		panel.addKeyListener(gameController);
+		panel.setFocusable(true);
 	}
 	
 	/**
@@ -49,7 +52,10 @@ public class GraphicalInterface  {
 	}
 
 	public void dispose(){
-		this.f.dispose();
+		//this.f.dispose();
 	}
-	
+
+	public DrawingPanel getPanel() {
+		return panel;
+	}
 }
