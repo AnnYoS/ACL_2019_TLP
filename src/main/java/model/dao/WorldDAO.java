@@ -6,6 +6,7 @@ import model.Map;
 import model.World;
 import model.cell.Cell;
 import model.cell.CellFactory;
+import model.cell.Warp;
 import model.person.Hero;
 import model.person.Monster;
 import model.person.strategy.FollowStrategy;
@@ -13,6 +14,7 @@ import model.person.strategy.RandomStrategy;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
