@@ -1,11 +1,14 @@
-package model;
+package model.sprites;
+
+import model.ISpriteFactory;
+import model.sprites.Sprite;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class SpriteFactory implements ISpriteFactory{
+public class SpriteFactory implements ISpriteFactory {
 
     private Sprite grass;
     private Sprite wall;
@@ -39,14 +42,14 @@ public class SpriteFactory implements ISpriteFactory{
             e.printStackTrace();
         }
 
-        wall = new Sprite(bWall);
-        grass = new Sprite(bGrass);
-        chest = new Sprite(bChest);
-        trap = new Sprite(bTrap);
-        hero = new Sprite(bHero);
-        enemy = new Sprite(bMonster);
-        life = new Sprite(bLife);
-        warp = new Sprite(bWarp);
+        wall = new SpriteStatic(bWall);
+        grass = new SpriteStatic(bGrass);
+        chest = new SpriteStatic(bChest);
+        trap = new SpriteStatic(bTrap);
+        hero = new SpritePerson(bHero);
+        enemy = new SpritePerson(bMonster);
+        life = new SpriteStatic(bLife);
+        warp = new SpriteWarp(bWarp);
     }
 
     public Sprite getGrass() {

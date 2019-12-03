@@ -1,7 +1,7 @@
 package view.screen;
 
 import engine.GameEngineGraphical;
-import model.SpriteFactory;
+import model.sprites.SpriteFactory;
 import model.World;
 import model.dao.DAOFactory;
 import view.PacmanController;

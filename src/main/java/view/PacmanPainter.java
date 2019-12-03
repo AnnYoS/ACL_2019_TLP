@@ -9,6 +9,7 @@ import math.Vector;
 import model.*;
 import model.cell.*;
 import model.person.Monster;
+import model.sprites.SpriteFactory;
 
 /**
  * @author Horatiu Cirstea, Vincent Thomas
@@ -29,6 +30,9 @@ public class PacmanPainter implements GamePainter {
 
 	private World game;
 
+	private long dt;
+	private long time;
+
 	private SpriteFactory spriteFactory;
 
 	/**
@@ -40,6 +44,8 @@ public class PacmanPainter implements GamePainter {
 	public PacmanPainter(Game game, SpriteFactory factory) {
 		this.game = (World) game;
 		spriteFactory = factory;
+		dt = 0;
+		time = System.currentTimeMillis();
 	}
 
 	/**
@@ -47,6 +53,9 @@ public class PacmanPainter implements GamePainter {
 	 */
 	@Override
 	public void draw(BufferedImage im) {
+		dt = System.currentTimeMillis() - time;
+		time = System.currentTimeMillis();
+
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
 
 		Map map = game.getMap();
@@ -60,14 +69,14 @@ public class PacmanPainter implements GamePainter {
 		Vector heroPos = game.getHero().getDrawPos();
 		Vector heroSpeed = game.getHero().getSpeed();
         Graphics g = im.getGraphics();
-        g.drawImage(spriteFactory.getHero().getAnimation(heroSpeed), (int) (heroPos.getX() * BLOCK_SIZE), (int) (heroPos.getY() * BLOCK_SIZE), null);
+        g.drawImage(spriteFactory.getHero().getAnimation(heroSpeed, dt), (int) (heroPos.getX() * BLOCK_SIZE), (int) (heroPos.getY() * BLOCK_SIZE), null);
 
 
 		crayon.setColor(Color.red);
 		for (Monster m: game.getMonsterList()){
             Vector monsterPos = m.getDrawPos();
             Vector monsterSpeed = m.getSpeed();
-            g.drawImage(spriteFactory.getEnemy().getAnimation(monsterSpeed), (int) (monsterPos.getX() * BLOCK_SIZE), (int) (monsterPos.getY() * BLOCK_SIZE), null);
+            g.drawImage(spriteFactory.getEnemy().getAnimation(monsterSpeed, dt), (int) (monsterPos.getX() * BLOCK_SIZE), (int) (monsterPos.getY() * BLOCK_SIZE), null);
 		}
 
 		drawLifePoint(im);
