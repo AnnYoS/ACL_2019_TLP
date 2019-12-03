@@ -15,12 +15,12 @@ public class Map {
 
     public void setCells(Cell[][] cells){
         this.cells=cells;
-        w = cells.length;
+        h = cells.length;
 
-        h = cells[0].length;
+        w = cells[0].length;
 
-        for(int i = 1; i < w; i++) {
-            h = Math.max(h, cells[i].length);
+        for(int i = 1; i < h; i++) {
+            w = Math.max(w, cells[i].length);
         }
     }
 
@@ -30,7 +30,7 @@ public class Map {
         int y = p.getY();
 
         if(x >= 0 && y >= 0 && x < w && y < h) {
-            res = cells[x][y].isWalkable();
+            res = cells[y][x].isWalkable();
         }else{
             res = false;
         }
@@ -38,7 +38,7 @@ public class Map {
     }
 
     public Cell getCell(int x, int y) {
-        return cells[x][y];
+        return cells[y][x];
     }
 
     public int getW() {
