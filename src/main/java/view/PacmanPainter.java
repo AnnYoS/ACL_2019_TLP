@@ -24,8 +24,8 @@ public class PacmanPainter implements GamePainter {
 
 	private static final int BLOCK_SIZE = 32;
 
-	protected static final int WIDTH = BLOCK_SIZE * 20;
-	protected static final int HEIGHT = BLOCK_SIZE * 20;
+	protected int width;
+	protected int height;
 
 	private World game;
 
@@ -40,6 +40,9 @@ public class PacmanPainter implements GamePainter {
 	public PacmanPainter(Game game, SpriteFactory factory) {
 		this.game = (World) game;
 		spriteFactory = factory;
+
+		width = ((World) game).getMap().getW() * BLOCK_SIZE;
+		height = ((World) game).getMap().getH() * BLOCK_SIZE;
 	}
 
 	/**
@@ -50,6 +53,7 @@ public class PacmanPainter implements GamePainter {
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
 
 		Map map = game.getMap();
+
 		for(int i=0; i < map.getW();i++){
 			for(int j=0; j < map.getH();j++){
 				Cell c = map.getCell(i, j);
@@ -116,12 +120,12 @@ public class PacmanPainter implements GamePainter {
 
 	@Override
 	public int getWidth() {
-		return WIDTH;
+		return width;
 	}
 
 	@Override
 	public int getHeight() {
-		return HEIGHT;
+		return height;
 	}
 
 }
