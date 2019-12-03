@@ -34,11 +34,16 @@ public class WorldDAO implements IWorldDAO{
 
         List<List<Cell>> cells = new ArrayList<>();
         List<Monster> monsters = new ArrayList<>();
-        List<List<Point>> warpLinks = new ArrayList<>();
+        //List<List<Point>> warpLinks = new ArrayList<>();
+        HashMap<Integer, List<Warp>> warps= new HashMap<>();
 
         Hero hero = null;
 
         BufferedReader in = new BufferedReader(new FileReader(path));
+
+        for(int i=0; i<6; i++){
+            warps.put(i, new ArrayList<>());
+        }
 
         int y = 0;
         int width = 0;
@@ -80,13 +85,40 @@ public class WorldDAO implements IWorldDAO{
                         break;
                     }
                     //Les Warps
-                    case '0':
-                    case '1':
-                    case '2':
-                    case '3':
-                    case '4':
+                    case '0': {
+                        Cell w = factory.createWarp();
+                        cellLine.add(w);
+                        warps.get(0).add((Warp) w);
+                        break;
+                    }
+                    case '1': {
+                        Cell w = factory.createWarp();
+                        cellLine.add(w);
+                        warps.get(1).add((Warp) w);
+                        break;
+                    }
+                    case '2': {
+                        Cell w = factory.createWarp();
+                        cellLine.add(w);
+                        warps.get(2).add((Warp) w);
+                        break;
+                    }
+                    case '3':{
+                        Cell w= factory.createWarp();
+                        cellLine.add(w);
+                        warps.get(3).add((Warp)w);
+                        break;
+                    }
+                    case '4':{
+                        Cell w = factory.createWarp();
+                        cellLine.add(w);
+                        warps.get(4).add((Warp) w);
+                        break;
+                    }
                     case '5':
-                        cellLine.add(factory.createWarp());
+                        Cell w= factory.createWarp();
+                        cellLine.add(w);
+                        warps.get(5).add((Warp)w);
                         break;
                     case GRASS : {
                     }
@@ -115,6 +147,7 @@ public class WorldDAO implements IWorldDAO{
 
         Map map = new Map();
         map.setCells(cellArray);
+        map.setWarpLinks(warps);
 
         res.setHero(hero);
         res.setMonsterList(monsters);
