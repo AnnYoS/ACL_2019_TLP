@@ -53,6 +53,7 @@ public class GameEngineGraphical implements Screen {
 	}
 
 	/**
+	 * @deprecated
 	 * permet de lancer le game
 	 */
 	public void run() throws InterruptedException {
