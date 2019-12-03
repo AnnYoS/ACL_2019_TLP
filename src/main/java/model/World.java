@@ -57,8 +57,10 @@ public class World implements Game {
         int y = (int) p.getY();
 
         map.getCell(x, y).applyEffect(hero);
-        if(map.getCell(x,y).getClass()== Warp.class){
-            ((Warp)map.getCell(hero.getPos().getX(),hero.getPos().getY())).desactivate();
+        int x2 = hero.getPos().getX();
+        int y2 = hero.getPos().getY();
+        if(map.getCell(x2,y2).getClass()== Warp.class){
+            ((Warp)map.getCell(x2,y2)).desactivate();
         }
 
         map.reactivateWarps(hero.getPos());

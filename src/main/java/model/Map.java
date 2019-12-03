@@ -71,9 +71,9 @@ public class Map {
     }
 
     public Point getCellPos(Cell c){
-        for(int i=0; i<cells.length; i++){
-            for(int j=0; j<cells[0].length; j++){
-                if(c.equals(cells[i][j])){
+        for(int j = 0; j < h; j++){
+            for(int i = 0; i < w; i++){
+                if(c.equals(cells[j][i])){
                     return new Point(i, j);
                 }
             }
