@@ -4,6 +4,7 @@ import engine.Cmd;
 import engine.Game;
 import math.Point;
 import math.Vector;
+import model.cell.Warp;
 import model.person.Hero;
 import model.person.Monster;
 
@@ -56,6 +57,12 @@ public class World implements Game {
         int y = (int) p.getY();
 
         map.getCell(x, y).applyEffect(hero);
+        if(map.getCell(x,y).getClass()== Warp.class){
+            ((Warp)map.getCell(hero.getPos().getX(),hero.getPos().getY())).desactivate();
+        }
+
+        map.reactivateWarps(hero.getPos());
+
 
         for(Monster m : monsterList) {
             x = (int) m.getPos().getX();
@@ -64,6 +71,8 @@ public class World implements Game {
             map.getCell(x, y).applyEffect(m);
         }
     }
+
+
 
     private void removeDeadMonsters() {
         for(int i = monsterList.size() - 1; i >= 0; i--) {
