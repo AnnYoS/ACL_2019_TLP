@@ -12,12 +12,19 @@ public class SpriteWarp extends Sprite {
 
     @Override
     public BufferedImage getAnimation(Vector v, long dt) {
-        if (dt - timelastanim > freqanim){
-
-            
-
-            timelastanim = dt;
+        timelastanim += dt;
+        if (timelastanim > freqanim * 2.5){
+            if(noanimx >= 4){
+                noanimy += 1;
+                noanimx = 0;
+                if(noanimy > 2){
+                    noanimy = 0;
+                }
+            } else {
+                noanimx += 1;
+            }
+            timelastanim = 0;
         }
-        return sprite;
+        return sprite.getSubimage(noanimx * 32, noanimy * 32, 32, 32);
     }
 }

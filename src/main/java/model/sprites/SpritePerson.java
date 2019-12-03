@@ -12,25 +12,26 @@ public class SpritePerson extends Sprite{
 
     @Override
     public BufferedImage getAnimation(Vector v, long dt) {
+        timelastanim += dt;
         if(v.getX() != 0 || v.getY() != 0) {
             if (v.getX() < 0) {
                 //vers la gauche
-                noaminy = 1;
+                noanimy = 1;
             }
             if (v.getX() > 0) {
                 //vers la droite
-                noaminy = 2;
+                noanimy = 2;
             }
             if (v.getY() > 0) {
                 //vers le bas
-                noaminy = 0;
+                noanimy = 0;
             }
             if (v.getY() < 0) {
                 //vers le haut
-                noaminy = 3;
+                noanimy = 3;
             }
 
-            if (dt - timelastanim > freqanim){
+            if (timelastanim > freqanim){
                 if (noanimx == 0 || noanimx == 2) {
                     lastanim = noanimx;
                     noanimx = 1;
@@ -42,9 +43,9 @@ public class SpritePerson extends Sprite{
                     }
                     lastanim = 1;
                 }
-                timelastanim = dt;
+                timelastanim = 0;
             }
         }
-        return sprite.getSubimage(noanimx * 32, noaminy * 32, 32, 32);
+        return sprite.getSubimage(noanimx * 32, noanimy * 32, 32, 32);
     }
 }

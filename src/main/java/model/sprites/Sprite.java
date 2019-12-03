@@ -9,7 +9,7 @@ public abstract class Sprite {
     protected BufferedImage sprite;
 
     protected int noanimx; //utilisé pour les animations
-    protected int noaminy; //savoir l'orientation des monstres et du hero
+    protected int noanimy; //savoir l'orientation des monstres et du hero
 
     protected int lastanim;
     protected long timelastanim;
@@ -20,7 +20,7 @@ public abstract class Sprite {
         noanimx = 0;
         lastanim = 0;
         timelastanim = 0;
-        noaminy = 0;
+        noanimy = 0;
     }
 
     public abstract BufferedImage getAnimation(Vector v, long dt);

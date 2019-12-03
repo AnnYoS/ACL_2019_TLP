@@ -113,7 +113,7 @@ public class PacmanPainter implements GamePainter {
 	public void drawCell(BufferedImage img, Warp p, int x, int y) {
 		Graphics g = img.getGraphics();
 		g.drawImage(spriteFactory.getGrass().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
-		g.drawImage(spriteFactory.getWarp().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+		g.drawImage(spriteFactory.getWarp().getAnimation(new Vector(0,0), dt), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
 	}
 
 	public void drawLifePoint(BufferedImage img){
