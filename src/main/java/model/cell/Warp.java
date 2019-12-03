@@ -2,6 +2,7 @@ package model.cell;
 
 import math.Point;
 import math.Vector;
+import model.person.Hero;
 import model.person.Person;
 import view.PacmanPainter;
 
@@ -9,6 +10,23 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Warp implements Cell {
+    private Point dest;
+    private boolean activated = true;
+
+
+    public void setDest(Point point){
+        dest=point;
+    }
+
+    public void desactivate(){
+        activated=false;
+    }
+
+    public void activate(){
+        activated=true;
+    }
+
+
     @Override
     public boolean isWalkable() {
         return true;
@@ -16,7 +34,9 @@ public class Warp implements Cell {
 
     @Override
     public void applyEffect(Person p) {
-
+        if(dest!=null && p.getClass()== Hero.class && activated) {
+            p.setPos(dest);
+        }
     }
 
     @Override
