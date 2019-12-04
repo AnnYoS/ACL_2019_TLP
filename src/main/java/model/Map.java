@@ -15,6 +15,7 @@ public class Map {
     private int h;
     private List<Warp> warps = new ArrayList<>();
 
+    @Deprecated
     public Cell[][] getCells() {
         return cells;
     }
@@ -42,15 +43,16 @@ public class Map {
         }
     }
 
-    public void reactivateWarps(Point heroPos){
-        for (Warp w : warps){
-            if(!w.equals(getCell(heroPos.getX(), heroPos.getY()))){
+    public void toggleWarps(Point heroPos) {
+        for(Warp w : warps) {
+            if(w != getCell(heroPos.getX(), heroPos.getY())) {
                 w.activate();
+            }
+            else {
+                w.desactivate();
             }
         }
     }
-
-
 
     public boolean isWalkable(Point p) {
         boolean res;
@@ -69,6 +71,7 @@ public class Map {
         return cells[y][x];
     }
 
+    @Deprecated
     public Point getCellPos(Cell c){
         for(int j = 0; j < h; j++){
             for(int i = 0; i < w; i++){
