@@ -30,13 +30,12 @@ public class Map {
         }
     }
 
-    public void setWarpLinks(HashMap<Integer, List<Warp>> map){
-        for(int i=0; i<6; i++){
-            if(map.get(i).size()==2){
-                Warp w1 = map.get(i).get(0);
-                Warp w2 = map.get(i).get(1);
-                w1.setDest(getCellPos(w2));
-                w2.setDest(getCellPos(w1));
+    public void setWarpLinks(HashMap<Character, List<Warp>> map){
+        for (java.util.Map.Entry<Character, List<Warp>> e : map.entrySet()) {
+            if(e.getValue().size() == 2) {
+                Warp w1 = e.getValue().get(0);
+                Warp w2 = e.getValue().get(1);
+
                 warps.add(w1);
                 warps.add(w2);
             }
