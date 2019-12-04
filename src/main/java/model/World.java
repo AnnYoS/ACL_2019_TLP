@@ -4,7 +4,6 @@ import engine.Cmd;
 import engine.Game;
 import math.Point;
 import math.Vector;
-import model.cell.Warp;
 import model.person.Hero;
 import model.person.Monster;
 
@@ -53,20 +52,17 @@ public class World implements Game {
     private void applyCellEffectOnPerson() {
         Point p = hero.getPos();
 
-        int x = (int) p.getX();
-        int y = (int) p.getY();
+        int x = p.getX();
+        int y = p.getY();
 
         map.getCell(x, y).applyEffect(hero);
-        if(map.getCell(x,y).getClass()== Warp.class){
-            ((Warp)map.getCell(hero.getPos().getX(),hero.getPos().getY())).desactivate();
-        }
 
-        map.reactivateWarps(hero.getPos());
+        map.toggleWarps(hero.getPos());
 
 
         for(Monster m : monsterList) {
-            x = (int) m.getPos().getX();
-            y = (int) m.getPos().getY();
+            x = m.getPos().getX();
+            y = m.getPos().getY();
 
             map.getCell(x, y).applyEffect(m);
         }
@@ -85,9 +81,8 @@ public class World implements Game {
     }
 
     private void monsterAttack(){
-        for (int i =0 ; i < monsterList.size();i++){
-            Monster m = monsterList.get(i);
-            if (m.getPos().manhattanDistance(hero.getPos()) == 0){
+        for (Monster m : monsterList) {
+            if (m.getPos().manhattanDistance(hero.getPos()) == 0) {
                 m.attack(hero);
                 hero.attack(m);
             }
@@ -105,8 +100,8 @@ public class World implements Game {
     }
 
     private void checkIfWon() {
-        int x = (int) hero.getPos().getX();
-        int y = (int) hero.getPos().getY();
+        int x = hero.getPos().getX();
+        int y = hero.getPos().getY();
 
         gameOver = map.getCell(x, y).isChest();
     }
@@ -129,28 +124,16 @@ public class World implements Game {
     public void events(Cmd c) {
         switch (c) {
             case UP: {
-                /*Vector old = getHeroPos();
-                Vector n = new Vector(old.getX(), old.getY() - 1);
-                moveHeroTo(n);*/
                 hero.setSpeed(new Vector(0, -Hero.SPEED));
                 break;
             }
             case DOWN: {
-                /*Vector old = getHeroPos();
-                Vector n = new Vector(old.getX(), old.getY() + 1);
-                moveHeroTo(n);*/
                 hero.setSpeed(new Vector(0, Hero.SPEED));
                 break;
             }case LEFT: {
-                /*Vector old = getHeroPos();
-                Vector n = new Vector(old.getX() - 1, old.getY());
-                moveHeroTo(n);*/
                 hero.setSpeed(new Vector(-Hero.SPEED, 0));
                 break;
             }case RIGHT: {
-                /*Vector old = getHeroPos();
-                Vector n = new Vector(old.getX() + 1, old.getY());
-                moveHeroTo(n);*/
                 hero.setSpeed(new Vector(Hero.SPEED, 0));
                 break;
             }case ATTACK: {

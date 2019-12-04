@@ -15,6 +15,7 @@ public class Map {
     private int h;
     private List<Warp> warps = new ArrayList<>();
 
+    @Deprecated
     public Cell[][] getCells() {
         return cells;
     }
@@ -30,28 +31,28 @@ public class Map {
         }
     }
 
-    public void setWarpLinks(HashMap<Integer, List<Warp>> map){
-        for(int i=0; i<6; i++){
-            if(map.get(i).size()==2){
-                Warp w1 = map.get(i).get(0);
-                Warp w2 = map.get(i).get(1);
-                w1.setDest(getCellPos(w2));
-                w2.setDest(getCellPos(w1));
+    public void setWarpLinks(HashMap<Character, List<Warp>> map){
+        for (java.util.Map.Entry<Character, List<Warp>> e : map.entrySet()) {
+            if(e.getValue().size() == 2) {
+                Warp w1 = e.getValue().get(0);
+                Warp w2 = e.getValue().get(1);
+
                 warps.add(w1);
                 warps.add(w2);
             }
         }
     }
 
-    public void reactivateWarps(Point heroPos){
-        for (Warp w : warps){
-            if(!w.equals(getCell(heroPos.getX(), heroPos.getY()))){
+    public void toggleWarps(Point heroPos) {
+        for(Warp w : warps) {
+            if(w != getCell(heroPos.getX(), heroPos.getY())) {
                 w.activate();
+            }
+            else {
+                w.desactivate();
             }
         }
     }
-
-
 
     public boolean isWalkable(Point p) {
         boolean res;
@@ -70,10 +71,11 @@ public class Map {
         return cells[y][x];
     }
 
+    @Deprecated
     public Point getCellPos(Cell c){
-        for(int i=0; i<cells.length; i++){
-            for(int j=0; j<cells[0].length; j++){
-                if(c.equals(cells[i][j])){
+        for(int j = 0; j < h; j++){
+            for(int i = 0; i < w; i++){
+                if(c.equals(cells[j][i])){
                     return new Point(i, j);
                 }
             }

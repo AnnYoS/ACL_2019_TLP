@@ -18,6 +18,10 @@ public class Warp implements Cell {
         dest=point;
     }
 
+    public Point getDest() {
+        return dest;
+    }
+
     public void desactivate(){
         activated=false;
     }
