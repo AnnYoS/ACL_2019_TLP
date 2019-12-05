@@ -48,4 +48,9 @@ public class SpritePerson extends Sprite{
         }
         return sprite.getSubimage(noanimx * 32, noanimy * 32, 32, 32);
     }
+
+    @Override
+    public Sprite clone() {
+        return new SpritePerson(sprite);
+    }
 }

@@ -8,12 +8,13 @@ public class SpriteWarp extends Sprite {
 
     public SpriteWarp(BufferedImage img) {
         super(img);
+        freqanim = 50;
     }
 
     @Override
     public BufferedImage getAnimation(Vector v, long dt) {
         timelastanim += dt;
-        if (timelastanim > freqanim * 2.5){
+        if (timelastanim > freqanim){
             if(noanimx >= 4){
                 noanimy += 1;
                 noanimx = 0;
@@ -26,5 +27,10 @@ public class SpriteWarp extends Sprite {
             timelastanim = 0;
         }
         return sprite.getSubimage(noanimx * 32, noanimy * 32, 32, 32);
+    }
+
+    @Override
+    public Sprite clone() {
+        return new SpriteWarp(sprite);
     }
 }
