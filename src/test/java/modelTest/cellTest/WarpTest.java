@@ -58,4 +58,13 @@ public class WarpTest {
 
         assertEquals(new Point(42,42), hero.getPos());
     }
+
+    @Test
+    public void testApplyEffectPersonNull(){
+        Point p = new Point(1,0);
+        Warp warp = new Warp();
+        warp.setDest(p);
+
+        assertThrows(NullPointerException.class, ()->{warp.applyEffect(null);});
+    }
 }
