@@ -12,7 +12,7 @@ public class Trap implements Cell {
     }
 
     @Override
-    public void applyDamage(Person p) {
+    public void applyEffect(Person p) {
         p.looseLP(1);
     }
 

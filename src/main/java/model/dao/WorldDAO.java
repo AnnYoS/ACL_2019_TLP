@@ -3,18 +3,17 @@ package model.dao;
 
 import math.Point;
 import model.Map;
-import math.Vector;
 import model.World;
 import model.cell.Cell;
 import model.cell.CellFactory;
+import model.cell.Warp;
 import model.person.Hero;
 import model.person.Monster;
 import model.person.strategy.FollowStrategy;
 import model.person.strategy.RandomStrategy;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 public class WorldDAO implements IWorldDAO{
@@ -34,6 +33,8 @@ public class WorldDAO implements IWorldDAO{
 
         List<List<Cell>> cells = new ArrayList<>();
         List<Monster> monsters = new ArrayList<>();
+        HashMap<Character, List<Warp>> warps = new HashMap<>();
+
         Hero hero = null;
 
         BufferedReader in = new BufferedReader(new FileReader(path));
@@ -78,9 +79,43 @@ public class WorldDAO implements IWorldDAO{
                         break;
                     }
                     case GRASS : {
+                        cellLine.add(factory.createGrass());
+                        break;
                     }
                     default: {
-                        cellLine.add(factory.createGrass());
+                        Warp w = (Warp) factory.createWarp();
+                        cellLine.add(w);
+
+                        /*
+                        if the character is already present we only add the warp if there is one warp in the list
+                        3 warps or more can't be bound together because that behaviour is undefined
+                        only 2 warps may be linked
+                         */
+                        if(warps.containsKey(c)) {
+                            List<Warp> tmp = warps.get(c);
+
+                            if(tmp.size() == 1) {
+                                Point p1 = tmp.get(0).getDest();
+                                Point p2 = new Point(i, y);
+
+                                tmp.get(0).setDest(p2);
+                                w.setDest(p1);
+
+                                tmp.add(w);
+                            }
+                        }
+                        else {
+                            /*
+                            if the character is not already used for another warp, this means that the warp won't teleport
+                            anywhere so the destination is the same as the entry point
+                             */
+                            List<Warp> tmp = new ArrayList<>(2);
+                            tmp.add(w);
+
+                            w.setDest(new Point(i, y));
+
+                            warps.put(c, tmp);
+                        }
                         break;
                     }
                 }
@@ -98,12 +133,13 @@ public class WorldDAO implements IWorldDAO{
         for(int j = 0; j < cellArray.length; j++) {
             List<Cell> tmp = cells.get(j);
             for(int i = 0; i < tmp.size(); i++) {
-                cellArray[i][j] = tmp.get(i);
+                cellArray[j][i] = tmp.get(i);
             }
         }
 
         Map map = new Map();
         map.setCells(cellArray);
+        map.setWarpLinks(warps);
 
         res.setHero(hero);
         res.setMonsterList(monsters);

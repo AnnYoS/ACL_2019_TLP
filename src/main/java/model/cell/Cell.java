@@ -1,11 +1,14 @@
 package model.cell;
 
+import math.Point;
 import model.person.Person;
+
+import java.util.List;
 
 public interface Cell extends Drawable {
     public boolean isWalkable();
 
-    default void applyDamage(Person p) {
+    default void applyEffect(Person p) {
 
     }
 

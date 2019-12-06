@@ -1,14 +1,18 @@
 package view;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-
 import engine.Game;
 import engine.GamePainter;
 import math.Vector;
-import model.*;
+import model.World;
 import model.cell.*;
 import model.person.Monster;
+import model.sprites.Sprite;
+import model.sprites.SpriteFactory;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Horatiu Cirstea, Vincent Thomas
@@ -24,12 +28,17 @@ public class PacmanPainter implements GamePainter {
 
 	private static final int BLOCK_SIZE = 32;
 
-	protected static final int WIDTH = BLOCK_SIZE * 20;
-	protected static final int HEIGHT = BLOCK_SIZE * 20;
+	protected int width;
+	protected int height;
 
 	private World game;
 
+	private long dt;
+	private long time;
+
 	private SpriteFactory spriteFactory;
+
+	private Map<Object, Sprite> spriteMap;
 
 	/**
 	 * appelle constructeur parent
@@ -40,6 +49,13 @@ public class PacmanPainter implements GamePainter {
 	public PacmanPainter(Game game, SpriteFactory factory) {
 		this.game = (World) game;
 		spriteFactory = factory;
+
+		width = ((World) game).getMap().getW() * BLOCK_SIZE;
+		height = ((World) game).getMap().getH() * BLOCK_SIZE;
+		dt = 0;
+		time = System.currentTimeMillis();
+
+		spriteMap = new HashMap<>();
 	}
 
 	/**
@@ -47,9 +63,12 @@ public class PacmanPainter implements GamePainter {
 	 */
 	@Override
 	public void draw(BufferedImage im) {
+		dt = System.currentTimeMillis() - time;
+		time = System.currentTimeMillis();
+
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
 
-		Map map = game.getMap();
+		model.Map map = game.getMap();
 		for(int i=0; i < map.getW();i++){
 			for(int j=0; j < map.getH();j++){
 				Cell c = map.getCell(i, j);
@@ -60,15 +79,29 @@ public class PacmanPainter implements GamePainter {
 		Vector heroPos = game.getHero().getDrawPos();
 		Vector heroSpeed = game.getHero().getSpeed();
         Graphics g = im.getGraphics();
-        g.drawImage(spriteFactory.getHero().getAnimation(heroSpeed), (int) (heroPos.getX() * BLOCK_SIZE), (int) (heroPos.getY() * BLOCK_SIZE), null);
+
+        if(! spriteMap.containsKey(game.getHero())) {
+			spriteMap.put(game.getHero(), spriteFactory.getHero());
+		}
+        Sprite tmp = spriteMap.get(game.getHero());
+
+        g.drawImage(tmp.getAnimation(heroSpeed, dt), (int) (heroPos.getX() * BLOCK_SIZE), (int) (heroPos.getY() * BLOCK_SIZE), null);
 
 
 		crayon.setColor(Color.red);
 		for (Monster m: game.getMonsterList()){
             Vector monsterPos = m.getDrawPos();
             Vector monsterSpeed = m.getSpeed();
-            g.drawImage(spriteFactory.getEnemy().getAnimation(monsterSpeed), (int) (monsterPos.getX() * BLOCK_SIZE), (int) (monsterPos.getY() * BLOCK_SIZE), null);
+
+            if(! spriteMap.containsKey(m)) {
+            	spriteMap.put(m, spriteFactory.getEnemy());
+			}
+            tmp = spriteMap.get(m);
+
+            g.drawImage(tmp.getAnimation(monsterSpeed, dt), (int) (monsterPos.getX() * BLOCK_SIZE), (int) (monsterPos.getY() * BLOCK_SIZE), null);
 		}
+
+		drawLifePoint(im);
 	}
 
 	public void drawCell(BufferedImage img, Grass gr, int x, int y) {
@@ -99,15 +132,33 @@ public class PacmanPainter implements GamePainter {
 		//g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 	}
 
+	public void drawCell(BufferedImage img, Warp p, int x, int y) {
+		Graphics g = img.getGraphics();
+		g.drawImage(spriteFactory.getGrass().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+
+		if(! spriteMap.containsKey(p)) {
+			spriteMap.put(p, spriteFactory.getWarp());
+		}
+		Sprite tmp = spriteMap.get(p);
+
+		g.drawImage(tmp.getAnimation(new Vector(0,0), dt), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+	}
+
+	public void drawLifePoint(BufferedImage img){
+		Graphics g = img.getGraphics();
+		g.drawImage(spriteFactory.getLife().getSprite(), 0, 0, null);
+		g.drawString(game.getHero().getLifepoints()+"", BLOCK_SIZE, BLOCK_SIZE);
+	}
+
 
 	@Override
 	public int getWidth() {
-		return WIDTH;
+		return width;
 	}
 
 	@Override
 	public int getHeight() {
-		return HEIGHT;
+		return height;
 	}
 
 }

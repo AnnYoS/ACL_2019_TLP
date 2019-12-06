@@ -3,24 +3,54 @@ package model;
 import math.Point;
 import math.Vector;
 import model.cell.Cell;
+import model.cell.Warp;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Map {
     private Cell[][] cells;
     private int w;
     private int h;
+    private List<Warp> warps = new ArrayList<>();
 
+    @Deprecated
     public Cell[][] getCells() {
         return cells;
     }
 
     public void setCells(Cell[][] cells){
         this.cells=cells;
-        w = cells.length;
+        h = cells.length;
 
-        h = cells[0].length;
+        w = cells[0].length;
 
-        for(int i = 1; i < w; i++) {
-            h = Math.max(h, cells[i].length);
+        for(int i = 1; i < h; i++) {
+            w = Math.max(w, cells[i].length);
+        }
+    }
+
+    public void setWarpLinks(HashMap<Character, List<Warp>> map){
+        for (java.util.Map.Entry<Character, List<Warp>> e : map.entrySet()) {
+            if(e.getValue().size() == 2) {
+                Warp w1 = e.getValue().get(0);
+                Warp w2 = e.getValue().get(1);
+
+                warps.add(w1);
+                warps.add(w2);
+            }
+        }
+    }
+
+    public void toggleWarps(Point heroPos) {
+        for(Warp w : warps) {
+            if(w != getCell(heroPos.getX(), heroPos.getY())) {
+                w.activate();
+            }
+            else {
+                w.desactivate();
+            }
         }
     }
 
@@ -30,7 +60,7 @@ public class Map {
         int y = p.getY();
 
         if(x >= 0 && y >= 0 && x < w && y < h) {
-            res = cells[x][y].isWalkable();
+            res = cells[y][x].isWalkable();
         }else{
             res = false;
         }
@@ -38,7 +68,19 @@ public class Map {
     }
 
     public Cell getCell(int x, int y) {
-        return cells[x][y];
+        return cells[y][x];
+    }
+
+    @Deprecated
+    public Point getCellPos(Cell c){
+        for(int j = 0; j < h; j++){
+            for(int i = 0; i < w; i++){
+                if(c.equals(cells[j][i])){
+                    return new Point(i, j);
+                }
+            }
+        }
+        return null;
     }
 
     public int getW() {

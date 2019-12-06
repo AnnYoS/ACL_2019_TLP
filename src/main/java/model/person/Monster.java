@@ -39,9 +39,11 @@ public class Monster implements Person {
     }
 
     public void setSpeed(Vector speed) {
-        if(!this.speed.equals(speed)) {
-            this.speed = speed;
-            acc = new Vector(0, 0);
+        if(Math.abs(acc.getX()) <= 0.05 && Math.abs(acc.getY()) <= 0.05) {
+            if (!this.speed.equals(speed)) {
+                this.speed = speed;
+                acc = new Vector(0, 0);
+            }
         }
     }
 

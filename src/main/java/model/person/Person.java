@@ -64,5 +64,8 @@ public interface Person {
                 acc.setY(acc.getY() + 1);
             }
         }
+        else {
+            forceSetSpeed(new Vector(0, 0));
+        }
     }
 }
