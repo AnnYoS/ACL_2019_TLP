@@ -30,7 +30,6 @@ public class Warp implements Cell {
         activated=true;
     }
 
-
     @Override
     public boolean isWalkable() {
         return true;
