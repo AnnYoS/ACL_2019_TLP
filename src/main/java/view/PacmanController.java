@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Timer;
 
 import engine.Cmd;
 import engine.GameController;
@@ -42,7 +44,6 @@ public class PacmanController implements GameController {
 	 */
 	public void keyPressed(KeyEvent e) {
 		//char c = Character.toLowerCase(e.getKeyChar());
-
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_UP:
 				this.commandeEnCours = Cmd.UP;
@@ -68,6 +69,7 @@ public class PacmanController implements GameController {
 	 * met a jour les commandes quand le joueur relache une touche
 	 */
 	public void keyReleased(KeyEvent e) {
+
 		this.commandeEnCours = Cmd.IDLE;
 	}
 
@@ -78,5 +80,7 @@ public class PacmanController implements GameController {
 	public void keyTyped(KeyEvent e) {
 
 	}
+
+
 
 }

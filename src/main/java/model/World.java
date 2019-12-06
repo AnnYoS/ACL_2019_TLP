@@ -97,6 +97,8 @@ public class World implements Game {
                 hero.attack(m);
             }
         }
+        hero.setIsAttacking(true);
+        System.out.println("attacking");
     }
 
     private void checkIfWon() {
@@ -141,6 +143,7 @@ public class World implements Game {
             }
             case IDLE: {
                 hero.setSpeed(new Vector(0, 0));
+                hero.setIsAttacking(false);
             }
         }
         calcMonsterSpeeds();
