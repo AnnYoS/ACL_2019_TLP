@@ -13,7 +13,7 @@ public abstract class Sprite {
 
     protected int lastanim;
     protected long timelastanim;
-    protected static int freqanim = 100;
+    protected int freqanim = 100;
 
     public Sprite(BufferedImage img){
         sprite = img;
@@ -28,4 +28,6 @@ public abstract class Sprite {
     public BufferedImage getSprite() {
         return sprite;
     }
+
+    public abstract Sprite clone();
 }

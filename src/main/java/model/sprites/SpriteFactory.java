@@ -53,31 +53,31 @@ public class SpriteFactory implements ISpriteFactory {
     }
 
     public Sprite getGrass() {
-        return grass;
+        return grass.clone();
     }
 
     public Sprite getWall() {
-        return wall;
+        return wall.clone();
     }
 
     public Sprite getChest() {
-        return chest;
+        return chest.clone();
     }
 
     public Sprite getTrap() {
-        return trap;
+        return trap.clone();
     }
 
     public Sprite getHero() {
-        return hero;
+        return hero.clone();
     }
 
     public Sprite getEnemy() {
-        return enemy;
+        return enemy.clone();
     }
 
-    public Sprite getLife() { return life; }
+    public Sprite getLife() { return life.clone(); }
 
-    public Sprite getWarp() { return warp; }
+    public Sprite getWarp() { return warp.clone(); }
 }
 

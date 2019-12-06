@@ -1,15 +1,18 @@
 package view;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-
 import engine.Game;
 import engine.GamePainter;
 import math.Vector;
-import model.*;
+import model.World;
 import model.cell.*;
 import model.person.Monster;
+import model.sprites.Sprite;
 import model.sprites.SpriteFactory;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Horatiu Cirstea, Vincent Thomas
@@ -35,6 +38,8 @@ public class PacmanPainter implements GamePainter {
 
 	private SpriteFactory spriteFactory;
 
+	private Map<Object, Sprite> spriteMap;
+
 	/**
 	 * appelle constructeur parent
 	 * 
@@ -49,6 +54,8 @@ public class PacmanPainter implements GamePainter {
 		height = ((World) game).getMap().getH() * BLOCK_SIZE;
 		dt = 0;
 		time = System.currentTimeMillis();
+
+		spriteMap = new HashMap<>();
 	}
 
 	/**
@@ -61,7 +68,7 @@ public class PacmanPainter implements GamePainter {
 
 		Graphics2D crayon = (Graphics2D) im.getGraphics();
 
-		Map map = game.getMap();
+		model.Map map = game.getMap();
 		for(int i=0; i < map.getW();i++){
 			for(int j=0; j < map.getH();j++){
 				Cell c = map.getCell(i, j);
@@ -72,14 +79,26 @@ public class PacmanPainter implements GamePainter {
 		Vector heroPos = game.getHero().getDrawPos();
 		Vector heroSpeed = game.getHero().getSpeed();
         Graphics g = im.getGraphics();
-        g.drawImage(spriteFactory.getHero().getAnimation(heroSpeed, dt), (int) (heroPos.getX() * BLOCK_SIZE), (int) (heroPos.getY() * BLOCK_SIZE), null);
+
+        if(! spriteMap.containsKey(game.getHero())) {
+			spriteMap.put(game.getHero(), spriteFactory.getHero());
+		}
+        Sprite tmp = spriteMap.get(game.getHero());
+
+        g.drawImage(tmp.getAnimation(heroSpeed, dt), (int) (heroPos.getX() * BLOCK_SIZE), (int) (heroPos.getY() * BLOCK_SIZE), null);
 
 
 		crayon.setColor(Color.red);
 		for (Monster m: game.getMonsterList()){
             Vector monsterPos = m.getDrawPos();
             Vector monsterSpeed = m.getSpeed();
-            g.drawImage(spriteFactory.getEnemy().getAnimation(monsterSpeed, dt), (int) (monsterPos.getX() * BLOCK_SIZE), (int) (monsterPos.getY() * BLOCK_SIZE), null);
+
+            if(! spriteMap.containsKey(m)) {
+            	spriteMap.put(m, spriteFactory.getEnemy());
+			}
+            tmp = spriteMap.get(m);
+
+            g.drawImage(tmp.getAnimation(monsterSpeed, dt), (int) (monsterPos.getX() * BLOCK_SIZE), (int) (monsterPos.getY() * BLOCK_SIZE), null);
 		}
 
 		drawLifePoint(im);
@@ -116,7 +135,13 @@ public class PacmanPainter implements GamePainter {
 	public void drawCell(BufferedImage img, Warp p, int x, int y) {
 		Graphics g = img.getGraphics();
 		g.drawImage(spriteFactory.getGrass().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
-		g.drawImage(spriteFactory.getWarp().getAnimation(new Vector(0,0), dt), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+
+		if(! spriteMap.containsKey(p)) {
+			spriteMap.put(p, spriteFactory.getWarp());
+		}
+		Sprite tmp = spriteMap.get(p);
+
+		g.drawImage(tmp.getAnimation(new Vector(0,0), dt), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
 	}
 
 	public void drawLifePoint(BufferedImage img){

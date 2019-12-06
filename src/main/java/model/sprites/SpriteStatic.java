@@ -15,4 +15,9 @@ public class SpriteStatic extends Sprite {
         //no use
         return sprite;
     }
+
+    @Override
+    public Sprite clone() {
+        return this;
+    }
 }
