@@ -2,6 +2,10 @@ package model.person;
 
 import math.Point;
 import math.Vector;
+import model.cell.Drawable;
+import view.PacmanPainter;
+
+import java.awt.image.BufferedImage;
 
 public class Hero implements Person {
     public static final float SPEED = 0.005f;
@@ -10,12 +14,15 @@ public class Hero implements Person {
     private Vector acc;
     private Vector speed;
     private int lifepoints;
+    private boolean isAttacking;
+    private Attack attack;
 
     public Hero(Point pos, int lp) {
         this.pos = pos;
         acc = new Vector(0, 0);
         this.lifepoints = lp;
         speed = new Vector(0, 0);
+        this.attack = new Attack();
     }
 
     public void setSpeed(Vector speed) {
@@ -27,6 +34,14 @@ public class Hero implements Person {
         }
     }
 
+    public class Attack implements Drawable {
+        @Override
+        public void draw(PacmanPainter p, BufferedImage img, int x, int y) {
+            //p.drawAttack(img, this, x, y);
+        }
+    }
+
+
     @Override
     public void forceSetSpeed(Vector v) {
         this.speed = v;
@@ -36,6 +51,7 @@ public class Hero implements Person {
     @Override
     public void attack(Person p) {
         p.looseLP(1);
+
     }
 
     @Override
@@ -54,6 +70,18 @@ public class Hero implements Person {
 
     public void setPos(Point pos) {
         this.pos = pos;
+    }
+
+    public void setIsAttacking(boolean attacking) {
+        isAttacking = attacking;
+    }
+
+    public boolean isAttacking() {
+        return isAttacking;
+    }
+
+    public Attack getAttack() {
+        return attack;
     }
 
     @Override

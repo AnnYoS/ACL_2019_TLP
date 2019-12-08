@@ -5,6 +5,7 @@ import engine.GamePainter;
 import math.Vector;
 import model.World;
 import model.cell.*;
+import model.person.Hero;
 import model.person.Monster;
 import model.sprites.Sprite;
 import model.sprites.SpriteFactory;
@@ -76,6 +77,7 @@ public class PacmanPainter implements GamePainter {
 			}
 		}
 
+		//Déplacement du héros
 		Vector heroPos = game.getHero().getDrawPos();
 		Vector heroSpeed = game.getHero().getSpeed();
         Graphics g = im.getGraphics();
@@ -86,6 +88,17 @@ public class PacmanPainter implements GamePainter {
         Sprite tmp = spriteMap.get(game.getHero());
 
         g.drawImage(tmp.getAnimation(heroSpeed, dt), (int) (heroPos.getX() * BLOCK_SIZE), (int) (heroPos.getY() * BLOCK_SIZE), null);
+
+
+        //Attaque du héros
+		//System.out.println("State attack : "+                   game.getHero().isAttacking());
+ 		if(game.getHero().isAttacking()){
+			if(! spriteMap.containsKey(game.getHero().getAttack())) {
+				spriteMap.put(game.getHero().getAttack(), spriteFactory.getAttack());
+			}
+			tmp = spriteMap.get(game.getHero().getAttack());
+			g.drawImage(tmp.getAnimation(heroSpeed,dt), (int) (heroPos.getX() * BLOCK_SIZE-32), (int) (heroPos.getY() * BLOCK_SIZE-32), null);
+		}
 
 
 		crayon.setColor(Color.red);
@@ -149,7 +162,6 @@ public class PacmanPainter implements GamePainter {
 		g.drawImage(spriteFactory.getLife().getSprite(), 0, 0, null);
 		g.drawString(game.getHero().getLifepoints()+"", BLOCK_SIZE, BLOCK_SIZE);
 	}
-
 
 	@Override
 	public int getWidth() {
