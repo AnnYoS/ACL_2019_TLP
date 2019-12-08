@@ -69,7 +69,6 @@ public class PacmanController implements GameController {
 	 * met a jour les commandes quand le joueur relache une touche
 	 */
 	public void keyReleased(KeyEvent e) {
-
 		this.commandeEnCours = Cmd.IDLE;
 	}
 
