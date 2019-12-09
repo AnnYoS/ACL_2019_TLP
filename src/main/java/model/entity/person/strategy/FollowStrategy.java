@@ -1,9 +1,9 @@
-package model.person.strategy;
+package model.entity.person.strategy;
 
 import math.Point;
 import model.Map;
 import math.Vector;
-import model.person.Monster;
+import model.entity.person.Monster;
 
 import java.util.*;
 

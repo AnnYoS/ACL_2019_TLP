@@ -5,8 +5,8 @@ import engine.GamePainter;
 import math.Vector;
 import model.World;
 import model.cell.*;
-import model.person.Hero;
-import model.person.Monster;
+import model.entity.Entity;
+import model.entity.person.Monster;
 import model.sprites.Sprite;
 import model.sprites.SpriteFactory;
 
@@ -112,6 +112,17 @@ public class PacmanPainter implements GamePainter {
             tmp = spriteMap.get(m);
 
             g.drawImage(tmp.getAnimation(monsterSpeed, dt), (int) (monsterPos.getX() * BLOCK_SIZE), (int) (monsterPos.getY() * BLOCK_SIZE), null);
+		}
+
+		for(Entity e : game.getProjectiles()) {
+			Vector pos = e.getDrawPos();
+
+			pos.mult(BLOCK_SIZE);
+
+			//g.setColor(Color.red);
+			//g.fillRect((int)pos.getX() - 4 + BLOCK_SIZE / 2, (int)pos.getY()  - 4 + BLOCK_SIZE / 2, 8, 8);
+
+			g.drawImage(spriteFactory.getFireball().getSprite(), (int)(pos.getX()), (int)(pos.getY()), null);
 		}
 
 		drawLifePoint(im);

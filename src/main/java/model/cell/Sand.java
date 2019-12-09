@@ -1,7 +1,7 @@
 package model.cell;
 
 import math.Vector;
-import model.person.Person;
+import model.entity.person.Person;
 import view.PacmanPainter;
 
 import java.awt.image.BufferedImage;

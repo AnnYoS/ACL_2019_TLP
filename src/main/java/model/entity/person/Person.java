@@ -1,10 +1,11 @@
-package model.person;
+package model.entity.person;
 
 import math.Point;
 import model.Map;
 import math.Vector;
+import model.entity.Entity;
 
-public interface Person {
+public interface Person extends Entity {
     void attack (Person p);
     void looseLP (int lp);
     int getLifepoints();
@@ -19,8 +20,6 @@ public interface Person {
 
     Vector getAcc();
     void setAcc(Vector v);
-
-    Vector getDrawPos();
 
     default void evolve(Map m, long dt) {
         Vector speed = getSpeed();

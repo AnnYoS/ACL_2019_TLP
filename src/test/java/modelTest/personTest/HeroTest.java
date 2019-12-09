@@ -3,7 +3,7 @@ package modelTest.personTest;
 import math.Point;
 import math.Vector;
 import model.Map;
-import model.person.Hero;
+import model.entity.person.Hero;
 import org.easymock.EasyMock;
 import org.junit.jupiter.api.Test;
 

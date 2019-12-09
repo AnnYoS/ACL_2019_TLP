@@ -2,9 +2,9 @@ package modelTest.cellTest;
 
 import math.Point;
 import model.cell.Warp;
-import model.person.Hero;
-import model.person.Monster;
-import model.person.strategy.RandomStrategy;
+import model.entity.person.Hero;
+import model.entity.person.Monster;
+import model.entity.person.strategy.RandomStrategy;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
