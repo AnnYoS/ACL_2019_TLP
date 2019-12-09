@@ -25,6 +25,7 @@ public class WorldDAO implements IWorldDAO{
     private static final char CHEST = 'C';
     private static final char HERO = 'H';
     private static final char GRASS = ' ';
+    private static final char SAND = 'S';
 
     @Override
     public World load(String path) throws IOException {
@@ -85,6 +86,10 @@ public class WorldDAO implements IWorldDAO{
                     }
                     case GRASS : {
                         cellLine.add(factory.createGrass());
+                        break;
+                    }
+                    case SAND : {
+                        cellLine.add(factory.createSand());
                         break;
                     }
                     default: {

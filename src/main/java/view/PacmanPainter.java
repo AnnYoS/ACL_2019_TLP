@@ -119,7 +119,7 @@ public class PacmanPainter implements GamePainter {
 
 	public void drawCell(BufferedImage img, Grass gr, int x, int y) {
 		Graphics g = img.getGraphics();
-		g.drawImage(spriteFactory.getSand().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+		g.drawImage(spriteFactory.getGrass().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
 	}
 
 	public void drawCell(BufferedImage img, Wall w, int x, int y) {
