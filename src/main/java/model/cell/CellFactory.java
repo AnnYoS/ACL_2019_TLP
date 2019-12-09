@@ -6,6 +6,7 @@ public class CellFactory implements ICellFactory {
     private static final Grass GRASS = new Grass();
     private static final Trap TRAP = new Trap();
     private static final Chest CHEST = new Chest();
+    private static final Sand SAND = new Sand();
     //private static final Warp WARP = new Warp();
 
     @Override
@@ -37,4 +38,9 @@ public class CellFactory implements ICellFactory {
     public Cell createWarp() {
         return new Warp();
     }
+
+    @Override
+    public Cell createSand() { return SAND;}
+
+
 }

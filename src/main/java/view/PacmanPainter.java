@@ -157,6 +157,14 @@ public class PacmanPainter implements GamePainter {
 		g.drawImage(tmp.getAnimation(new Vector(0,0), dt), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
 	}
 
+	public void drawCell(BufferedImage img, Sand s, int x, int y){
+		Graphics g = img.getGraphics();
+		//g.drawImage(spriteFactory.getGrass().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+		//g.drawImage(spriteFactory.getChest().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+		g.setColor(Color.YELLOW);
+		g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+	}
+
 	public void drawLifePoint(BufferedImage img){
 		Graphics g = img.getGraphics();
 		g.drawImage(spriteFactory.getLife().getSprite(), 0, 0, null);
