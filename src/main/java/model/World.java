@@ -4,6 +4,9 @@ import engine.Cmd;
 import engine.Game;
 import math.Point;
 import math.Vector;
+import model.cell.Cell;
+import model.cell.Grass;
+import model.cell.Wall;
 import model.person.Hero;
 import model.person.Monster;
 
@@ -34,8 +37,6 @@ public class World implements Game {
     public void setMonsterList(List<Monster> monsterList) {
         this.monsterList = monsterList;
     }
-
-
 
     private void calcMonsterSpeeds() {
         for (Monster m: monsterList) {
@@ -69,7 +70,6 @@ public class World implements Game {
     }
 
 
-
     private void removeDeadMonsters() {
         for(int i = monsterList.size() - 1; i >= 0; i--) {
             Monster m = monsterList.get(i);
@@ -97,6 +97,22 @@ public class World implements Game {
                 hero.attack(m);
             }
         }
+
+        for(int j = -1; j < 2; j++) {
+            for(int i = -1; i < 2; i++) {
+                int x = i + p.getX();
+                int y = j + p.getY();
+
+                if(x >= 0 && y >= 0 && x < map.getW() && y < map.getH()) {
+                    Cell c = map.getCell(x, y);
+
+                    if (c.isDestructible()) {
+                        map.setCell(x, y, new Grass());
+                    }
+                }
+            }
+        }
+        hero.setIsAttacking(true);
     }
 
     private void checkIfWon() {
@@ -138,9 +154,12 @@ public class World implements Game {
                 break;
             }case ATTACK: {
                 heroAttack();
+                break;
             }
             case IDLE: {
                 hero.setSpeed(new Vector(0, 0));
+                hero.setIsAttacking(false);
+                break;
             }
         }
         calcMonsterSpeeds();

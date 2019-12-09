@@ -18,6 +18,7 @@ public class SpriteFactory implements ISpriteFactory {
     private Sprite enemy;
     private Sprite life;
     private Sprite warp;
+    private Sprite attack;
 
     public SpriteFactory(){
 
@@ -29,6 +30,7 @@ public class SpriteFactory implements ISpriteFactory {
         BufferedImage bMonster = null;
         BufferedImage bLife = null;
         BufferedImage bWarp = null;
+        BufferedImage bAttack = null;
         try {
             bGrass = ImageIO.read(new File("assets/grass32x32.png"));
             bWall = ImageIO.read(new File("assets/wall32x32.png"));
@@ -38,6 +40,7 @@ public class SpriteFactory implements ISpriteFactory {
             bMonster = ImageIO.read(new File("assets/enemy32x32.png"));
             bLife = ImageIO.read(new File("assets/life32x32.png"));
             bWarp = ImageIO.read(new File("assets/warp32x32.png"));
+            bAttack = ImageIO.read(new File("assets/slash_attack.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,6 +53,7 @@ public class SpriteFactory implements ISpriteFactory {
         enemy = new SpritePerson(bMonster);
         life = new SpriteStatic(bLife);
         warp = new SpriteWarp(bWarp);
+        attack = new SpriteAttack(bAttack);
     }
 
     public Sprite getGrass() {
@@ -79,5 +83,8 @@ public class SpriteFactory implements ISpriteFactory {
     public Sprite getLife() { return life.clone(); }
 
     public Sprite getWarp() { return warp.clone(); }
+
+    public Sprite getAttack() { return attack.clone(); }
+
 }
 
