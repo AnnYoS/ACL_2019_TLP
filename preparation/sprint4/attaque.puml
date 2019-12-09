@@ -1,0 +1,40 @@
+@startuml
+
+actor Player
+
+
+Player -> "w : World": attack()
+"w : World" -> "w : World" : p = getHeroPos()
+"w : World" -> "m : Map" : getMonstersAside(p)
+    activate "m : Map"
+    "m : Map" -> "m : Map" : monsters = getMonstersAside(p)
+        return monsters
+
+loop "for each monster mo in monsters"
+  "w : World" -> "h : Hero": attack(mo)
+  activate "h : Hero"
+    "h : Hero" -> "mo : Monster" : looseLP()
+  deactivate
+end
+
+
+"w : World" -> "m : Map" : getWallsAside(p)
+    activate "m : Map"
+    "m : Map" -> "m : Map" : walls = getWallsAside(p)
+        return walls
+
+loop "for each wall wa in walls"
+  "w : World" -> "m : Map": delete(wa)
+  activate "m : Map"
+    "m : Map" -> "wa : Wall" !!: delete()
+
+  deactivate
+end
+
+
+"w : World" -> "w : World" : removeDeadMonsters()
+"w : World" -> "w : World" : updateView()
+"w : World" -> Player : update screen
+
+
+@enduml
