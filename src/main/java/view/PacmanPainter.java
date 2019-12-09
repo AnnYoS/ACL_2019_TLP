@@ -8,7 +8,9 @@ import model.cell.*;
 import model.person.Hero;
 import model.person.Monster;
 import model.sprites.Sprite;
+import model.sprites.SpriteAttack;
 import model.sprites.SpriteFactory;
+import model.sprites.SpritePerson;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -36,6 +38,9 @@ public class PacmanPainter implements GamePainter {
 
 	private long dt;
 	private long time;
+
+	private SpriteAttack attack;
+	private boolean attacking;
 
 	private SpriteFactory spriteFactory;
 
@@ -82,22 +87,27 @@ public class PacmanPainter implements GamePainter {
 		Vector heroSpeed = game.getHero().getSpeed();
         Graphics g = im.getGraphics();
 
-        if(! spriteMap.containsKey(game.getHero())) {
+
+		if(!spriteMap.containsKey(game.getHero())) {
 			spriteMap.put(game.getHero(), spriteFactory.getHero());
 		}
-        Sprite tmp = spriteMap.get(game.getHero());
-
-        g.drawImage(tmp.getAnimation(heroSpeed, dt), (int) (heroPos.getX() * BLOCK_SIZE), (int) (heroPos.getY() * BLOCK_SIZE), null);
+		Sprite tmp = spriteMap.get(game.getHero());
+		g.drawImage(tmp.getAnimation(heroSpeed,dt), (int) (heroPos.getX() * BLOCK_SIZE), (int) (heroPos.getY() * BLOCK_SIZE), null);
 
 
         //Attaque du héros
-		//System.out.println("State attack : "+                   game.getHero().isAttacking());
- 		if(game.getHero().isAttacking()){
-			if(! spriteMap.containsKey(game.getHero().getAttack())) {
-				spriteMap.put(game.getHero().getAttack(), spriteFactory.getAttack());
+		attacking = game.getHero().isAttacking();
+		game.getHero().setIsAttacking(false);
+		if(attacking){
+			if(attack==null) {
+				attack = (SpriteAttack) spriteFactory.getAttack();
 			}
-			tmp = spriteMap.get(game.getHero().getAttack());
-			g.drawImage(tmp.getAnimation(heroSpeed,dt), (int) (heroPos.getX() * BLOCK_SIZE-32), (int) (heroPos.getY() * BLOCK_SIZE-32), null);
+			g.drawImage(attack.getAnimation(heroSpeed,dt), (int) (heroPos.getX() * BLOCK_SIZE-32), (int) (heroPos.getY() * BLOCK_SIZE-32), null);
+		}
+
+		if(attack!= null && attack.isFinished()){
+			attacking = false;
+			attack = null;
 		}
 
 

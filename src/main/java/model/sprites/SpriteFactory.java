@@ -20,6 +20,8 @@ public class SpriteFactory implements ISpriteFactory {
     private Sprite warp;
     private Sprite attack;
 
+
+
     public SpriteFactory(){
 
         BufferedImage bGrass = null;

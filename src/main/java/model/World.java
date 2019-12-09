@@ -143,7 +143,6 @@ public class World implements Game {
             }
             case IDLE: {
                 hero.setSpeed(new Vector(0, 0));
-                hero.setIsAttacking(false);
                 break;
             }
         }
