@@ -1,8 +1,8 @@
 package model.cell;
 
 import math.Vector;
-import model.person.Hero;
-import model.person.Person;
+import model.entity.person.Hero;
+import model.entity.person.Person;
 import view.PacmanPainter;
 
 import java.awt.image.BufferedImage;
