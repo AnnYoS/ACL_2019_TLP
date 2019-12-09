@@ -26,8 +26,10 @@ end
 loop "for each wall wa in walls"
   "w : World" -> "m : Map": delete(wa)
   activate "m : Map"
-    "m : Map" -> "wa : Wall" !!: delete()
-
+    "m : Map" -> "wa : Wall" : delete()
+    alt Wall is deletable
+        "wa : Wall" -> "wa : Wall" !!
+    end
   deactivate
 end
 
