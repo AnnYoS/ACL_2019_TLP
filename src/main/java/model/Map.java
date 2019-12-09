@@ -71,6 +71,10 @@ public class Map {
         return cells[y][x];
     }
 
+    public void setCell(int x, int y, Cell c) {
+        cells[y][x] = c;
+    }
+
     @Deprecated
     public Point getCellPos(Cell c){
         for(int j = 0; j < h; j++){
