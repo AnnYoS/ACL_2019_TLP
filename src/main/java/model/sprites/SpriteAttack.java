@@ -30,10 +30,6 @@ public class SpriteAttack extends Sprite {
         return finished;
     }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
-    }
-
     @Override
     public Sprite clone() {
         return new SpriteAttack(sprite);

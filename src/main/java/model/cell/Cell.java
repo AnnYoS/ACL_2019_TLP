@@ -1,6 +1,6 @@
 package model.cell;
 
-import model.person.Person;
+import model.entity.person.Person;
 
 public interface Cell extends Drawable {
     boolean isWalkable();
