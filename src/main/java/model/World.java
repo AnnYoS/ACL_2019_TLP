@@ -49,6 +49,8 @@ public class World implements Game {
         this.monsterList = monsterList;
     }
 
+
+
     private void calcMonsterSpeeds() {
         for (Monster m: monsterList) {
             m.calcSpeed(map, hero.getPos());
@@ -79,6 +81,7 @@ public class World implements Game {
             map.getCell(x, y).applyEffect(m);
         }
     }
+
 
 
     private void removeDeadMonsters() {
@@ -245,7 +248,6 @@ public class World implements Game {
             }
             case IDLE: {
                 hero.setSpeed(new Vector(0, 0));
-                hero.setIsAttacking(false);
                 break;
             }
         }

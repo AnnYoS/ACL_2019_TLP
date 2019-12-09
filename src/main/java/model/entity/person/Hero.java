@@ -11,22 +11,17 @@ public class Hero implements Person {
     public static final float SPEED = 0.005f;
 
     private Direction direction;
-
     private Point pos;
     private Vector acc;
     private Vector speed;
     private int lifepoints;
-
     private boolean isAttacking;
-    private Attack attack;
 
     public Hero(Point pos, int lp) {
         this.pos = pos;
         acc = new Vector(0, 0);
         this.lifepoints = lp;
         speed = new Vector(0, 0);
-        this.attack = new Attack();
-
         direction = Direction.Down;
     }
 
@@ -45,13 +40,6 @@ public class Hero implements Person {
 
     public void setDirection(Direction direction) {
         this.direction = direction;
-    }
-
-    public class Attack implements Drawable {
-        @Override
-        public void draw(PacmanPainter p, BufferedImage img, int x, int y) {
-            //p.drawAttack(img, this, x, y);
-        }
     }
 
 
@@ -93,9 +81,6 @@ public class Hero implements Person {
         return isAttacking;
     }
 
-    public Attack getAttack() {
-        return attack;
-    }
 
     @Override
     public Vector getAcc() {
