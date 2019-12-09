@@ -4,13 +4,9 @@ actor Player
 
 
 Player -> "w : World": attack()
-"w : World" -> "w : World" : p = getHeroPos()
-"w : World" -> "m : Map" : getMonstersAside(p)
-    activate "m : Map"
-    "m : Map" -> "m : Map" : monsters = getMonstersAside(p)
-        return monsters
 
-loop "for each monster mo in monsters"
+
+loop "for each monster mo in monsters around hero"
   "w : World" -> "h : Hero": attack(mo)
   activate "h : Hero"
     "h : Hero" -> "mo : Monster" : looseLP()
@@ -18,17 +14,14 @@ loop "for each monster mo in monsters"
 end
 
 
-"w : World" -> "m : Map" : getWallsAside(p)
-    activate "m : Map"
-    "m : Map" -> "m : Map" : walls = getWallsAside(p)
-        return walls
 
-loop "for each wall wa in walls"
-  "w : World" -> "m : Map": delete(wa)
+
+loop "for each cell c in cells around hero"
+  "w : World" -> "m : Map": delete(c)
   activate "m : Map"
-    "m : Map" -> "wa : Wall" : delete()
+    "m : Map" -> "c : Cell" : delete()
     alt Wall is deletable
-        "wa : Wall" -> "wa : Wall" !!
+        "c : Cell" --> "c : Cell" !!
     end
   deactivate
 end
