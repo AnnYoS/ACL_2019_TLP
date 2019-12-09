@@ -20,6 +20,7 @@ public class WorldDAO implements IWorldDAO{
     private static final char RANDOM_STRAT = 'R';
     private static final char FOLLOW_STRAT = 'F';
     private static final char WALL = '#';
+    private static final char DESTRUCTIBLE_WALL = 'W';
     private static final char TRAP = 'T';
     private static final char CHEST = 'C';
     private static final char HERO = 'H';
@@ -68,6 +69,10 @@ public class WorldDAO implements IWorldDAO{
                     }
                     case WALL : {
                         cellLine.add(factory.createWall());
+                        break;
+                    }
+                    case DESTRUCTIBLE_WALL: {
+                        cellLine.add(factory.createDestructibleWall());
                         break;
                     }
                     case TRAP: {

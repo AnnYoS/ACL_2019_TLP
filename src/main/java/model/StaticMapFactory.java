@@ -19,18 +19,18 @@ public class StaticMapFactory extends MapFactory{
         }
 
         //ajout de murs
-        cells[1][4]= new Wall();
-        cells[5][4]= new Wall();
-        cells[6][2]= new Wall();
-        cells[8][8]= new Wall();
+        cells[1][4]= new Wall(false);
+        cells[5][4]= new Wall(false);
+        cells[6][2]= new Wall(false);
+        cells[8][8]= new Wall(false);
 
         //ajout de murs pour les bords
         for (int i = 0; i <20 ; i++) {
-            cells[i][0] = new Wall();
-            cells[i][19] = new Wall();
-            cells[0][i] = new Wall();
+            cells[i][0] = new Wall(false);
+            cells[i][19] = new Wall(false);
+            cells[0][i] = new Wall(false);
             if(i != 10){
-                cells[19][i] = new Wall();
+                cells[19][i] = new Wall(false);
             }
         }
 

@@ -106,7 +106,7 @@ public class World implements Game {
                 if(x >= 0 && y >= 0 && x < map.getW() && y < map.getH()) {
                     Cell c = map.getCell(x, y);
 
-                    if (c.getClass() == Wall.class) {
+                    if (c.isDestructible()) {
                         map.setCell(x, y, new Grass());
                     }
                 }
