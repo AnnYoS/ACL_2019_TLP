@@ -20,7 +20,7 @@ loop "for each cell c in cells around hero"
   "w : World" -> "m : Map": delete(c)
   activate "m : Map"
     "m : Map" -> "c : Cell" : delete()
-    alt Wall is deletable
+    alt c is a Wall deletable
         "c : Cell" --> "c : Cell" !!
     end
   deactivate
