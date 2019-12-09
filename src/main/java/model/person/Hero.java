@@ -14,6 +14,7 @@ public class Hero implements Person {
     private Vector acc;
     private Vector speed;
     private int lifepoints;
+
     private boolean isAttacking;
     private Attack attack;
 
