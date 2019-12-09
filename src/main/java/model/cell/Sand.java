@@ -1,13 +1,13 @@
 package model.cell;
 
 import math.Vector;
+import model.person.Hero;
 import model.person.Person;
 import view.PacmanPainter;
 
 import java.awt.image.BufferedImage;
 
 public class Sand implements Cell{
-    private int ralenti = 0;
 
     @Override
     public boolean isWalkable() {
@@ -16,11 +16,10 @@ public class Sand implements Cell{
 
     @Override
     public void applyEffect(Person p) {
-        if(ralenti != 10){
-            p.setSpeed(new Vector(0f,0f));
-            ralenti++;
-        }else{
-            ralenti = 0;
+        if(p.getClass().equals(Hero.class)) {
+            Vector s = p.getAcc();
+            Vector n = new Vector(s.getX() * 0.85f, s.getY() * 0.85f);
+            p.setAcc(n);
         }
     }
 
