@@ -224,6 +224,7 @@ public class World implements Game {
                 hero.setDirection(Direction.Right);
                 break;
             }case ATTACK: {
+                hero.setSpeed(new Vector(0, 0));
                 heroAttack();
                 break;
             }

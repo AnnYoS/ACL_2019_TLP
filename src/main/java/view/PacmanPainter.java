@@ -81,11 +81,19 @@ public class PacmanPainter implements GamePainter {
 				c.draw(this, im, i, j);
 			}
 		}
+		Graphics g = im.getGraphics();
+		for(Entity e : game.getProjectiles()) {
+			Vector pos = e.getDrawPos();
+
+			pos.mult(BLOCK_SIZE);
+
+			g.drawImage(spriteFactory.getFireball().getSprite(), (int)(pos.getX()), (int)(pos.getY()), null);
+		}
 
 		//Déplacement du héros
 		Vector heroPos = game.getHero().getDrawPos();
 		Vector heroSpeed = game.getHero().getSpeed();
-        Graphics g = im.getGraphics();
+
 
 
 		if(!spriteMap.containsKey(game.getHero())) {
@@ -122,17 +130,6 @@ public class PacmanPainter implements GamePainter {
             tmp = spriteMap.get(m);
 
             g.drawImage(tmp.getAnimation(monsterSpeed, dt), (int) (monsterPos.getX() * BLOCK_SIZE), (int) (monsterPos.getY() * BLOCK_SIZE), null);
-		}
-
-		for(Entity e : game.getProjectiles()) {
-			Vector pos = e.getDrawPos();
-
-			pos.mult(BLOCK_SIZE);
-
-			//g.setColor(Color.red);
-			//g.fillRect((int)pos.getX() - 4 + BLOCK_SIZE / 2, (int)pos.getY()  - 4 + BLOCK_SIZE / 2, 8, 8);
-
-			g.drawImage(spriteFactory.getFireball().getSprite(), (int)(pos.getX()), (int)(pos.getY()), null);
 		}
 
 		drawLifePoint(im);
