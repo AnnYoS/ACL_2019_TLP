@@ -225,6 +225,7 @@ public class World implements Game {
                 break;
             }
             case SHOOT: {
+                hero.setSpeed(new Vector(0, 0));
                 if(shootDt <= 0) {
                     Vector tmp = null;
                     switch (hero.getDirection()) {
