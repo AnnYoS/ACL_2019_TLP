@@ -3,8 +3,8 @@ package modelTest.personTest;
 import math.Point;
 import math.Vector;
 import model.Map;
-import model.person.Monster;
-import model.person.strategy.RandomStrategy;
+import model.entity.person.Monster;
+import model.entity.person.strategy.RandomStrategy;
 import org.easymock.EasyMock;
 import org.junit.jupiter.api.Test;
 

@@ -1,9 +1,9 @@
-package model.person;
+package model.entity.person;
 
 import math.Point;
 import model.Map;
 import math.Vector;
-import model.person.strategy.MonsterStrategy;
+import model.entity.person.strategy.MonsterStrategy;
 
 public class Monster implements Person {
 

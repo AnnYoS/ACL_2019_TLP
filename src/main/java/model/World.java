@@ -6,10 +6,13 @@ import math.Point;
 import math.Vector;
 import model.cell.Cell;
 import model.cell.Grass;
-import model.cell.Wall;
-import model.person.Hero;
-import model.person.Monster;
+import model.entity.Entity;
+import model.entity.Projectile;
+import model.entity.person.Direction;
+import model.entity.person.Hero;
+import model.entity.person.Monster;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class World implements Game {
@@ -17,6 +20,14 @@ public class World implements Game {
     private Hero hero;
     private boolean gameOver = false;
     private List<Monster> monsterList;
+
+    private List<Entity> projectiles;
+    private long shootDt = 0;
+    private static final long SHOOT_INTERVAL = 250;
+
+    public World() {
+        projectiles = new ArrayList<>(5);
+    }
 
     public Map getMap() {
         return map;
@@ -37,6 +48,8 @@ public class World implements Game {
     public void setMonsterList(List<Monster> monsterList) {
         this.monsterList = monsterList;
     }
+
+
 
     private void calcMonsterSpeeds() {
         for (Monster m: monsterList) {
@@ -68,6 +81,7 @@ public class World implements Game {
             map.getCell(x, y).applyEffect(m);
         }
     }
+
 
 
     private void removeDeadMonsters() {
@@ -126,14 +140,67 @@ public class World implements Game {
         return monsterList;
     }
 
+    public List<Entity> getProjectiles() {
+        return projectiles;
+    }
+
+    private void moveProjectiles(long dt) {
+        for(int i = projectiles.size() - 1; i >= 0; i--) {
+            Entity e = projectiles.get(i);
+
+            e.evolve(map, dt);
+
+            if(!e.keep()) {
+                projectiles.remove(i);
+            }
+        }
+    }
+
+    private void projectileMonsterCollisions() {
+        for (int i = projectiles.size() - 1; i >= 0; i--) {
+            Entity e = projectiles.get(i);
+            Vector ep = e.getDrawPos();
+            ep.add(new Vector(0.5f, 0.5f));
+
+            for (int j = monsterList.size() - 1; j >= 0; j--) {
+                Monster m = monsterList.get(j);
+                Vector mp = m.getDrawPos();
+
+                mp.add(new Vector(0.5f, 0.5f));
+
+                if(mp.distance(ep) <= 0.3) {
+                    m.looseLP(1);
+
+                    projectiles.remove(i);
+
+                    if(m.getLifepoints() <= 0) {
+                        monsterList.remove(j);
+                    }
+
+                    break;
+                }
+            }
+        }
+    }
+
     @Override
     public void evolve(long dt) {
-        moveMonsters(dt);
-        hero.evolve(map, dt);
-        monsterAttack();
         applyCellEffectOnPerson();
+        hero.evolve(map, dt);
+
+        moveMonsters(dt);
+        moveProjectiles(dt);
+
+        monsterAttack();
+        projectileMonsterCollisions();
+
         removeDeadMonsters();
         checkIfWon();
+
+        shootDt -= dt;
+        if(shootDt < 0) {
+            shootDt = 0;
+        }
     }
 
     @Override
@@ -141,24 +208,51 @@ public class World implements Game {
         switch (c) {
             case UP: {
                 hero.setSpeed(new Vector(0, -Hero.SPEED));
+                hero.setDirection(Direction.Up);
                 break;
             }
             case DOWN: {
                 hero.setSpeed(new Vector(0, Hero.SPEED));
+                hero.setDirection(Direction.Down);
                 break;
             }case LEFT: {
                 hero.setSpeed(new Vector(-Hero.SPEED, 0));
+                hero.setDirection(Direction.Left);
                 break;
             }case RIGHT: {
                 hero.setSpeed(new Vector(Hero.SPEED, 0));
+                hero.setDirection(Direction.Right);
                 break;
             }case ATTACK: {
+                hero.setSpeed(new Vector(0, 0));
                 heroAttack();
+                break;
+            }
+            case SHOOT: {
+                hero.setSpeed(new Vector(0, 0));
+                if(shootDt <= 0) {
+                    Vector tmp = null;
+                    switch (hero.getDirection()) {
+                        case Up:
+                            tmp = new Vector(0, -Projectile.SPEED);
+                            break;
+                        case Down:
+                            tmp = new Vector(0, Projectile.SPEED);
+                            break;
+                        case Left:
+                            tmp = new Vector(-Projectile.SPEED, 0);
+                            break;
+                        case Right:
+                            tmp = new Vector(Projectile.SPEED, 0);
+                            break;
+                    }
+                    projectiles.add(new Projectile(hero.getPos().clone(), tmp));
+                    shootDt = SHOOT_INTERVAL;
+                }
                 break;
             }
             case IDLE: {
                 hero.setSpeed(new Vector(0, 0));
-                hero.setIsAttacking(false);
                 break;
             }
         }

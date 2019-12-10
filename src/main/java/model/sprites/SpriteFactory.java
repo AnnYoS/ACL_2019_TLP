@@ -4,6 +4,7 @@ import model.ISpriteFactory;
 import model.sprites.Sprite;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +21,9 @@ public class SpriteFactory implements ISpriteFactory {
     private Sprite warp;
     private Sprite attack;
     private Sprite walldestruc;
+    private Sprite fireball;
+    private Sprite sand;
+    private Sprite tank;
 
     public SpriteFactory(){
 
@@ -33,6 +37,9 @@ public class SpriteFactory implements ISpriteFactory {
         BufferedImage bWarp = null;
         BufferedImage bAttack = null;
         BufferedImage bWalldestruc = null;
+        BufferedImage bFireball = null;
+        BufferedImage bSand = null;
+        BufferedImage bTank = null;
         try {
             bGrass = ImageIO.read(new File("assets/grass32x32.png"));
             bWall = ImageIO.read(new File("assets/wall32x32.png"));
@@ -44,6 +51,9 @@ public class SpriteFactory implements ISpriteFactory {
             bWarp = ImageIO.read(new File("assets/warp32x32.png"));
             bAttack = ImageIO.read(new File("assets/slash_attack.png"));
             bWalldestruc = ImageIO.read(new File("assets/walldestructible32x32.png"));
+            bFireball = ImageIO.read(new File("assets/fireball.png"));
+            bSand = ImageIO.read(new File("assets/sand.png"));
+            bTank = ImageIO.read(new File("assets/tank.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,6 +68,9 @@ public class SpriteFactory implements ISpriteFactory {
         warp = new SpriteWarp(bWarp);
         attack = new SpriteAttack(bAttack);
         walldestruc = new SpriteStatic(bWalldestruc);
+        fireball = new SpriteStatic(bFireball);
+        sand = new SpriteStatic(bSand);
+        tank = new SpriteTank(bTank);
     }
 
     public Sprite getGrass() {
@@ -90,8 +103,12 @@ public class SpriteFactory implements ISpriteFactory {
 
     public Sprite getAttack() { return attack.clone(); }
 
-    public Sprite getWalldestruc() {
-        return walldestruc;
-    }
+    public Sprite getWalldestruc() { return walldestruc; }
+
+    public Sprite getFireball() { return fireball; }
+
+    public Sprite getSand() { return sand; }
+
+    public Sprite getTank() { return tank; }
 }
 

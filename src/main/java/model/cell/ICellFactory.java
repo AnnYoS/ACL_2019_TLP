@@ -7,4 +7,5 @@ public interface ICellFactory {
     Cell createTrap();
     Cell createChest();
     Cell createWarp();
+    Cell createSand();
 }

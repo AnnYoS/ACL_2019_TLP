@@ -5,10 +5,12 @@ import engine.GamePainter;
 import math.Vector;
 import model.World;
 import model.cell.*;
-import model.person.Hero;
-import model.person.Monster;
+import model.entity.Entity;
+import model.entity.person.Monster;
 import model.sprites.Sprite;
+import model.sprites.SpriteAttack;
 import model.sprites.SpriteFactory;
+import model.sprites.SpritePerson;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -36,6 +38,9 @@ public class PacmanPainter implements GamePainter {
 
 	private long dt;
 	private long time;
+
+	private SpriteAttack attack;
+	private boolean attacking;
 
 	private SpriteFactory spriteFactory;
 
@@ -76,28 +81,41 @@ public class PacmanPainter implements GamePainter {
 				c.draw(this, im, i, j);
 			}
 		}
+		Graphics g = im.getGraphics();
+		for(Entity e : game.getProjectiles()) {
+			Vector pos = e.getDrawPos();
+
+			pos.mult(BLOCK_SIZE);
+
+			g.drawImage(spriteFactory.getFireball().getSprite(), (int)(pos.getX()), (int)(pos.getY()), null);
+		}
 
 		//Déplacement du héros
 		Vector heroPos = game.getHero().getDrawPos();
 		Vector heroSpeed = game.getHero().getSpeed();
-        Graphics g = im.getGraphics();
 
-        if(! spriteMap.containsKey(game.getHero())) {
-			spriteMap.put(game.getHero(), spriteFactory.getHero());
+
+
+		if(!spriteMap.containsKey(game.getHero())) {
+			spriteMap.put(game.getHero(), spriteFactory.getTank());
 		}
-        Sprite tmp = spriteMap.get(game.getHero());
-
-        g.drawImage(tmp.getAnimation(heroSpeed, dt), (int) (heroPos.getX() * BLOCK_SIZE), (int) (heroPos.getY() * BLOCK_SIZE), null);
+		Sprite tmp = spriteMap.get(game.getHero());
+		g.drawImage(tmp.getAnimation(heroSpeed,dt), (int) (heroPos.getX() * BLOCK_SIZE), (int) (heroPos.getY() * BLOCK_SIZE), null);
 
 
         //Attaque du héros
-		//System.out.println("State attack : "+                   game.getHero().isAttacking());
- 		if(game.getHero().isAttacking()){
-			if(! spriteMap.containsKey(game.getHero().getAttack())) {
-				spriteMap.put(game.getHero().getAttack(), spriteFactory.getAttack());
+		attacking = game.getHero().isAttacking();
+		game.getHero().setIsAttacking(false);
+		if(attacking){
+			if(attack==null) {
+				attack = (SpriteAttack) spriteFactory.getAttack();
 			}
-			tmp = spriteMap.get(game.getHero().getAttack());
-			g.drawImage(tmp.getAnimation(heroSpeed,dt), (int) (heroPos.getX() * BLOCK_SIZE-32), (int) (heroPos.getY() * BLOCK_SIZE-32), null);
+			g.drawImage(attack.getAnimation(heroSpeed,dt), (int) (heroPos.getX() * BLOCK_SIZE-32), (int) (heroPos.getY() * BLOCK_SIZE-32), null);
+		}
+
+		if(attack!= null && attack.isFinished()){
+			attacking = false;
+			attack = null;
 		}
 
 
@@ -159,6 +177,13 @@ public class PacmanPainter implements GamePainter {
 		Sprite tmp = spriteMap.get(p);
 
 		g.drawImage(tmp.getAnimation(new Vector(0,0), dt), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+	}
+
+	public void drawCell(BufferedImage img, Sand s, int x, int y) {
+		Graphics g = img.getGraphics();
+		g.drawImage(spriteFactory.getSand().getSprite(), x * BLOCK_SIZE, y * BLOCK_SIZE, null);
+		//g.setColor(Color.CYAN);
+		//g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 	}
 
 	public void drawLifePoint(BufferedImage img){

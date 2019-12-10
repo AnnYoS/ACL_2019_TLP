@@ -64,6 +64,11 @@ public class Vector {
         y *= c;
     }
 
+    public void div(float c) {
+        x /= c;
+        y /= c;
+    }
+
     public float length() {
         return (float) Math.sqrt(x * x + y * y);
     }
