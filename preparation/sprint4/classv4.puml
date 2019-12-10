@@ -233,24 +233,7 @@ package DAO {
 }
 
 
-class Sprite {
-	+Sprite(BufferedImage img)
-	+BufferedImage getAnimation(Vector v)
-	+BufferedImage getSprite()
-}
-interface ISpriteFactory
-class SpriteFactory {
-	+SpriteFactory(BufferedImage... sprites)
-	+Sprite getGrass()
-  +Sprite getWall()
-  +Sprite getChest()
-  +Sprite getTrap()
- 	+Sprite getHero()
- 	+Sprite getEnemy()
-}
 
-SpriteFactory .up.|> ISpriteFactory
-SpriteFactory -- "1..*" Sprite
 
 
 package engine {
@@ -313,5 +296,35 @@ package view {
 		GameOver .up.|> Screen
 	}
 }
+
+package sprites{
+    abstract class Sprite{
+        +Sprite(BufferedImage img)
+        +BufferedImage getAnimation(Vector v, long dt)
+        +BufferedImage getSprite()
+        +Sprite clone();
+    }
+
+    SpriteAttack -up-|> Sprite
+    SpritePerson -up-|> Sprite
+    SpriteStatic -up-|> Sprite
+    SpriteTank -up-|> Sprite
+    SpriteWarp -up-|> Sprite
+
+}
+
+interface ISpriteFactory
+class SpriteFactory {
+	+SpriteFactory(BufferedImage... sprites)
+	+Sprite getGrass()
+  +Sprite getWall()
+  +Sprite getChest()
+  +Sprite getTrap()
+ 	+Sprite getHero()
+ 	+Sprite getEnemy()
+}
+
+SpriteFactory .up.|> ISpriteFactory
+SpriteFactory -- "1..*" Sprite
 
 @enduml
