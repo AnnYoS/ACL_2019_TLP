@@ -1,0 +1,317 @@
+@startuml
+
+package math {
+	class Vector {
+		+Vector(float x, float y)
+		.. Getters ..
+		+float getX()
+		+float getY()
+		+int getXasInt()
+		+int getYasInt()
+		.. Setters ..
+		+void setX(float x)
+		+void setY(float y)
+		.. Add ..
+		+void add(Vector v)
+		+void add(Point p)
+		+void add(Vector v, float c)
+		..
+		+Vector clone()
+		+void sub(Vector v)
+		+void mult(float c)
+		+float length()
+		+float distance(Vector v)
+	}
+	class Point {
+		+Point(int x, int y)
+		+Point clone()
+		+int getX()
+		+void setX(int x)
+		+int getY()
+		+void setY(int y)
+		+int manhattanDistance(Point pos)
+	}
+}
+
+package entity{
+
+    interface Entity{
+        +evolve(Map m, long dt);
+        +Vector getDrawPos();
+        +boolean keep()
+    }
+
+    class Projectile{
+        -boolean keep
+        +Projectile(Point pos, Vector speed)
+    }
+
+    Projectile ..|> Entity
+
+    package person {
+        interface Person {
+            void attack (Person p)
+        void looseLP (int lp)
+            .. Getters ..
+        Vector getSpeed()
+            Point getPos()
+            Vector getAcc()
+            Vector getDrawPos()
+            int getLifepoints()
+            .. Setters ..
+        void setSpeed(Vector v)
+            void setPos(Point v)
+        void setAcc(Vector v)
+            ..
+        void forceSetSpeed(Vector v)
+        void evolve(Map m, long dt)
+        }
+
+        class Hero {
+            +Hero(Point pos, int lp)
+            +void setSpeed(Vector speed)
+        }
+
+        class Monster {
+            +Monster(Point pos, MonsterStrategy moveStrategy, int lp)
+            +void setSpeed(Vector speed)
+            +void setPos(Point pos)
+            +Point getPos()
+            +void calcSpeed(Map map, Point heroPos)
+        }
+
+        Enum Direction
+
+        Hero .up.|> Person
+        Monster .up.|> Person
+
+        Hero -- "2" Vector
+        Hero -- "1" Point
+        Hero -- "1" Direction
+
+        Monster --   "2" Vector
+        Monster --   "1" Point
+
+        Monster -- "1" MonsterStrategy
+
+        package strategy {
+            interface MonsterStrategy {
+                Vector move(Monster m, Map map, Point heroPos)
+            }
+
+            class RandomStrategy
+            RandomStrategy .up.|> MonsterStrategy
+            FollowStrategy .up.|> MonsterStrategy
+        }
+
+
+    }
+
+    Projectile -- "1" Point
+    Projectile -- "2" Vector
+
+    Person ..|> Entity
+
+}
+
+
+class World {
+	.. Getters ..
+	+Map getMap()
+	+Hero getHero()
+	+List<Monster> getMonsterList()
+	.. Setters ..
+	+void setMap(Map map)
+	+void setHero(Hero hero)
+	+void setMonsterList(List<Monster> monsterList)
+	.. Relative to monsters ..
+	-void removeDeadMonsters()
+	-void monsterAttack()
+	-void calcMonsterSpeeds()
+	-void moveMonsters(long dt)
+	.. Other ..
+	-void applyCellEffectOnPerson()
+	-void checkIfWon()
+}
+
+World -- "1" Hero
+World -- "0..*" Monster
+World -- "1" Map
+World -- "*" Entity
+
+package cell{
+	interface Cell {
+		 boolean isWalkable()
+		 void applyDamage(Person p)
+		 boolean isChest()
+	}
+
+	interface Drawable {
+		void draw(PacmanPainter p, BufferedImage img, int x, int y)
+	}
+
+	class Wall
+	class Trap
+	class Treasure
+	class Magic
+	class Passage
+	class Grass
+	class Sand
+
+	Wall .down.|> Cell
+	Trap .down.|> Cell
+	Treasure .down.|> Cell
+	Magic .down.|> Cell
+	Passage .down.|> Cell
+	Grass .down.|> Cell
+	Sand .down.|> Cell
+	Cell --|> Drawable
+
+	Passage -- "1" Vector
+
+
+	interface ICellFactory {
+		Cell createWall()
+		Cell createGrass()
+		Cell createTrap()
+		Cell createChest()
+	}
+
+	class CellFactory {
+	}
+
+	CellFactory .up.|> ICellFactory
+	CellFactory .down.> Passage
+	CellFactory .down.> Magic
+	CellFactory .down.> Grass
+	CellFactory .down.> Wall
+	CellFactory .down.> Trap
+	CellFactory .down.> Treasure
+	CellFactory .down.> Sand
+}
+
+class Map {
+	+Cell[][] getCells()
+	+Cell getCell(int x, int y)
+	+int getW()
+	+int getH()
+	+void setCells(Cell[][] cells)
+	+boolean isWalkable(Point p)
+}
+Cell "1..*" -down- Map
+
+package DAO {
+
+
+
+	interface IDAOFactory
+	class DAOFactory {
+		+DAOFactory()
+		+{static} DAOFactory getInstance()
+		+WorldDAO getWorldDAO()
+	}
+	DAOFactory .up.|> IDAOFactory
+	DAOFactory -- "1" WorldDAO
+
+
+	interface IWorldDAO {
+		+World load(String path)
+		+void save(World world)
+	}
+
+	class WorldDAO {
+		-{static} final char RANDOM_STRAT
+    -{static} final char FOLLOW_STRAT
+    -{static} final char WALL
+    -{static} final char TRAP
+    -{static} final char CHEST
+    -{static} final char HERO
+    -{static} final char GRASS
+	}
+	WorldDAO .up.|> IWorldDAO
+	WorldDAO ..> World
+}
+
+
+class Sprite {
+	+Sprite(BufferedImage img)
+	+BufferedImage getAnimation(Vector v)
+	+BufferedImage getSprite()
+}
+interface ISpriteFactory
+class SpriteFactory {
+	+SpriteFactory(BufferedImage... sprites)
+	+Sprite getGrass()
+  +Sprite getWall()
+  +Sprite getChest()
+  +Sprite getTrap()
+ 	+Sprite getHero()
+ 	+Sprite getEnemy()
+}
+
+SpriteFactory .up.|> ISpriteFactory
+SpriteFactory -- "1..*" Sprite
+
+
+package engine {
+	interface GamePainter {
+		void draw(BufferedImage image)
+		int getWidth()
+		int getHeight()
+	}
+
+	class GameEngineGraphical {
+		+GameEngineGraphical(Game game, GamePainter gamePainter, GameController gameController)
+		+void run()
+	}
+
+	GameEngineGraphical -- "1" GamePainter
+
+	class GraphicalInterface {
+		+GraphicalInterface(GamePainter gamePainter, GameController gameController)
+		+void paint()
+		+void dispose()
+	}
+
+	class DrawingPanel {
+		+DrawingPanel(GamePainter painter)
+		+void drawGame()
+		+void paint(Graphics g)
+	}
+
+	GameEngineGraphical -right- "1" GraphicalInterface
+	GraphicalInterface -- "1" DrawingPanel
+	DrawingPanel -- "1" GamePainter
+
+	interface GameController {
+		Cmd getCommand()
+	}
+
+	GameEngineGraphical -- "2" GameController
+}
+
+package view {
+	class PacmanPainter
+	PacmanPainter -- "1" World
+	PacmanPainter .up.|> GamePainter
+	PacmanPainter -- "1" ISpriteFactory
+
+	class PacmanController
+	PacmanController .up.|> GameController
+
+	package gui {
+		interface Screen
+		class MainFrame
+
+		MainFrame -- "*" Screen
+		GameEngineGraphical .up.|> Screen
+
+		class MainMenu
+		MainMenu .up.|> Screen
+
+		class GameOver
+		GameOver .up.|> Screen
+	}
+}
+
+@enduml
