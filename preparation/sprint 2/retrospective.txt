@@ -1,0 +1,9 @@
+Mauvaise conception pour ce sprint, a été changée durant ce sprint.
+
+Ont été supprimées :
+
+   * DAO des sprites car inutile.
+   * DAO des maps car inutile.
+
+Mauvaise gestion de la répartition du travail duran le première semaine mais beaucoup mieux pour la deuxième semaine de
+sprint.
