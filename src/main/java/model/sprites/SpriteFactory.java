@@ -4,6 +4,7 @@ import model.ISpriteFactory;
 import model.sprites.Sprite;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class SpriteFactory implements ISpriteFactory {
     private Sprite walldestruc;
     private Sprite fireball;
     private Sprite sand;
+    private Sprite tank;
 
     public SpriteFactory(){
 
@@ -37,6 +39,7 @@ public class SpriteFactory implements ISpriteFactory {
         BufferedImage bWalldestruc = null;
         BufferedImage bFireball = null;
         BufferedImage bSand = null;
+        BufferedImage bTank = null;
         try {
             bGrass = ImageIO.read(new File("assets/grass32x32.png"));
             bWall = ImageIO.read(new File("assets/wall32x32.png"));
@@ -50,6 +53,7 @@ public class SpriteFactory implements ISpriteFactory {
             bWalldestruc = ImageIO.read(new File("assets/walldestructible32x32.png"));
             bFireball = ImageIO.read(new File("assets/fireball.png"));
             bSand = ImageIO.read(new File("assets/sand.png"));
+            bTank = ImageIO.read(new File("assets/tank.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -66,6 +70,7 @@ public class SpriteFactory implements ISpriteFactory {
         walldestruc = new SpriteStatic(bWalldestruc);
         fireball = new SpriteStatic(bFireball);
         sand = new SpriteStatic(bSand);
+        tank = new SpriteTank(bTank);
     }
 
     public Sprite getGrass() {
@@ -103,5 +108,7 @@ public class SpriteFactory implements ISpriteFactory {
     public Sprite getFireball() { return fireball; }
 
     public Sprite getSand() { return sand; }
+
+    public Sprite getTank() { return tank; }
 }
 
