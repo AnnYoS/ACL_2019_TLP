@@ -97,7 +97,7 @@ public class PacmanPainter implements GamePainter {
 
 
 		if(!spriteMap.containsKey(game.getHero())) {
-			spriteMap.put(game.getHero(), spriteFactory.getHero());
+			spriteMap.put(game.getHero(), spriteFactory.getTank());
 		}
 		Sprite tmp = spriteMap.get(game.getHero());
 		g.drawImage(tmp.getAnimation(heroSpeed,dt), (int) (heroPos.getX() * BLOCK_SIZE), (int) (heroPos.getY() * BLOCK_SIZE), null);
