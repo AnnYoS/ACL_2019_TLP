@@ -185,12 +185,15 @@ public class World implements Game {
 
     @Override
     public void evolve(long dt) {
+        applyCellEffectOnPerson();
+        hero.evolve(map, dt);
+
         moveMonsters(dt);
         moveProjectiles(dt);
-        hero.evolve(map, dt);
+
         monsterAttack();
         projectileMonsterCollisions();
-        applyCellEffectOnPerson();
+
         removeDeadMonsters();
         checkIfWon();
 

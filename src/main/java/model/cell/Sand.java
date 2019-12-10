@@ -17,9 +17,11 @@ public class Sand implements Cell{
     @Override
     public void applyEffect(Person p) {
         if(p.getClass().equals(Hero.class)) {
-            Vector s = p.getAcc();
-            Vector n = new Vector(s.getX() * 0.85f, s.getY() * 0.85f);
-            p.setAcc(n);
+            Vector v = p.getSpeed();
+
+            if(v.length() >= Hero.SPEED) {
+                v.mult(0.5f);
+            }
         }
     }
 
